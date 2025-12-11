@@ -1,0 +1,8 @@
+{
+  "plugins": [
+    "prettierpnpm install -D prettier prettier-plugin-tailwindcss",
+    "@huggingface/prettier-plugin-vertical-align"
+  ],
+  "alignInGroups": "always",
+  "tailwindStylesheet": "./app/app.css"
+}

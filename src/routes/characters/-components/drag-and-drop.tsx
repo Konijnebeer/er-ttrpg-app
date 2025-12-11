@@ -1,0 +1,321 @@
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
+
+import { ContentCardOverlay } from "./sidebar";
+import {
+  DndContext,
+  DragOverlay as DndDragOverlay,
+  useDroppable,
+  type DragEndEvent,
+  type DragStartEvent,
+} from "@dnd-kit/core";
+import { useState } from "react";
+import { useCharacterStore } from "@/store/characterStore";
+import type { Item, Aspect } from "@/types/source";
+import type { Reference } from "@/types/refrence";
+
+export function DragOverlay({
+  children,
+  dropAnimation,
+}: {
+  children: React.ReactNode;
+  dropAnimation?: any;
+}) {
+  return (
+    <DndDragOverlay dropAnimation={dropAnimation}>{children}</DndDragOverlay>
+  );
+}
+
+export function SheetDropZone({ children }: { children: React.ReactNode }) {
+  const { setNodeRef, isOver } = useDroppable({
+    id: "sheet-drop-zone",
+  });
+
+  return (
+    <div
+      ref={setNodeRef}
+      className={`h-screen relative border-4 ${
+        isOver
+          ? " border-green-400 ring-2 ring-blue-500 ring-offset-2"
+          : "border-transparent"
+      }`}
+    >
+      {children}
+    </div>
+  );
+}
+
+export function SheetDropComponent({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { character, updateCharacter } = useCharacterStore();
+
+  const [activeContent, setActiveContent] = useState<Item | Aspect | null>(
+    null
+  );
+  const [pendingContent, setPendingContent] = useState<Item | Aspect | null>(
+    null
+  );
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const [track, setTrack] = useState(0);
+
+  function handleDragStart(event: DragStartEvent) {
+    const { active } = event;
+    if (active.data.current?.type === "content") {
+      setActiveContent(active.data.current.content);
+    }
+  }
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+
+    // If dropped on sidebar or nowhere, cancel
+    if (!over || over.id === "sidebar-drop-zone") {
+      console.log("Dropped on sidebar or outside - not adding");
+      setActiveContent(null);
+      return;
+    }
+
+    // Only add if dropped on sheet
+    if (over.id === "sheet-drop-zone") {
+      const content = active.data.current?.content as Item | Aspect;
+      console.log("Dragged:", active.id);
+      console.log("Dropped on:", over.id);
+      console.log("Content data:", content);
+
+      // Open dialog with the content
+      setPendingContent(content);
+
+      // Set defaults based on content type
+      if (content && isItem(content)) {
+        setQuantity(1);
+      } else if (content && "maxTrack" in content) {
+        // It's an aspect
+        setTrack(content.maxTrack);
+      }
+
+      setDialogOpen(true);
+    }
+
+    setActiveContent(null);
+  }
+
+  function handleCancel() {
+    setDialogOpen(false);
+    setPendingContent(null);
+    setQuantity(1);
+    setTrack(0);
+  }
+
+  function handleSave() {
+    if (!pendingContent) return;
+
+    // TODO: Add logic to add item to character store here
+    console.log("Adding to character:", {
+      content: pendingContent,
+      quantity: isItem(pendingContent) ? quantity : undefined,
+      track: isAspect(pendingContent) ? track : undefined,
+    });
+
+    if (isItem(pendingContent)) {
+      // Determine which backpack array to use
+      let backpackKey: keyof typeof character.data.backpack;
+      switch (pendingContent.category) {
+        case "Oddement":
+          backpackKey = "oddements";
+          break;
+        case "Fragment":
+          backpackKey = "fragments";
+          break;
+        case "CampingGear":
+          backpackKey = "campingGear";
+          break;
+        default:
+          toast.error("Unknown item category");
+          return;
+      }
+
+      // Limit to 1000
+      if (quantity >= 1000) {
+        setQuantity(1000);
+      }
+
+      // Find if item already exists in backpack (same ref and same tags)
+      function haveSameTags(
+        tags1: Reference[] | undefined,
+        tags2: Reference[] | undefined
+      ): boolean {
+        const arr1 = tags1 ?? [];
+        const arr2 = tags2 ?? [];
+        if (arr1.length !== arr2.length) return false;
+        const sorted1 = [...arr1].sort();
+        const sorted2 = [...arr2].sort();
+        return sorted1.every((tag, index) => tag === sorted2[index]);
+      }
+
+      const existingIndex = character.data.backpack[backpackKey].findIndex(
+        (ref) =>
+          ref.ref === pendingContent.id &&
+          haveSameTags(ref.tags, pendingContent.tags)
+      );
+
+      const updatedBackpackArray = [...character.data.backpack[backpackKey]];
+
+      if (existingIndex !== -1) {
+        const existingItem = updatedBackpackArray[existingIndex];
+        // Same item with same tags - update quantity
+        updatedBackpackArray[existingIndex] = {
+          ...existingItem,
+          quantity: existingItem.quantity + quantity,
+        };
+      } else {
+        // Add new item reference
+        updatedBackpackArray.push({
+          ref: pendingContent.id,
+          quantity,
+          tags: pendingContent.tags,
+        });
+      }
+
+      updateCharacter({
+        data: {
+          ...character.data,
+          backpack: {
+            ...character.data.backpack,
+            [backpackKey]: updatedBackpackArray,
+          },
+        },
+      });
+    }
+
+    if (isAspect(pendingContent)) {
+      const updatedAspects = [
+        ...character.data.aspects,
+        {
+          ref: pendingContent.id,
+          track: track,
+        },
+      ];
+      updateCharacter({
+        data: {
+          ...character.data,
+          aspects: updatedAspects,
+        },
+      });
+    }
+    // check if already in backpack
+    // you can have multiple aspects, only 1 item
+
+    toast.success(`Added ${pendingContent.name} to character`);
+
+    setDialogOpen(false);
+    setPendingContent(null);
+    setQuantity(1);
+    setTrack(0);
+  }
+
+  function isItem(content: Item | Aspect): content is Item {
+    return (
+      "category" in content &&
+      (content.category === "Oddement" ||
+        content.category === "Fragment" ||
+        content.category === "CampingGear")
+    );
+  }
+
+  function isAspect(content: Item | Aspect): content is Aspect {
+    return (
+      "category" in content &&
+      (content.category === "Trait" ||
+        content.category === "Gear" ||
+        content.category === "Habit" ||
+        content.category === "Relic")
+    );
+  }
+
+  return (
+    <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+      <SheetDropZone>{children}</SheetDropZone>
+      <DragOverlay dropAnimation={null}>
+        {activeContent ? <ContentCardOverlay content={activeContent} /> : null}
+      </DragOverlay>
+
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent
+          onInteractOutside={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <DialogHeader>
+            <DialogTitle>Add {pendingContent?.name}</DialogTitle>
+            <DialogDescription>
+              Configure the{" "}
+              {pendingContent && isItem(pendingContent)
+                ? "quantity"
+                : "track value"}{" "}
+              before adding to your character.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 py-4">
+            {pendingContent && isItem(pendingContent) && (
+              <div className="space-y-2">
+                <Label htmlFor="quantity">Quantity</Label>
+                <Input
+                  id="quantity"
+                  type="number"
+                  min={1}
+                  value={quantity}
+                  onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
+                />
+              </div>
+            )}
+
+            {pendingContent && isAspect(pendingContent) && (
+              <div className="space-y-2">
+                <Label htmlFor="track">
+                  Track (max: {pendingContent.maxTrack})
+                </Label>
+                <Input
+                  id="track"
+                  type="number"
+                  min={0}
+                  max={pendingContent.maxTrack}
+                  value={track}
+                  onChange={(e) =>
+                    setTrack(
+                      Math.min(
+                        parseInt(e.target.value) || 0,
+                        pendingContent.maxTrack
+                      )
+                    )
+                  }
+                />
+              </div>
+            )}
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={handleCancel}>
+              Cancel
+            </Button>
+            <Button onClick={handleSave}>Save</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </DndContext>
+  );
+}

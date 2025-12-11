@@ -1,0 +1,567 @@
+{
+  "id": "alpha-playtest",
+  "version": "1.0.0",
+  "name": "The Eternal Ruins RPG - Alpha Playtest",
+  "description": "A roleplaying game of exploration and discovery set in the endless labyrinth of the Eternal Ruins. \n This is a port of the Alpha Playtest.",
+  "url": "https://www.eternalruins.com",
+  "status": "release",
+  "sourceInfo": {
+    "homebrew": false,
+    "isCore": true
+  },
+  "license": "Copyright 2025 Mythworks / Sam Carr. All rights reserved.",
+  "language": "en-GB",
+  "contributors": [
+    {
+      "id": "1",
+      "title": "Artist & Creator",
+      "name": "Sam Carr",
+      "contact": [
+        {
+          "type": "Website",
+          "name": "Eternal Ruins",
+          "url": "https://www.eternalruins.com"
+        },
+        {
+          "type": "Youtube",
+          "name": "Eternal Ruins",
+          "url": "https://www.youtube.com/@Eternal_ruins"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Writer",
+      "name": "Felix Isaacs",
+      "contact": [
+        {
+          "type": "Website",
+          "name": "Mythworks",
+          "url": "https://www.myth.works"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Writer",
+      "name": "Rob Leigh",
+      "contact": [
+        {
+          "type": "Website",
+          "name": "Mythworks",
+          "url": "https://www.myth.works"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Code & Porting",
+      "name": "Konijnebeer",
+      "contact": [
+        {
+          "type": "Github",
+          "name": "@Konijnebeer",
+          "url": "https://github.com/Konijnebeer"
+        }
+      ]
+    }
+  ],
+  "acknowledgements": [
+    {
+      "id": "1",
+      "title": "Publisher",
+      "name": "Mythworks",
+      "contribution": "Publication and distribution",
+      "contact": [{ "type": "Website", "name": "Mythworks", "url": "https://www.myth.works" }]
+    },
+    {
+      "id": "2",
+      "title": "Game Inspirations",
+      "name": "Ico, The Last Guardian, Zelda, and Hollow Knight",
+      "contribution": "With their emphasis on exploring strange, overgrown ruins and featuring childlike protagonists have been a big influence on Sam’s artwork, and the development of this RPG"
+    },
+    {
+      "id": "3",
+      "title": "Film Inspirations",
+      "name": "Studio Ghibli, Princess Mononoke, Castle in the Sky, Spirited Away, and Nausicaä Valley of the Wind",
+      "contribution": "With their strange spirits and demons, focus on nature, and heroic but pacifist protagonists are also an influence on the setting and RPG."
+    },
+    {
+      "id": "4",
+      "title": "RPG Inspirations",
+      "name": "Emily Allen, The Gardens of Ynn and Stygian Librarian, The Wildsea and PICO",
+      "contribution": "Have inspired the exploration mechanic used in this book. The Wildsea and PICO, as other Wild Words games, are obviously an influence as well"
+    }
+  ],
+  "dateCreated": 1735689600,
+  "dateModified": 1735862400,
+  "data": {
+    "edges": [
+      {
+        "id": "stone",
+        "name": "Stone",
+        "maxTrack": 1,
+        "description": "An edge of uncompromising presence and direct action, used to strike foes, win arguments, and withstand hardships."
+      },
+      {
+        "id": "wind",
+        "name": "Wind",
+        "maxTrack": 1,
+        "description": "An edge of movement and change, used to leap and tumble, quip and fast-talk."
+      },
+      {
+        "id": "lore",
+        "name": "Lore",
+        "maxTrack": 1,
+        "description": "An edge of lost knowledge and deep thought, used to decipher glyphs, understand mechanisms, and solve puzzles."
+      },
+      {
+        "id": "instinct",
+        "name": "Instinct",
+        "maxTrack": 1,
+        "description": "An edge of innate understanding and reflex, used to perceive the world around you, sense others' emotions, and react instinctively."
+      },
+      {
+        "id": "light",
+        "name": "Light",
+        "maxTrack": 1,
+        "description": "An edge of openness and honesty, used to make friends, put people at ease, and keep worries at bay."
+      },
+      {
+        "id": "shadow",
+        "name": "Shadow",
+        "maxTrack": 1,
+        "description": "An edge of secrecy and stealth, used to steal, conceal, and creep around undetected."
+      },
+      {
+        "id": "smoke",
+        "name": "Smoke",
+        "maxTrack": 1,
+        "description": "An edge of luck and fate, used to submit to the whim of chance, and manipulate the esoteric and the occult."
+      }
+    ],
+    "skills": [
+      {
+        "id": "scramble",
+        "name": "Scramble",
+        "maxTrack": 2,
+        "description": "Climbing, athletics, movement over difficult terrain (going up)"
+      },
+      {
+        "id": "delve",
+        "name": "Delve",
+        "maxTrack": 2,
+        "description": "Swimming, caving, squirming through things (going down)"
+      },
+      {
+        "id": "muse",
+        "name": "Muse",
+        "maxTrack": 2,
+        "description": "Sixth sense, mental exploration, understanding spirits and demons"
+      },
+      {
+        "id": "puzzle",
+        "name": "Puzzle",
+        "maxTrack": 2,
+        "description": "Investigating, interacting with servitors, using logic on problems"
+      },
+      {
+        "id": "wreck",
+        "name": "Wreck",
+        "maxTrack": 2,
+        "description": "Breaking things, scavenging, close combat"
+      },
+      {
+        "id": "hunt",
+        "name": "Hunt",
+        "maxTrack": 2,
+        "description": "Perception, spotting, listening, shooting bows & slings, natural understanding"
+      },
+      {
+        "id": "blend",
+        "name": "Blend",
+        "maxTrack": 2,
+        "description": "Using organic oddments to create food or medicine. Also covers brewing drinks, etc."
+      },
+      {
+        "id": "tinker",
+        "name": "Tinker",
+        "maxTrack": 2,
+        "description": "Using inorganic oddments to create items. Also covers unlocking doors, etc."
+      },
+      {
+        "id": "soothe",
+        "name": "Soothe",
+        "maxTrack": 2,
+        "description": "Calming animals and other wanderers, helping teammates in times of stress."
+      },
+      {
+        "id": "bargain",
+        "name": "Bargain",
+        "maxTrack": 2,
+        "description": "Making deals and impressing others, be it wanderers or spirits. Getting your way."
+      }
+    ],
+    "tags": [
+      {
+        "id": "feature",
+        "name": "Feature",
+        "description": "A Feature of the ruins",
+        "color": "#000000",
+        "icon": "mapPinned"
+      },
+      {
+        "id": "detail",
+        "name": "Detail",
+        "description": "A Detail of the ruins",
+        "color": "#000000",
+        "icon": "mapPinPen"
+      },
+      {
+        "id": "fresh",
+        "name": "Fresh",
+        "description": "Meant for food to indecate freshnes",
+        "color": "#B0DC4C",
+        "icon": "leafyGreen"
+      }
+    ],
+    "items": [
+      {
+        "id": "carrot",
+        "name": "Carrot",
+        "description": "Just a carrot",
+        "category": "Oddement"
+      },
+      {
+        "id": "fresh-carrot",
+        "name": "Fresh Carrot",
+        "description": "Just a carrot but fresher?",
+        "category": "Oddement",
+        "tags": ["fresh"]
+      },
+      {
+        "id": "waterlogged-journal",
+        "name": "Waterlogged Journal",
+        "description": "From: Bank-Broken",
+        "category": "Oddement"
+      },
+      {
+        "id": "stream",
+        "name": "Stream",
+        "description": "From: Bank-Broken",
+        "category": "Fragment",
+        "tags": ["feature"]
+      },
+      {
+        "id": "leaky-bucket",
+        "name": "Leaky Bucket",
+        "description": "From: Bank-Broken",
+        "category": "Oddement"
+      },
+      {
+        "id": "woven-kelp-rope",
+        "name": "Woven Kelp Rope",
+        "description": "From: Bank-Broken",
+        "category": "Oddement"
+      },
+      {
+        "id": "fish-in-a-jar",
+        "name": "Fish in a Jar",
+        "description": "From: Bank-Broken",
+        "category": "Oddement"
+      },
+      {
+        "id": "crab-net",
+        "name": "Crab Net",
+        "description": "From: Bank-Broken",
+        "category": "Oddement"
+      },
+      {
+        "id": "gorse-towel",
+        "name": "Gorse Towel",
+        "description": "From: Bank-Broken",
+        "category": "Oddement"
+      },
+      {
+        "id": "fountain",
+        "name": "Fountain",
+        "description": "From: Bank-Broken",
+        "category": "Fragment",
+        "tags": ["feature"]
+      },
+      {
+        "id": "path",
+        "name": "Path",
+        "description": "From: Bank-Broken",
+        "category": "Fragment",
+        "tags": ["feature"]
+      },
+      {
+        "id": "purifying",
+        "name": "Purifying",
+        "description": "From: Bank-Broken",
+        "category": "Fragment",
+        "tags": ["detail"]
+      },
+      {
+        "id": "scenic",
+        "name": "Scenic",
+        "description": "From: Bank-Broken",
+        "category": "Fragment",
+        "tags": ["detail"]
+      },
+      {
+        "id": "raining",
+        "name": "Raining",
+        "description": "From: Bank-Broken",
+        "category": "Fragment",
+        "tags": ["detail"]
+      },
+      {
+        "id": "palewing-quill",
+        "name": "Palewing Quill",
+        "description": "From: Chronicler",
+        "category": "Oddement"
+      },
+      {
+        "id": "soft-cloak",
+        "name": "Soft Cloak",
+        "description": "From: Chronicler",
+        "category": "Oddement"
+      },
+      {
+        "id": "jar-of-ink",
+        "name": "Jar of Ink",
+        "description": "From: Chronicler",
+        "category": "Oddement"
+      },
+      {
+        "id": "ginger-root",
+        "name": "Ginger Root",
+        "description": "From: Chronicler",
+        "category": "Oddement"
+      },
+      {
+        "id": "sunflower-seeds",
+        "name": "Sunflower Seeds",
+        "description": "From: Chronicler",
+        "category": "Oddement"
+      },
+      {
+        "id": "fresh-honeycomb",
+        "name": "Fresh Honeycomb",
+        "description": "From: Chronicler",
+        "category": "Oddement"
+      },
+      {
+        "id": "library",
+        "name": "Library",
+        "description": "From: Chronicler",
+        "category": "Fragment",
+        "tags": ["feature"]
+      },
+      {
+        "id": "tower",
+        "name": "Tower",
+        "description": "From: Chronicler",
+        "category": "Fragment",
+        "tags": ["feature"]
+      },
+      {
+        "id": "flowering",
+        "name": "Flowering",
+        "description": "From: Chronicler",
+        "category": "Fragment",
+        "tags": ["detail"]
+      },
+      {
+        "id": "collapsed",
+        "name": "Collapsed",
+        "description": "From: Chronicler",
+        "category": "Fragment",
+        "tags": ["detail"]
+      },
+      {
+        "id": "windy",
+        "name": "Windy",
+        "category": "Fragment",
+        "description": "From: Chronicler",
+        "tags": ["detail"]
+      }
+    ],
+    "origins": [
+      {
+        "id": "bank-broken",
+        "name": "Bank-Broken",
+        "description": "Your earliest memories are of shards hitting water, a splash and ripple as your stone egg hatched. Did you wade to the shore, stumbling to the solid safety of moss-covered stone, or luxuriate in movement after a near- eternity of stillness? The bank-broken are some of the rarest wanderers, and also seldom join up with others as they travel. Part of this is a desire to stick close to the streams and waterways of the ruins, but there's also an element of the mercurial to their nature that's hard for others to understand.",
+        "edges": ["stone", "wind", "instinct"],
+        "skills": ["scramble", "muse", "blend", "delve", "hunt", "soothe"],
+        "oddements": [
+          "waterlogged-journal",
+          "leaky-bucket",
+          "woven-kelp-rope",
+          "fish-in-a-jar",
+          "crab-net",
+          "gorse-towel"
+        ],
+        "fragments": [
+          "stream",
+          "fountain",
+          "path",
+          "purifying",
+          "scenic",
+          "raining"
+        ],
+        "gaugeBonuses": { "fallout": 1, "curse": 4 },
+        "aspects": ["aspect-wading-bird", "aspect-fishers-lung"]
+      },
+      {
+        "id": "bridge-broken",
+        "name": "Bridge-Broken",
+        "description": "Some wake to darkness, companionship, or rushing waters, but the bridge-broken wakes to an entire world spread out both below and to either side of them - a perch above pathways, a conduit of choice. The first decisions they make as they shake off the stone dream are often the hardest, and many wait multiple bells before choosing a direction to wander. As an explorer, the bridge-broken has a natural inclination toward high places and vantage points, and their keener eyes let them spot details across the distance of the ruins that others might miss - few confine themselves to the ground for long if they can help it.",
+        "edges": ["wind", "lore", "smoke"],
+        "skills": ["scramble", "muse", "wreck", "hunt", "tinker", "soothe"],
+        "oddements": [
+          "shattered-keystone",
+          "loop-of-rope",
+          "a-sketch-of-pillars",
+          "cobblemoss",
+          "underspar-mushrooms",
+          "a-bats-wing"
+        ],
+        "fragments": [
+          "chasm",
+          "bridge",
+          "stream",
+          "collapsed",
+          "windy",
+          "flowering"
+        ],
+        "gaugeBonuses": { "fallout": 3, "curse": 2 },
+        "aspects": ["aspect-keen-observer", "keystone-dance"]
+      }
+    ],
+    "paths": [
+      {
+        "id": "chronicler",
+        "name": "Chronicler",
+        "description": "A collector of knowledge, stories, and maps, you strive to understand the countless mysteries contained within the ruins. In doing so, you have gained more than a passing knowledge of sprites, spirits, and demons. Perhaps you seek to pass on what you have learned to other wanderers, or maybe you want to unravel a particular secret of the ruins yourself. The chronicler is a repository of information and tales, someone who sees everything as a story to record or a puzzle to unravel. They tend to take a more intellectual, observational role in a group of wanderers, preferring to use their brain rather than brawn to deal with any problems they might encounter.",
+        "edges": ["lore", "instinct", "smoke"],
+        "skills": ["muse", "puzzle", "hunt", "tinker", "soothe", "bargain"],
+        "oddements": [
+          "palewing-quill",
+          "soft-cloak",
+          "jar-of-ink",
+          "ginger-root",
+          "sunflower-seeds",
+          "fresh-honeycomb"
+        ],
+        "fragments": [
+          "library",
+          "tower",
+          "fountain",
+          "scenic",
+          "flowering",
+          "collapsed"
+        ],
+        "gaugeBonuses": { "fallout": 1, "curse": 3 },
+        "aspects": ["aspect-haruspex", "aspect-brightspark"]
+      }
+    ],
+    "aspects": [
+      {
+        "id": "aspect-wading-bird",
+        "name": "Wading Bird",
+        "description": "From: Bank-Broken. It helps to move with the current, but it's not essential once you know what you're doing.",
+        "category": "Trait",
+        "maxTrack": 2
+      },
+      {
+        "id": "aspect-fishers-lung",
+        "name": "Fisher's Lung",
+        "description": "From: Bank-Broken",
+        "category": "Trait",
+        "maxTrack": 4
+      },
+      {
+        "id": "aspect-haruspex",
+        "name": "Haruspex",
+        "description": "From: Chronicler",
+        "category": "Trait",
+        "maxTrack": 5
+      },
+      {
+        "id": "aspect-brightspark",
+        "name": "Brightspark",
+        "description": "From: Chronicler",
+        "category": "Trait",
+        "maxTrack": 5
+      }
+    ],
+    "conditions": [
+      {
+        "id": "bleeding",
+        "name": "Bleeding",
+        "type": "fallout",
+        "description": "This specific condition may well be applied when a wanderer’s Fallout gauge is filled due to some kind of cut or laceration, whether from a weapon or from an element of the ruins (like thorns or sharpened stones).",
+        "levels": [
+          {
+            "level": 1,
+            "description": "The wanderer is wounded, bleeding, and generally sorry for themselves. When camping, taking a task for anything other than tending to their own wounds adds a mark to the Fallout gauge."
+          },
+          {
+            "level": 2,
+            "description": "The wanderer is beginning to look pale and weak. Whenever they take a mark of damage from any other source, they take an additional mark of damage."
+          },
+          {
+            "level": 3,
+            "description": "Blood loss is a serious concern. The wanderer cuts for difficulty on all actions that require even the lightest physical exertion."
+          }
+        ],
+        "finalMoment": "There’s no coming back from this - you can’t staunch the flow."
+      },
+      {
+        "id": "broken-bone",
+        "name": "Broken Bone",
+        "type": "fallout",
+        "description": "This specific condition may well be applied when a wanderer’s Fallout gauge is filled due to falling from a height, being caught under heavy debris, or as the result of combat.",
+        "levels": [
+          {
+            "level": 1,
+            "description": " The wanderer’s limb is painful, but still usable. Actions that require the use of the limb mark the wanderer’s Fallout gauge."
+          },
+          {
+            "level": 2,
+            "description": "The broken limb is now hot to the touch and hard to use. Cut for difficulty on all actions that would require the use of that limb."
+          },
+          {
+            "level": 3,
+            "description": "Unbearable pain hampers the wanderer’s movements, even those that do not require the use of the broken limb. The wanderer counts triumphs as conflicts on all actions using Physical and Moving skills."
+          }
+        ],
+        "finalMoment": "Wracked by pain, you know you cannot take another step."
+      },
+      {
+        "id": "the-limb-curse",
+        "name": "The Limb Curse",
+        "type": "curse",
+        "description": "This specific condition may well be applied when a wanderer comes into contact with the grasping hands of a demon.",
+        "levels": [
+          {
+            "level": 1,
+            "description": "You feel a little too flexible, and you can’t stop your joints from popping when you move."
+          },
+          {
+            "level": 2,
+            "description": "A limb detaches, worryingly painlessly, but remains mostly under your control. Cut for difficulty when performing an action that relies on your detached limb in some way."
+          },
+          {
+            "level": 3,
+            "description": "Your detached limb now has a mind of its own, and it’s not exactly a fan of yours. The Guide can spend a point of Despair from your track any time you undertake an action that relies on your detached limb, twisting the expected outcome of the action into something inherently negative no matter the result of your roll."
+          }
+        ],
+        "finalMoment": " Following the example of your detached limb, every other part of your body separates into pieces that crawl, scuttle, or roll away under their own power."
+      }
+    ]
+  }
+}

@@ -1,39 +1,100 @@
-import { createFileRoute } from '@tanstack/react-router'
-import logo from '../logo.svg'
+import { Border } from "@/components/border";
+import {
+  Section,
+  SectionHeader,
+  SectionTitle,
+  SectionDescription,
+  SectionAction,
+  SectionContent,
+} from "@/components/section";
+import { Button } from "@/components/ui/button";
 
-export const Route = createFileRoute('/')({
-  component: App,
-})
+import { SourceCardGrid } from "./sources/-components/source-card";
+import { CharacterCardGrid } from "./characters/-components/character-card";
 
-function App() {
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { useSourceStore } from "@/store/sourceStore";
+import { useCharacterStore } from "@/store/characterStore";
+
+export const Route = createFileRoute("/")({
+  component: SourcesIndexPage,
+});
+
+export default function SourcesIndexPage() {
+  const {
+    characters,
+    loadAllCharactersMetadata,
+    isLoading: isCharactersLoading,
+  } = useCharacterStore();
+
+  useEffect(() => {
+    loadAllCharactersMetadata();
+  }, [loadAllCharactersMetadata]);
+
+  console.log(characters);
+
+  const {
+    groupedSources,
+    loadAllSourcesMetadata,
+    isLoading: isSourcesLoading,
+  } = useSourceStore();
+
+  useEffect(() => {
+    loadAllSourcesMetadata();
+  }, [loadAllSourcesMetadata]);
+
+  console.log(groupedSources);
+
+  const latestSources = [
+    ...groupedSources.Core.map((group) => group.metadata[0]),
+    ...groupedSources.Extra.map((group) => group.metadata[0]),
+  ].filter(Boolean);
+
+  if (isSourcesLoading || isCharactersLoading) {
+    return <div>loading...</div>;
+  }
+
   return (
-    <div className="text-center">
-      <header className="min-h-screen flex flex-col items-center justify-center bg-[#282c34] text-white text-[calc(10px+2vmin)]">
-        <img
-          src={logo}
-          className="h-[40vmin] pointer-events-none animate-[spin_20s_linear_infinite]"
-          alt="logo"
-        />
-        <p>
-          Edit <code>src/routes/index.tsx</code> and save to reload.
-        </p>
-        <a
-          className="text-[#61dafb] hover:underline"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <a
-          className="text-[#61dafb] hover:underline"
-          href="https://tanstack.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn TanStack
-        </a>
-      </header>
-    </div>
-  )
+    <Border>
+      <Section>
+        <SectionHeader>
+          <Link to="/characters">
+            <SectionTitle>Characters</SectionTitle>
+          </Link>
+          <SectionDescription>Manage your Characters here.</SectionDescription>
+          <SectionAction>
+            <Link to="/characters/create">
+              <Button variant="secondary">Create Character</Button>
+            </Link>
+            <Link to="/characters/import">
+              <Button variant="default">Import Character</Button>
+            </Link>
+          </SectionAction>
+        </SectionHeader>
+        <SectionContent>
+          <CharacterCardGrid characters={characters} className="h-[40vh]" />
+        </SectionContent>
+      </Section>
+      <Section>
+        <SectionHeader>
+          <Link to="/sources">
+            <SectionTitle>Sources</SectionTitle>
+          </Link>
+          <SectionDescription>Manage your sources here.</SectionDescription>
+          <SectionAction>
+            <Button variant="secondary" className="cursor-not-allowed">
+              Create Source
+            </Button>
+            <Link to="/sources/import">
+              <Button variant="default">Import Source</Button>
+            </Link>
+          </SectionAction>
+        </SectionHeader>
+        <SectionContent>
+          <SourceCardGrid sources={latestSources} className="h-[40vh]" />
+        </SectionContent>
+      </Section>
+    </Border>
+  );
 }

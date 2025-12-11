@@ -1,0 +1,159 @@
+import { Checkbox } from "@/components/ui/checkbox";
+import { Field, FieldError, FieldLabel, FieldSet } from "@/components/ui/field";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+import { useFieldContext } from "@/hooks/character.form";
+import { useEffect, useState } from "react";
+
+import { ensureRefrence, makeRefrence } from "@/lib/versioningHelpers";
+import { useSourceStore } from "@/store/sourceStore";
+
+import type { Reference, SourceKey } from "@/types/refrence";
+import type { EdgeSkill } from "@/types/source";
+import type { ItemReference } from "@/types/character";
+
+export function EdgesSkillsField({
+  originId,
+  sourceKey,
+  entityRefs,
+  type,
+  parentType,
+  label,
+}: {
+  originId: string;
+  sourceKey: SourceKey;
+  entityRefs: Reference[];
+  type: "edges" | "skills" | "items";
+  parentType: "origins" | "paths";
+  label: string;
+}) {
+  const field = useFieldContext<Reference[] | ItemReference[]>();
+  const { resolveRefrence } = useSourceStore();
+  const [entityObjects, setEntityObjects] = useState<EdgeSkill[]>([]);
+
+  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+  const selectedEntities = (field.state.value || []) as
+    | Reference[]
+    | ItemReference[];
+  // default max for edges/skills, items
+  let maxSelection = 1;
+  if (type === "edges") {
+    maxSelection = 1;
+  }
+  if (type === "skills") {
+    maxSelection = 2;
+  }
+  if (type === "items") {
+    maxSelection = 1;
+  }
+
+  useEffect(() => {
+    // Reset state when origin changes
+    setEntityObjects([]);
+
+    // Resolve all references
+    const resolvedEntityObjects: EdgeSkill[] = [];
+
+    entityRefs.forEach((entityRef) => {
+      try {
+        // TODO: check if its a self refrence or not
+        const entityObject = resolveRefrence(
+          ensureRefrence(sourceKey, entityRef),
+          type
+        );
+        if (entityObject) {
+          resolvedEntityObjects.push(entityObject as EdgeSkill);
+        }
+      } catch (error) {
+        console.error(`Failed to resolve reference: ${entityRef}`, error);
+      }
+    });
+
+    setEntityObjects(resolvedEntityObjects);
+  }, [originId, sourceKey, entityRefs, resolveRefrence]);
+
+  const handleCheckboxChange = (entityId: string, checked: boolean) => {
+    const ref = makeRefrence(sourceKey, entityId); // Create a full reference for all types
+
+    if (type === "items") {
+      // Items are saved as ItemReference objects with default quantity 1
+      const items = selectedEntities as ItemReference[];
+
+      if (checked) {
+        // Don't duplicate
+        if (!items.some((i) => i.ref === ref)) {
+          field.handleChange([...items, { ref, quantity: 1 }]);
+        }
+      } else {
+        field.handleChange(items.filter((i) => i.ref !== ref));
+      }
+      return;
+    }
+
+    // Edges/skills: store full references
+    const refs = selectedEntities as Reference[];
+    if (checked) {
+      if (!refs.includes(ref)) {
+        field.handleChange([...refs, ref]);
+      }
+    } else {
+      field.handleChange(refs.filter((id: Reference) => id !== ref));
+    }
+  };
+
+  return (
+    <FieldSet data-invalid={isInvalid}>
+      <FieldLabel>
+        {label} ({selectedEntities.length} of {maxSelection || "X"} selected)
+      </FieldLabel>
+      <div className="grid grid-cols-2 gap-2">
+        {entityObjects.map((entityObject) => {
+          const ref = makeRefrence(sourceKey, entityObject.id);
+          // Determine if the entity is checked and if it should be disabled
+          const isChecked =
+            type === "items"
+              ? (selectedEntities as ItemReference[]).some((i) => i.ref === ref)
+              : (selectedEntities as Reference[]).includes(ref);
+
+          const isDisabled =
+            !isChecked &&
+            selectedEntities.length >= maxSelection &&
+            maxSelection !== Infinity;
+
+          return (
+            <Field key={`${parentType}-${type}-${entityObject.id}`}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <FieldLabel
+                    htmlFor={`${parentType}-${type}-${entityObject.id}`}
+                  >
+                    <Checkbox
+                      id={`${parentType}-${type}-${entityObject.id}`}
+                      checked={isChecked}
+                      disabled={isDisabled}
+                      onCheckedChange={(checked) =>
+                        handleCheckboxChange(
+                          entityObject.id,
+                          checked as boolean
+                        )
+                      }
+                    />
+                    {entityObject.name}
+                  </FieldLabel>
+                </TooltipTrigger>
+                <TooltipContent className="[&_svg]:hidden!" sideOffset={8}>
+                  {entityObject.description}
+                </TooltipContent>
+              </Tooltip>
+            </Field>
+          );
+        })}
+      </div>
+      {isInvalid && <FieldError errors={field.state.meta.errors} />}
+    </FieldSet>
+  );
+}

@@ -1,0 +1,34 @@
+{
+  "id": "other-core",
+  "version": "1.0.0",
+  "name": "Other rules",
+  "description": "this is also a core rule if you want to homebrew even more",
+  "status": "release",
+  "sourceInfo": {
+    "homebrew": true,
+    "isCore": true
+  },
+  "license": "None",
+  "language": "en-GB",
+  "contributors": [
+    {
+      "id": "4",
+      "title": "Code & Porting",
+      "name": "Konijnebeer",
+      "contact": [{ "type": "Github", "url": "@Konijnebeer" }]
+    }
+  ],
+  "acknowledgements": [],
+  "dateCreated": 1735689600,
+  "dateModified": 1735862400,
+  "data": {
+    "edges": [
+      {
+        "id": "other-stone",
+        "name": "other",
+        "maxTrack": 1,
+        "description": "definitly not stone"
+      }
+    ]
+  }
+}

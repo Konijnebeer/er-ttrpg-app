@@ -1,0 +1,136 @@
+{
+  "id": "test-character",
+  "versionRef": "alpha-playtest@1.0.0",
+  "name": "Test Character",
+  "description": "Character to test stuff",
+  "sheetVersion": "0.0.1",
+  "dependencies": [],
+  "author": "Test Author",
+  "dateCreated": 1730678400,
+  "dateModified": 1730678400,
+  "data": {
+    "character": {
+      "name": "Aria",
+      "player": "Test Player",
+      "pronouns": "she/her",
+      "origin": "Bank Broken",
+      "originRef": "alpha-playtest@1.0.0:bank-broken",
+      "path": "Chronicler",
+      "pathRef": "alpha-playtest@1.0.0:chronicler",
+      "milestones": 3,
+      "dispair": 2,
+      "hope": 3,
+      "fallout": {
+        "level": 1,
+        "condition": "Exhausted",
+        "maxTrack": 4,
+        "currentTrack": 2
+      },
+      "curse": {
+        "level": 2,
+        "condition": "",
+        "maxTrack": 6,
+        "currentTrack": 4
+      },
+      "clock": {
+        "food": 0,
+        "sleep": 0,
+        "dawn": 1,
+        "dusk": 0
+      }
+    },
+    "backpack": {
+      "oddements": [
+        {
+          "ref": "alpha-playtest@1.0.0:palewing-quill",
+          "quantity": 1
+        }
+      ],
+      "fragments": [
+        {
+          "ref": "alpha-playtest@1.0.0:fountain",
+          "quantity": 1
+        }
+      ],
+      "campingGear": []
+    },
+    "aspects": [
+      {
+        "ref": "alpha-playtest@1.0.0:aspect-wading-bird",
+        "track": 2
+      }
+    ],
+    "edges": [
+      {
+        "ref": "alpha-playtest@1.0.0:stone",
+        "level": 1
+      },
+      {
+        "ref": "alpha-playtest@1.0.0:wind",
+        "level": 1
+      },
+      {
+        "ref": "alpha-playtest@1.0.0:lore",
+        "level": 0
+      },
+      {
+        "ref": "alpha-playtest@1.0.0:instinct",
+        "level": 0
+      },
+      {
+        "ref": "alpha-playtest@1.0.0:light",
+        "level": 0
+      },
+      {
+        "ref": "alpha-playtest@1.0.0:shadow",
+        "level": 0
+      },
+      {
+        "ref": "alpha-playtest@1.0.0:smoke",
+        "level": 0
+      }
+    ],
+    "skills": [
+      {
+        "ref": "alpha-playtest@1.0.0:scramble",
+        "level": 0
+      },
+      {
+        "ref": "alpha-playtest@1.0.0:delve",
+        "level": 0
+      },
+      {
+        "ref": "alpha-playtest@1.0.0:muse",
+        "level": 0
+      },
+      {
+        "ref": "alpha-playtest@1.0.0:puzzle",
+        "level": 1
+      },
+      {
+        "ref": "alpha-playtest@1.0.0:wreck",
+        "level": 0
+      },
+      {
+        "ref": "alpha-playtest@1.0.0:hunt",
+        "level": 2
+      },
+      {
+        "ref": "alpha-playtest@1.0.0:blend",
+        "level": 1
+      },
+      {
+        "ref": "alpha-playtest@1.0.0:tinker",
+        "level": 0
+      },
+      {
+        "ref": "alpha-playtest@1.0.0:soothe",
+        "level": 0
+      },
+      {
+        "ref": "alpha-playtest@1.0.0:bargain",
+        "level": 0
+      }
+    ]
+  }
+}

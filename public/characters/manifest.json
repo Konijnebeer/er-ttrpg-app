@@ -1,0 +1,15 @@
+{
+  "characters": [
+    {
+      "id": "test-character",
+      "versions": [
+        {
+          "versionNumber": "1.0.0",
+          "versionRef": "alpha-playtest@1.0.0",
+          "dependencies": [],
+          "filename": "test-character.json"
+        }
+      ]
+    }
+  ]
+}

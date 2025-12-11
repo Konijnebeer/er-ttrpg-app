@@ -1,0 +1,14 @@
+{
+  "latest": "alpha-playtest@1.0.0",
+  "sources": [
+    {
+      "id": "alpha-playtest",
+      "versions": [
+        {
+          "versionNumber": "1.0.0",
+          "filename": "playtest-1.0.0.json"
+        }
+      ]
+    }
+  ]
+}
