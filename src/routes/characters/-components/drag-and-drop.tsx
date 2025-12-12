@@ -123,7 +123,6 @@ export function SheetDropComponent({
   function handleSave() {
     if (!pendingContent) return;
 
-    // TODO: Add logic to add item to character store here
     console.log("Adding to character:", {
       content: pendingContent,
       quantity: isItem(pendingContent) ? quantity : undefined,

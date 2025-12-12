@@ -1,6 +1,6 @@
 {
   "plugins": [
-    "prettierpnpm install -D prettier prettier-plugin-tailwindcss",
+    "prettier-plugin-tailwindcss",
     "@huggingface/prettier-plugin-vertical-align"
   ],
   "alignInGroups": "always",

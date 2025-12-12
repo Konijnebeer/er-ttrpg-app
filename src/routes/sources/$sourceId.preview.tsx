@@ -9,6 +9,7 @@ import { SkillSection } from "./-components/skill";
 import { TagSection } from "./-components/tag";
 import { ItemSection } from "./-components/item";
 import { AspectSection } from "./-components/aspect";
+import { ConditionSection } from "./-components/condition";
 import { ArrowBigLeftIcon, BadgeCheckIcon } from "lucide-react";
 
 import { getLatestSourceVersion } from "@/database/sourceDB";
@@ -72,7 +73,7 @@ function RouteComponent() {
         <div className="flex gap-4 justify-between -mt-6">
           <div className="flex gap-2 items-end">
             <h1 className="text-2xl">Preview for {source.name}</h1>
-            <Badge variant="secondary">
+            <Badge variant="outline">
               {source.sourceInfo.homebrew ? (
                 "Homebrew"
               ) : (
@@ -94,7 +95,7 @@ function RouteComponent() {
         </div>
         <p className="whitespace-pre-line align-bottom">{source.description}</p>
       </header>
-      <ScrollArea className="h-[70vh] max-h-[75vh] w-full">
+      <ScrollArea className="h-[75vh] w-full">
         <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
           {source.data.edges && source.data.edges.length >= 0 && (
             <EdgeSection edges={source.data.edges as EdgeSkill[]} />
@@ -113,6 +114,9 @@ function RouteComponent() {
           )}
           {source.data.aspects && source.data.aspects.length >= 0 && (
             <AspectSection aspects={source.data.aspects} />
+          )}
+          {source.data.conditions && source.data.conditions.length >= 0 && (
+            <ConditionSection conditions={source.data.conditions} />
           )}
         </div>
       </ScrollArea>

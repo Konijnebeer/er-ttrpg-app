@@ -16,7 +16,7 @@ import { useFieldContext } from "@/hooks/character.form";
 import { useEffect, useState } from "react";
 
 import { useSourceStore } from "@/store/sourceStore";
-import { ensureRefrence, makeRefrence } from "@/lib/versioningHelpers";
+import { ensureRefrence } from "@/lib/versioningHelpers";
 
 import type { Reference, SourceKey } from "@/types/refrence";
 import type { Aspect } from "@/types/source";
@@ -64,7 +64,7 @@ export function AspectsField({
   }, [originId, sourceKey, aspectRefs, resolveRefrence]);
 
   const handleCheckboxChange = (aspectId: string, checked: boolean) => {
-    const ref = makeRefrence(sourceKey, aspectId);
+    const ref = ensureRefrence(sourceKey, aspectId);
     // find the aspect object and use its maxTrack (fallback to 0)
     const aspectObj = aspectObjects.find((a) => a.id === aspectId);
     const track = aspectObj?.maxTrack ?? 0;
@@ -90,7 +90,7 @@ export function AspectsField({
       </FieldLabel>
       <div className="grid grid-cols-2 gap-2">
         {aspectObjects.map((aspectObject) => {
-          const ref = makeRefrence(sourceKey, aspectObject.id);
+          const ref = ensureRefrence(sourceKey, aspectObject.id);
           const isChecked = selectedAspects.some((a) => a.ref === ref);
           const isDisabled =
             !isChecked && selectedAspects.length >= maxSelection;

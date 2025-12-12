@@ -9,7 +9,7 @@ import {
 import { useFieldContext } from "@/hooks/character.form";
 import { useEffect, useState } from "react";
 
-import { ensureRefrence, makeRefrence } from "@/lib/versioningHelpers";
+import { ensureRefrence } from "@/lib/versioningHelpers";
 import { useSourceStore } from "@/store/sourceStore";
 
 import type { Reference, SourceKey } from "@/types/refrence";
@@ -77,7 +77,7 @@ export function EdgesSkillsField({
   }, [originId, sourceKey, entityRefs, resolveRefrence]);
 
   const handleCheckboxChange = (entityId: string, checked: boolean) => {
-    const ref = makeRefrence(sourceKey, entityId); // Create a full reference for all types
+    const ref = ensureRefrence(sourceKey, entityId); // Create a full reference for all types
 
     if (type === "items") {
       // Items are saved as ItemReference objects with default quantity 1
@@ -112,7 +112,7 @@ export function EdgesSkillsField({
       </FieldLabel>
       <div className="grid grid-cols-2 gap-2">
         {entityObjects.map((entityObject) => {
-          const ref = makeRefrence(sourceKey, entityObject.id);
+          const ref = ensureRefrence(sourceKey, entityObject.id);
           // Determine if the entity is checked and if it should be disabled
           const isChecked =
             type === "items"

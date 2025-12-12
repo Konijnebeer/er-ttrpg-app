@@ -10,19 +10,25 @@ import {
 } from "@/components/ui/card";
 import {
   Section,
+  SectionAction,
   SectionContent,
+  SectionDescription,
   SectionHeader,
   SectionTitle,
 } from "@/components/section";
 import { useCharacterStore } from "@/store/characterStore";
 import { Track } from "./track";
+import { Button } from "@/components/ui/button";
+import { PlusIcon } from "lucide-react";
 
 export function AspectSection({
   aspects,
   className = "",
+  onAddAspect,
 }: {
-  aspects: AspectReference[];
-  className?: string;
+  aspects:      AspectReference[];
+  className?:   string;
+  onAddAspect?: () => void;
 }) {
   return (
     <Section className={className}>
@@ -30,6 +36,12 @@ export function AspectSection({
         <SectionTitle>
           <h2>Aspects</h2>
         </SectionTitle>
+        <SectionDescription>(Add 1d6 if appropriate)</SectionDescription>
+        <SectionAction>
+          <Button size="icon-sm" className="mr-4" onClick={onAddAspect}>
+            <PlusIcon />
+          </Button>
+        </SectionAction>
       </SectionHeader>
       <SectionContent
         className={`${className === "col-span-3" ? "grid-cols-3" : "grid-cols-2"} grid gap-4`}
@@ -46,7 +58,7 @@ function AspectCard({
   aspect,
   aspectIndex,
 }: {
-  aspect: AspectReference;
+  aspect:      AspectReference;
   aspectIndex: number;
 }) {
   const { resolveRefrence } = useSourceStore();
@@ -79,7 +91,7 @@ function AspectCard({
   }
   return (
     <Card
-      className="sprite-border border-3 border-primary"
+      className="sprite-border"
       //   style={{
       //     borderStyle:       "solid",
       //     borderWidth:       10, // match the 150px border thickness

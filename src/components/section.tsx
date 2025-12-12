@@ -45,7 +45,7 @@ function SectionDescription({
     <div
       data-slot="card-description"
       className={cn(
-        "text-muted-foreground text-sm col-start-2 self-end justify-self-start",
+        "text-muted-foreground text-sm col-start-2 self-end justify-self-start mb-0.5",
         className
       )}
       {...props}

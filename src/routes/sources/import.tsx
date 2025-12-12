@@ -86,7 +86,7 @@ function ImportSource() {
           <ArrowBigLeftIcon />
         </Button>
       </Link>
-      <Section className="h-full flex flex-col justify-between">
+      <Section className="flex flex-col justify-between">
         <SectionHeader>
           <SectionTitle>Import A Source</SectionTitle>
         </SectionHeader>
@@ -181,7 +181,7 @@ function ImportSource() {
             </FieldGroup>
           </form>
         </SectionContent>
-        <SectionFooter className="self-end mt-auto">
+        <SectionFooter className="self-end">
           <Button type="submit" form="import-source">
             Import Source
           </Button>

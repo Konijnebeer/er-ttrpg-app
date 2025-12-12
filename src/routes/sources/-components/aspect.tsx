@@ -1,5 +1,19 @@
-import { Section, SectionContent, SectionDescription, SectionHeader, SectionTitle } from "@/components/section";
-import { Item, ItemActions, ItemContent, ItemDescription, ItemHeader, ItemTitle } from "@/components/ui/item";
+import {
+  Section,
+  SectionContent,
+  SectionDescription,
+  SectionHeader,
+  SectionTitle,
+} from "@/components/section";
+import { Badge } from "@/components/ui/badge";
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemHeader,
+  ItemTitle,
+} from "@/components/ui/item";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import type { Aspect } from "@/types/source";
 
@@ -28,7 +42,10 @@ function AspectCard({ aspect }: { aspect: Aspect }) {
     <Item variant="outline">
       <ItemContent>
         <ItemHeader>
-          <ItemTitle>{aspect.name}</ItemTitle>
+          <ItemTitle>
+            <span>{aspect.name}</span>
+            <Badge variant="outline">{aspect.category}</Badge>
+          </ItemTitle>
           <ItemActions className="font-semibold">
             {aspect.maxTrack && <span>Tracks: {aspect.maxTrack}</span>}
           </ItemActions>
@@ -39,4 +56,4 @@ function AspectCard({ aspect }: { aspect: Aspect }) {
   );
 }
 
-export { AspectSection }
+export { AspectSection };

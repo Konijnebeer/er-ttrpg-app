@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { withCharacterForm } from "@/hooks/character.form";
-import { makeRefrence } from "@/lib/versioningHelpers";
+import { ensureRefrence, makeRefrence } from "@/lib/versioningHelpers";
 import { useSourceStore } from "@/store/sourceStore";
 import type { SourceKey } from "@/types/refrence";
 import type { OriginPath } from "@/types/source";
@@ -106,7 +106,7 @@ export const OriginPathSection = withCharacterForm({
           // Find the selected origin based on the field value
           const selectedOriginRef = field.state.value;
           const selectedOrigin = origins.find((origin) => {
-            const originRef = makeRefrence(origin.sourceKey, origin.data.id);
+            const originRef = ensureRefrence(origin.sourceKey, origin.data.id);
             return originRef === selectedOriginRef;
           });
           return (
@@ -130,7 +130,7 @@ export const OriginPathSection = withCharacterForm({
                           {origins.map((origin) => (
                             <SelectItem
                               key={`${origin.sourceKey}-${origin.data.id}`}
-                              value={makeRefrence(
+                              value={ensureRefrence(
                                 origin.sourceKey,
                                 origin.data.id
                               )}

@@ -10,33 +10,182 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SourcesIndexRouteImport } from './routes/sources/index'
+import { Route as CharactersIndexRouteImport } from './routes/characters/index'
+import { Route as SourcesNewRouteImport } from './routes/sources/new'
+import { Route as SourcesImportRouteImport } from './routes/sources/import'
+import { Route as SourcesCreateRouteImport } from './routes/sources/create'
+import { Route as CharactersImportRouteImport } from './routes/characters/import'
+import { Route as CharactersCreateRouteImport } from './routes/characters/create'
+import { Route as SourcesSourceIdPreviewRouteImport } from './routes/sources/$sourceId.preview'
+import { Route as SourcesSourceIdEditRouteImport } from './routes/sources/$sourceId.edit'
+import { Route as CharactersCharacterIdPreviewRouteImport } from './routes/characters/$characterId.preview'
+import { Route as CharactersCharacterIdEditRouteImport } from './routes/characters/$characterId.edit'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SourcesIndexRoute = SourcesIndexRouteImport.update({
+  id: '/sources/',
+  path: '/sources/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CharactersIndexRoute = CharactersIndexRouteImport.update({
+  id: '/characters/',
+  path: '/characters/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SourcesNewRoute = SourcesNewRouteImport.update({
+  id: '/sources/new',
+  path: '/sources/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SourcesImportRoute = SourcesImportRouteImport.update({
+  id: '/sources/import',
+  path: '/sources/import',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SourcesCreateRoute = SourcesCreateRouteImport.update({
+  id: '/sources/create',
+  path: '/sources/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CharactersImportRoute = CharactersImportRouteImport.update({
+  id: '/characters/import',
+  path: '/characters/import',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CharactersCreateRoute = CharactersCreateRouteImport.update({
+  id: '/characters/create',
+  path: '/characters/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SourcesSourceIdPreviewRoute = SourcesSourceIdPreviewRouteImport.update({
+  id: '/sources/$sourceId/preview',
+  path: '/sources/$sourceId/preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SourcesSourceIdEditRoute = SourcesSourceIdEditRouteImport.update({
+  id: '/sources/$sourceId/edit',
+  path: '/sources/$sourceId/edit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CharactersCharacterIdPreviewRoute =
+  CharactersCharacterIdPreviewRouteImport.update({
+    id: '/characters/$characterId/preview',
+    path: '/characters/$characterId/preview',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CharactersCharacterIdEditRoute =
+  CharactersCharacterIdEditRouteImport.update({
+    id: '/characters/$characterId/edit',
+    path: '/characters/$characterId/edit',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/characters/create': typeof CharactersCreateRoute
+  '/characters/import': typeof CharactersImportRoute
+  '/sources/create': typeof SourcesCreateRoute
+  '/sources/import': typeof SourcesImportRoute
+  '/sources/new': typeof SourcesNewRoute
+  '/characters': typeof CharactersIndexRoute
+  '/sources': typeof SourcesIndexRoute
+  '/characters/$characterId/edit': typeof CharactersCharacterIdEditRoute
+  '/characters/$characterId/preview': typeof CharactersCharacterIdPreviewRoute
+  '/sources/$sourceId/edit': typeof SourcesSourceIdEditRoute
+  '/sources/$sourceId/preview': typeof SourcesSourceIdPreviewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/characters/create': typeof CharactersCreateRoute
+  '/characters/import': typeof CharactersImportRoute
+  '/sources/create': typeof SourcesCreateRoute
+  '/sources/import': typeof SourcesImportRoute
+  '/sources/new': typeof SourcesNewRoute
+  '/characters': typeof CharactersIndexRoute
+  '/sources': typeof SourcesIndexRoute
+  '/characters/$characterId/edit': typeof CharactersCharacterIdEditRoute
+  '/characters/$characterId/preview': typeof CharactersCharacterIdPreviewRoute
+  '/sources/$sourceId/edit': typeof SourcesSourceIdEditRoute
+  '/sources/$sourceId/preview': typeof SourcesSourceIdPreviewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/characters/create': typeof CharactersCreateRoute
+  '/characters/import': typeof CharactersImportRoute
+  '/sources/create': typeof SourcesCreateRoute
+  '/sources/import': typeof SourcesImportRoute
+  '/sources/new': typeof SourcesNewRoute
+  '/characters/': typeof CharactersIndexRoute
+  '/sources/': typeof SourcesIndexRoute
+  '/characters/$characterId/edit': typeof CharactersCharacterIdEditRoute
+  '/characters/$characterId/preview': typeof CharactersCharacterIdPreviewRoute
+  '/sources/$sourceId/edit': typeof SourcesSourceIdEditRoute
+  '/sources/$sourceId/preview': typeof SourcesSourceIdPreviewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/characters/create'
+    | '/characters/import'
+    | '/sources/create'
+    | '/sources/import'
+    | '/sources/new'
+    | '/characters'
+    | '/sources'
+    | '/characters/$characterId/edit'
+    | '/characters/$characterId/preview'
+    | '/sources/$sourceId/edit'
+    | '/sources/$sourceId/preview'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/characters/create'
+    | '/characters/import'
+    | '/sources/create'
+    | '/sources/import'
+    | '/sources/new'
+    | '/characters'
+    | '/sources'
+    | '/characters/$characterId/edit'
+    | '/characters/$characterId/preview'
+    | '/sources/$sourceId/edit'
+    | '/sources/$sourceId/preview'
+  id:
+    | '__root__'
+    | '/'
+    | '/characters/create'
+    | '/characters/import'
+    | '/sources/create'
+    | '/sources/import'
+    | '/sources/new'
+    | '/characters/'
+    | '/sources/'
+    | '/characters/$characterId/edit'
+    | '/characters/$characterId/preview'
+    | '/sources/$sourceId/edit'
+    | '/sources/$sourceId/preview'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CharactersCreateRoute: typeof CharactersCreateRoute
+  CharactersImportRoute: typeof CharactersImportRoute
+  SourcesCreateRoute: typeof SourcesCreateRoute
+  SourcesImportRoute: typeof SourcesImportRoute
+  SourcesNewRoute: typeof SourcesNewRoute
+  CharactersIndexRoute: typeof CharactersIndexRoute
+  SourcesIndexRoute: typeof SourcesIndexRoute
+  CharactersCharacterIdEditRoute: typeof CharactersCharacterIdEditRoute
+  CharactersCharacterIdPreviewRoute: typeof CharactersCharacterIdPreviewRoute
+  SourcesSourceIdEditRoute: typeof SourcesSourceIdEditRoute
+  SourcesSourceIdPreviewRoute: typeof SourcesSourceIdPreviewRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +197,99 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sources/': {
+      id: '/sources/'
+      path: '/sources'
+      fullPath: '/sources'
+      preLoaderRoute: typeof SourcesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/characters/': {
+      id: '/characters/'
+      path: '/characters'
+      fullPath: '/characters'
+      preLoaderRoute: typeof CharactersIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sources/new': {
+      id: '/sources/new'
+      path: '/sources/new'
+      fullPath: '/sources/new'
+      preLoaderRoute: typeof SourcesNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sources/import': {
+      id: '/sources/import'
+      path: '/sources/import'
+      fullPath: '/sources/import'
+      preLoaderRoute: typeof SourcesImportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sources/create': {
+      id: '/sources/create'
+      path: '/sources/create'
+      fullPath: '/sources/create'
+      preLoaderRoute: typeof SourcesCreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/characters/import': {
+      id: '/characters/import'
+      path: '/characters/import'
+      fullPath: '/characters/import'
+      preLoaderRoute: typeof CharactersImportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/characters/create': {
+      id: '/characters/create'
+      path: '/characters/create'
+      fullPath: '/characters/create'
+      preLoaderRoute: typeof CharactersCreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sources/$sourceId/preview': {
+      id: '/sources/$sourceId/preview'
+      path: '/sources/$sourceId/preview'
+      fullPath: '/sources/$sourceId/preview'
+      preLoaderRoute: typeof SourcesSourceIdPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sources/$sourceId/edit': {
+      id: '/sources/$sourceId/edit'
+      path: '/sources/$sourceId/edit'
+      fullPath: '/sources/$sourceId/edit'
+      preLoaderRoute: typeof SourcesSourceIdEditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/characters/$characterId/preview': {
+      id: '/characters/$characterId/preview'
+      path: '/characters/$characterId/preview'
+      fullPath: '/characters/$characterId/preview'
+      preLoaderRoute: typeof CharactersCharacterIdPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/characters/$characterId/edit': {
+      id: '/characters/$characterId/edit'
+      path: '/characters/$characterId/edit'
+      fullPath: '/characters/$characterId/edit'
+      preLoaderRoute: typeof CharactersCharacterIdEditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CharactersCreateRoute: CharactersCreateRoute,
+  CharactersImportRoute: CharactersImportRoute,
+  SourcesCreateRoute: SourcesCreateRoute,
+  SourcesImportRoute: SourcesImportRoute,
+  SourcesNewRoute: SourcesNewRoute,
+  CharactersIndexRoute: CharactersIndexRoute,
+  SourcesIndexRoute: SourcesIndexRoute,
+  CharactersCharacterIdEditRoute: CharactersCharacterIdEditRoute,
+  CharactersCharacterIdPreviewRoute: CharactersCharacterIdPreviewRoute,
+  SourcesSourceIdEditRoute: SourcesSourceIdEditRoute,
+  SourcesSourceIdPreviewRoute: SourcesSourceIdPreviewRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

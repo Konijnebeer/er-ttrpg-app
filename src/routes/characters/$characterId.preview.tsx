@@ -12,6 +12,7 @@ import { CharacterSection } from "./-components/character";
 import { CharacterSidebar } from "./-components/sidebar";
 import { SheetDropComponent } from "./-components/drag-and-drop";
 import { EdgeSkillSection } from "./-components/edgeSkill";
+import { CreateDialog } from "./-components/create-dialog";
 // Helpers
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
@@ -26,6 +27,13 @@ export const Route = createFileRoute("/characters/$characterId/preview")({
 function CharacterPreview() {
   const { characterId } = Route.useParams();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [createDialogOpen, setCreateDialogOpen] = useState(false);
+  const [dialogType, setDialogType] = useState<"item" | "aspect" | null>(null);
+
+  const openCreateDialog = (type: "item" | "aspect") => {
+    setDialogType(type);
+    setCreateDialogOpen(true);
+  };
 
   const {
     character,
@@ -110,7 +118,17 @@ function CharacterPreview() {
           </Button>
         </Link>
         <AutoSaveIndicator />
-        <CharacterSidebar open={sidebarOpen} onOpenChange={setSidebarOpen} />
+        <CharacterSidebar
+          open={sidebarOpen}
+          onOpenChange={setSidebarOpen}
+          onCreateItem={() => openCreateDialog("item")}
+          onCreateAspect={() => openCreateDialog("aspect")}
+        />
+        <CreateDialog
+          open={createDialogOpen}
+          onOpenChange={setCreateDialogOpen}
+          type={dialogType}
+        />
         <ScrollArea
           className={`h-[85vh] max-h-[90vh] w-full ${sidebarOpen ? "cursor-not-allowed" : ""}`}
         >
@@ -146,10 +164,12 @@ function CharacterPreview() {
             <BackpackSection
               items={character.data.backpack}
               className={sidebarOpen ? "col-2 row-1" : ""}
+              onAddItem={() => openCreateDialog("item")}
             />
             <AspectSection
               aspects={character.data.aspects}
               className={sidebarOpen ? "col-span-2" : "col-span-3"}
+              onAddAspect={() => openCreateDialog("aspect")}
             />
           </div>
         </ScrollArea>

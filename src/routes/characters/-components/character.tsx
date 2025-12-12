@@ -111,7 +111,7 @@ function CharacterFields({ characterSelf }: { characterSelf: CharacterSelf }) {
 
   return (
     <form
-      className="md:grid grid-cols-2 gap-4 space-y-2 items-s"
+      className="md:grid grid-cols-2 gap-4 space-y-2 items-start"
       id="edit-character-self"
       onSubmit={(e) => {
         e.preventDefault();
@@ -134,7 +134,7 @@ function CharacterFields({ characterSelf }: { characterSelf: CharacterSelf }) {
               data-invalid={isInvalid}
               className="grid grid-cols-[1fr_3fr]"
             >
-              <FieldLabel htmlFor={field.name}>name:</FieldLabel>
+              <FieldLabel htmlFor={field.name}>Name:</FieldLabel>
               <Input
                 id={field.name}
                 name={field.name}
@@ -171,7 +171,7 @@ function CharacterFields({ characterSelf }: { characterSelf: CharacterSelf }) {
               data-invalid={isInvalid}
               className="grid grid-cols-[1fr_3fr]"
             >
-              <FieldLabel htmlFor={field.name}>origin:</FieldLabel>
+              <FieldLabel htmlFor={field.name}>Origin:</FieldLabel>
               <Input
                 id={field.name}
                 name={field.name}
@@ -209,7 +209,7 @@ function CharacterFields({ characterSelf }: { characterSelf: CharacterSelf }) {
               data-invalid={isInvalid}
               className="grid grid-cols-[1fr_3fr]"
             >
-              <FieldLabel htmlFor={field.name}>player:</FieldLabel>
+              <FieldLabel htmlFor={field.name}>Player:</FieldLabel>
               <Input
                 id={field.name}
                 name={field.name}
@@ -247,7 +247,7 @@ function CharacterFields({ characterSelf }: { characterSelf: CharacterSelf }) {
               data-invalid={isInvalid}
               className="grid grid-cols-[1fr_3fr]"
             >
-              <FieldLabel htmlFor={field.name}>path:</FieldLabel>
+              <FieldLabel htmlFor={field.name}>Path:</FieldLabel>
               <Input
                 id={field.name}
                 name={field.name}
@@ -285,7 +285,7 @@ function CharacterFields({ characterSelf }: { characterSelf: CharacterSelf }) {
               data-invalid={isInvalid}
               className="grid grid-cols-[1fr_3fr]"
             >
-              <FieldLabel htmlFor={field.name}>pronouns:</FieldLabel>
+              <FieldLabel htmlFor={field.name}>Pronouns:</FieldLabel>
               <Input
                 id={field.name}
                 name={field.name}
@@ -323,7 +323,7 @@ function CharacterFields({ characterSelf }: { characterSelf: CharacterSelf }) {
               data-invalid={isInvalid}
               className="grid grid-cols-[1fr_3fr]"
             >
-              <FieldLabel htmlFor={field.name}>milestones:</FieldLabel>
+              <FieldLabel htmlFor={field.name}>Milestones:</FieldLabel>
               <Input
                 className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 id={field.name}
@@ -389,14 +389,14 @@ function HopeDespair({ dispair, hope }: { dispair: number; hope: number }) {
   const remainingCheckboxes = MaxCheckboxes - (dispair + hope);
 
   return (
-    <div className="md:flex text-center space-y-2 items-center">
+    <div className="md:flex text-center space-y-2 md:space-y-0 items-center">
       <div className="flex-1 flex items-center gap-2 flex-col md:flex-row md:justify-around">
         <Button size="icon" onClick={() => handleDespairChange(true)}>
           <Plus />
         </Button>
         <h3 className="capitalize">Despair</h3>
       </div>
-      <div className="flex-1 flex gap-2 border-2 border-primary rounded-xl p-4">
+      <div className="flex-1 flex gap-2 border-2 rounded-xl p-4">
         {/* Render Despair Checkboxes */}
         {Array.from({ length: dispair }).map((_, index) => (
           <DispairCheckbox
@@ -444,10 +444,9 @@ function FalloutCurse({
   type: "fallout" | "curse";
 }) {
   const { updateCharacter, character } = useCharacterStore();
-  const { getSourceDataArray, resolveRefrence } = useSourceStore();
+  const { getAllSourcesDataArray, resolveRefrence } = useSourceStore();
 
-  // needs to get all conditions from all for now hardcoded
-  const conditions = getSourceDataArray("alpha-playtest@1.0.0", "conditions");
+  const conditions = getAllSourcesDataArray("conditions");
 
   const handleTrackChange = (newLevel: number) => {
     if (!character.data.character[type]) return;
@@ -572,12 +571,12 @@ function FalloutCurse({
 
   return (
     <>
-      <h3 className="text-xl uppercase w-20">{type}</h3>
+      <h3 className="text-xl uppercase w-20 pt-1">{type}</h3>
       <div className="flex gap-4">
         <div className="flex flex-col items-center gap-2">
           <Input
             type="number"
-            className="w-10 h-10 text-center p-0 rounded-full border-2 border-primary [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            className="w-10 h-10 text-center p-0 rounded-full border-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             value={entity.level}
             onChange={(e) => handleLevelChange(e.target.value)}
             onFocus={(e) => e.target.select()}

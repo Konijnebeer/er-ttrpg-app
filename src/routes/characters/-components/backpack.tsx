@@ -5,21 +5,28 @@ import {
   SectionTitle,
 } from "@/components/section";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { ItemCardCharacter } from "@/routes/sources/-components/item";
+import { ItemCard } from "./item";
 import type { Backpack } from "@/types/character";
+import { Button } from "@/components/ui/button";
+import { PlusIcon } from "lucide-react";
 
 export function BackpackSection({
   items,
   className,
+  onAddItem,
 }: {
-  items: Backpack;
+  items:      Backpack;
   className?: string;
+  onAddItem?: () => void;
 }) {
   return (
     <Section className={className}>
       <SectionHeader>
-        <SectionTitle className="text-center">
-          <h2>Backpack</h2>
+        <SectionTitle className="text-center flex items-center gap-2">
+          <h2 className="flex-1 ml-10">Backpack </h2>
+          <Button size="icon-sm" className="mr-4" onClick={onAddItem}>
+            <PlusIcon />
+          </Button>
         </SectionTitle>
       </SectionHeader>
       <SectionContent className="grid grid-rows-3 gap-4">
@@ -29,7 +36,7 @@ export function BackpackSection({
             <div className="flex flex-wrap items-center p-2 space-x-2">
               {items.oddements.map((item, index) => {
                 return (
-                  <ItemCardCharacter
+                  <ItemCard
                     key={`${item.ref}-${index}`}
                     reference={item}
                     type="oddements"
@@ -46,7 +53,7 @@ export function BackpackSection({
             <div className="flex flex-wrap items-center p-2 space-x-2">
               {items.fragments.map((item, index) => {
                 return (
-                  <ItemCardCharacter
+                  <ItemCard
                     key={`${item.ref}-${index}`}
                     reference={item}
                     type="fragments"
@@ -63,7 +70,7 @@ export function BackpackSection({
             <div className="flex flex-wrap items-center p-2 space-x-2">
               {items.campingGear.map((item, index) => {
                 return (
-                  <ItemCardCharacter
+                  <ItemCard
                     key={`${item.ref}-${index}`}
                     reference={item}
                     type="campingGear"

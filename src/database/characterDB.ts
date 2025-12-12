@@ -5,7 +5,7 @@ import {
   type CharacterMetadata,
   type CharacterSelf,
 } from "@/types/character";
-import type { Id, SourceKey, Version } from "@/types/refrence";
+import type { Id, SourceKey } from "@/types/refrence";
 import {
   CHARACTER_DB_NAME,
   CHARACTER_DB_VERSION,
@@ -18,14 +18,14 @@ import {
  */
 interface CharacterDB {
   sources: {
-    key: Id;
-    value: Character;
+    key:     Id;
+    value:   Character;
     indexes: {
-      id: Id;
-      versionRef: SourceKey;
+      id:           Id;
+      versionRef:   SourceKey;
       dependencies: SourceKey[];
       dateModified: number;
-      name: string;
+      name:         string;
     };
   };
 }
@@ -46,7 +46,7 @@ export async function initDB(): Promise<IDBPDatabase<CharacterDB>> {
       CHARACTER_DB_NAME,
       CHARACTER_DB_VERSION,
       {
-        upgrade(db, oldVersion, newVersion, transaction) {
+        upgrade(db) {
           // Create characters store if it doesn't exist
           if (!db.objectStoreNames.contains(CHARACTER_STORE_NAME)) {
             const store = db.createObjectStore(CHARACTER_STORE_NAME);
@@ -63,7 +63,7 @@ export async function initDB(): Promise<IDBPDatabase<CharacterDB>> {
             store.createIndex("name", "name", { unique: false });
           }
         },
-      }
+      },
     );
 
     return dbInstance;
@@ -87,7 +87,7 @@ export async function getCharacter(id: Id): Promise<Character | undefined> {
 }
 
 /**
- * Get metadata for all characters without loading full data.
+ * Get metadata for all characters without loading full data. Ordered by dateModified descending.
  * @returns Array of character metadata objects
  */
 export async function getAllCharactersMetadata(): Promise<
@@ -98,10 +98,12 @@ export async function getAllCharactersMetadata(): Promise<
     const characters = await db.getAll(CHARACTER_STORE_NAME);
 
     // Strip out edges and skills to reduce memory, but keep character self
-    return characters.map(({ data, ...metadata }) => ({
-      ...metadata,
-      character: data.character,
-    }));
+    return characters
+      .map(({ data, ...metadata }) => ({
+        ...metadata,
+        character: data.character,
+      }))
+      .sort((a, b) => b.dateModified - a.dateModified);
   } catch (error) {
     throw error;
   }
@@ -165,7 +167,7 @@ export async function importCharacter(file: File): Promise<Character> {
       jsonData = JSON.parse(text);
     } catch (error) {
       throw new Error(
-        `Invalid JSON format: ${error instanceof Error ? error.message : "Unknown error"}`
+        `Invalid JSON format: ${error instanceof Error ? error.message : "Unknown error"}`,
       );
     }
 
@@ -180,7 +182,7 @@ export async function importCharacter(file: File): Promise<Character> {
             err.path.length > 0
               ? err.path
                   .map((p) =>
-                    typeof p === "number" ? `[${p}]` : `.${String(p)}`
+                    typeof p === "number" ? `[${p}]` : `.${String(p)}`,
                   )
                   .join("")
                   .replace(/^\./, "")
@@ -190,7 +192,7 @@ export async function importCharacter(file: File): Promise<Character> {
         .join("\n");
 
       throw new Error(
-        `Source validation failed with ${result.error.issues.length} error(s):\n${errorList}`
+        `Source validation failed with ${result.error.issues.length} error(s):\n${errorList}`,
       );
     }
 
@@ -200,7 +202,7 @@ export async function importCharacter(file: File): Promise<Character> {
     const exists = await characterExists(character.id);
     if (exists) {
       throw new Error(
-        `Source ${character.id}/${character.name} already exists`
+        `Source ${character.id}/${character.name} already exists`,
       );
     }
 

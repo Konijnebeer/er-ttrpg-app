@@ -7,7 +7,7 @@ import type {
   ItemReference,
 } from "@/types/character";
 import type { SourceKey } from "@/types/refrence";
-import { makeRefrence } from "./versioningHelpers";
+import { ensureRefrence } from "./versioningHelpers";
 import { useCharacterStore } from "@/store/characterStore";
 
 export function useCreateCharacter() {
@@ -45,13 +45,13 @@ export function useCreateCharacter() {
 
       const allEdges = [
         ...((getSourceDataArray(versionRef, "edges") ?? []).map((edge) => ({
-          ref:       makeRefrence(versionRef, edge.id),
+          ref:       ensureRefrence(versionRef, edge.id),
           sourceKey: versionRef,
           id:        edge.id,
         })) as Array<{ ref: string; sourceKey: string; id: string }>),
         ...dependencies.flatMap((dep) =>
           (getSourceDataArray(dep, "edges") ?? []).map((edge) => ({
-            ref:       makeRefrence(dep, edge.id),
+            ref:       ensureRefrence(dep, edge.id),
             sourceKey: dep,
             id:        edge.id,
           })),
@@ -81,13 +81,13 @@ export function useCreateCharacter() {
 
       const allSkills = [
         ...((getSourceDataArray(versionRef, "skills") ?? []).map((skill) => ({
-          ref:       makeRefrence(versionRef, skill.id),
+          ref:       ensureRefrence(versionRef, skill.id),
           sourceKey: versionRef,
           id:        skill.id,
         })) as Array<{ ref: string; sourceKey: string; id: string }>),
         ...dependencies.flatMap((dep) =>
           (getSourceDataArray(dep, "skills") ?? []).map((skill) => ({
-            ref:       makeRefrence(dep, skill.id),
+            ref:       ensureRefrence(dep, skill.id),
             sourceKey: dep,
             id:        skill.id,
           })),
@@ -115,6 +115,7 @@ export function useCreateCharacter() {
       console.log(skillsArray);
       console.log(edgesArray);
 
+      // TODO Needs to add the tags from the oddement to the saved character
       const allOddements: ItemReference[] = [
         ...value.selectedOriginOddements,
         ...value.selectedPathOddements,
@@ -203,8 +204,9 @@ export function useCreateCharacter() {
       } as Character;
       await createNewCharacter(character);
       return true;
-    } catch {
-      return false;
+    } catch (error) {
+      console.error("Failed to create character:", error);
+      throw error;
     }
   };
 

@@ -77,7 +77,7 @@ export type FalloutCurse = z.infer<typeof falloutCurseSchema>;
 export const characterSelfSchema = z.object({
   name: z.string().min(2).max(20),
   player: z.string().min(2).max(20),
-  pronouns: z.string().min(2).max(10),
+  pronouns: z.string().max(10),
   origin: z.string(),
   originRef: referenceSchema,
   path: z.string(),

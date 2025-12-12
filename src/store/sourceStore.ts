@@ -117,6 +117,10 @@ interface SourceStoreState {
     dataType: T
   ) => NonNullable<SourceData[T]> | null;
 
+  getAllSourcesDataArray: <T extends SourceDataKey>(
+    dataType: T
+  ) => NonNullable<SourceData[T]> | null;
+
   /** Get the object related to a Reference */
   resolveRefrence: <T extends SourceDataKey>(
     refrence: Reference,
@@ -555,6 +559,22 @@ export const useSourceStore = create<SourceStoreState>((set, get) => ({
     }
   },
 
+  getAllSourcesDataArray: <T extends SourceDataKey>(
+    dataType: T
+  ): NonNullable<SourceData[T]> | null => {
+    // use getSourceDataArray for all loaded sources and combine results
+    const sources = get().sources;
+    let combinedArray: NonNullable<SourceData[T]> = [];
+    sources.forEach((source, sourceKey) => {
+      const dataArray = get().getSourceDataArray(sourceKey, dataType);
+      if (dataArray) {
+        combinedArray = [...combinedArray, ...dataArray] as NonNullable<SourceData[T]>;
+      }
+    });
+    return combinedArray.length > 0 ? combinedArray : null;
+  },
+
+  
   resolveRefrence: <T extends SourceDataKey>(
     refrence: Reference,
     dataType: T

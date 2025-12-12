@@ -9,13 +9,18 @@ import { useCharacterStore } from "@/store/characterStore";
 import { useSourceStore } from "@/store/sourceStore";
 import type { EdgeSkillReference } from "@/types/character";
 import { Track } from "./track";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 function EdgeSkillSection({
   edgesSkills,
   type,
 }: {
   edgesSkills: EdgeSkillReference[];
-  type: "edges" | "skills";
+  type:        "edges" | "skills";
 }) {
   return (
     <Section className="py-2">
@@ -25,7 +30,7 @@ function EdgeSkillSection({
         </SectionTitle>
         <SectionDescription>(Add 1d6 if appropriate)</SectionDescription>
       </SectionHeader>
-      <SectionContent className="grid md:grid-cols-2">
+      <SectionContent className="md:columns-2 md:gap-4">
         {edgesSkills.map((edgeSkill, index) => (
           <EdgeSkillCard
             key={edgeSkill.ref}
@@ -44,8 +49,8 @@ function EdgeSkillCard({
   edgeSkill,
   edgeSkillIndex,
 }: {
-  type: "edges" | "skills";
-  edgeSkill: EdgeSkillReference;
+  type:           "edges" | "skills";
+  edgeSkill:      EdgeSkillReference;
   edgeSkillIndex: number;
 }) {
   const { error, resolveRefrence } = useSourceStore();
@@ -96,8 +101,15 @@ function EdgeSkillCard({
   }
 
   return (
-    <div className="grid grid-cols-[2fr_3fr] py-1">
-      <p>{edgeSkillObject.name}</p>
+    <div className="grid grid-cols-[1fr_3fr] md:grid-cols-[2fr_3fr] py-1">
+      <Popover>
+        <PopoverTrigger className="cursor-help" asChild>
+          <p>{edgeSkillObject.name}</p>
+        </PopoverTrigger>
+        <PopoverContent className="max-w-xs text-center">
+          {edgeSkillObject.description}
+        </PopoverContent>
+      </Popover>
       <div className="grow flex justify-center items-center">
         <Track
           maxTrack={edgeSkillObject.maxTrack}

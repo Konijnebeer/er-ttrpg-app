@@ -52,7 +52,7 @@ function SourceCard({ source }: { source: SourceMetadata }) {
             }}
           > */}
           {source.status !== "nonEditable" && (
-            <Button variant="secondary" className="cursor-not-allowed">
+            <Button variant="outline" className="cursor-not-allowed">
               Edit
             </Button>
           )}

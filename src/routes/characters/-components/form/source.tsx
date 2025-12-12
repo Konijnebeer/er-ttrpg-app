@@ -89,7 +89,6 @@ function CoreSourceCard({
     const sourceKey = makeSourceKey(sourceId, version);
     onSelect(sourceKey);
   };
-
   const sourceKey = makeSourceKey(sourceId, selectedVersion);
 
   return (

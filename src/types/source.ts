@@ -70,7 +70,7 @@ export type ItemCategory = z.infer<typeof itemCategorySchema>;
 
 export const itemSchema = z.object({
   id: idSchema,
-  name: z.string(),
+  name: z.string().min(2).max(30),
   image: z.string().optional(),
   description: z.string().min(4).max(100).optional(),
   tags: z.array(referenceSchema).optional(),

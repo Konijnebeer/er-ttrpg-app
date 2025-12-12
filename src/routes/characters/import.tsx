@@ -86,7 +86,7 @@ function ImportCharacter() {
           <ArrowBigLeftIcon />
         </Button>
       </Link>
-      <Section className="h-full flex flex-col justify-between">
+      <Section className="flex flex-col justify-between">
         <SectionHeader>
           <SectionTitle>Import A Character</SectionTitle>
         </SectionHeader>
@@ -181,7 +181,7 @@ function ImportCharacter() {
             </FieldGroup>
           </form>
         </SectionContent>
-        <SectionFooter className="self-end mt-auto">
+        <SectionFooter className="self-end ">
           <Button type="submit" form="import-character">
             Import Character
           </Button>

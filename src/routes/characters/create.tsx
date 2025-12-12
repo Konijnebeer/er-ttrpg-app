@@ -29,6 +29,19 @@ import { OriginPathSection } from "./-components/form/origin-path";
 import z from "zod";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useCreateCharacter } from "@/lib/createCharacter";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Scroll } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export const Route = createFileRoute("/characters/create")({
   component: RouteComponent,
@@ -36,14 +49,14 @@ export const Route = createFileRoute("/characters/create")({
 
 const characterCreateFormSchema = characterMetadataSchema
   .pick({
-    id: true,
-    name: true,
-    description: true,
-    author: true,
+    id:           true,
+    name:         true,
+    description:  true,
+    author:       true,
     sheetVersion: true,
-    dateCreated: true,
+    dateCreated:  true,
     dateModified: true,
-    versionRef: true,
+    versionRef:   true,
   })
   .extend({
     dependencies: z.array(sourceKeySchema),
@@ -52,33 +65,33 @@ const characterCreateFormSchema = characterMetadataSchema
       character: z.object({
         // Have to make it extend the refrenceSchema
         originRef: z.string().nonempty("Origin is required"),
-        pathRef: z.string().nonempty("Path is required"),
+        pathRef:   z.string().nonempty("Path is required"),
       }),
     }),
-    selectedOriginEdges: z.array(referenceSchema).length(1),
-    selectedOriginSkills: z.array(referenceSchema).length(2),
-    selectedOriginOddements: z.array(itemReferenceSchema).length(1),
+    selectedOriginEdges:      z.array(referenceSchema).length(1),
+    selectedOriginSkills:     z.array(referenceSchema).length(2),
+    selectedOriginOddements:  z.array(itemReferenceSchema).length(1),
     selectedOriginFragements: z.array(itemReferenceSchema).length(1),
-    selectedOriginAspects: z.array(aspectReferenceSchema).length(1),
-    selectedPathEdges: z.array(referenceSchema).length(1),
-    selectedPathSkills: z.array(referenceSchema).length(2),
-    selectedPathOddements: z.array(itemReferenceSchema).length(1),
-    selectedPathFragements: z.array(itemReferenceSchema).length(1),
-    selectedPathAspects: z.array(aspectReferenceSchema).length(1),
+    selectedOriginAspects:    z.array(aspectReferenceSchema).length(1),
+    selectedPathEdges:        z.array(referenceSchema).length(1),
+    selectedPathSkills:       z.array(referenceSchema).length(2),
+    selectedPathOddements:    z.array(itemReferenceSchema).length(1),
+    selectedPathFragements:   z.array(itemReferenceSchema).length(1),
+    selectedPathAspects:      z.array(aspectReferenceSchema).length(1),
   });
 
 // Default vallues in its own constant so subforms can use the types properly
 export const defaultCharacterFormValues = {
-  id: uuid(),
-  name: "",
-  description: "",
-  author: "",
+  id:           uuid(),
+  name:         "",
+  description:  "",
+  author:       "",
   sheetVersion: "0.0.0",
-  dateCreated: Math.floor(Date.now() / 1000),
+  dateCreated:  Math.floor(Date.now() / 1000),
   dateModified: Math.floor(Date.now() / 1000),
-  versionRef: "",
+  versionRef:   "",
   dependencies: [] as SourceKey[],
-  data: {
+  data:         {
     character: {
       originRef: "",
       pathRef: "",
@@ -86,16 +99,16 @@ export const defaultCharacterFormValues = {
       // despair:   "",
     },
   },
-  selectedOriginEdges: [] as Reference[],
-  selectedOriginSkills: [] as Reference[],
-  selectedOriginOddements: [] as ItemReference[],
+  selectedOriginEdges:      [] as Reference[],
+  selectedOriginSkills:     [] as Reference[],
+  selectedOriginOddements:  [] as ItemReference[],
   selectedOriginFragements: [] as ItemReference[],
-  selectedOriginAspects: [] as AspectReference[],
-  selectedPathEdges: [] as Reference[],
-  selectedPathSkills: [] as Reference[],
-  selectedPathOddements: [] as ItemReference[],
-  selectedPathFragements: [] as ItemReference[],
-  selectedPathAspects: [] as AspectReference[],
+  selectedOriginAspects:    [] as AspectReference[],
+  selectedPathEdges:        [] as Reference[],
+  selectedPathSkills:       [] as Reference[],
+  selectedPathOddements:    [] as ItemReference[],
+  selectedPathFragements:   [] as ItemReference[],
+  selectedPathAspects:      [] as AspectReference[],
 };
 
 function RouteComponent() {
@@ -110,26 +123,30 @@ function RouteComponent() {
 
   const form = useCharacterForm({
     defaultValues: defaultCharacterFormValues,
-    validators: {
+    validators:    {
       onSubmit: characterCreateFormSchema,
     },
     onSubmit: async ({ value }) => {
       console.log("handleSubmit called with value:", value);
 
-      const succses = await createCharacter({
-        value,
-      });
-      if (succses) {
-        toast.success(`Created character: ${value.name}`);
-        navigate({
-          to: "/characters/$characterId/preview",
-          params: {
-            characterId: value.id,
+      toast.promise(
+        createCharacter({
+          value,
+        }),
+        {
+          loading: `Creating character...`,
+          success: () => {
+            navigate({
+              to:     "/characters/$characterId/preview",
+              params: {
+                characterId: value.id,
+              },
+            });
+            return `Created character: ${value.name}`;
           },
-        });
-      } else {
-        toast.error(`Failed to create character: ${value.name}`);
-      }
+          error: `Failed to create character: ${value.name}`,
+        },
+      );
     },
   });
 
@@ -137,10 +154,10 @@ function RouteComponent() {
   const versionRef = useStore(form.store, (state) => state.values.versionRef);
   const dependencies = useStore(
     form.store,
-    (state) => state.values.dependencies
+    (state) => state.values.dependencies,
   );
   const sourceKeys = [versionRef, ...(dependencies ?? [])].filter(
-    (key) => key !== ""
+    (key) => key !== "",
   ) as SourceKey[];
 
   useEffect(() => {
@@ -187,33 +204,36 @@ function RouteComponent() {
             {(versionRef) =>
               versionRef && (
                 <form.AppForm>
-                  <ScrollArea className="h-[50vh] max-h-[50vh] w-full">
-                    <div className="space-y-4">
-                      <OriginPathSection
-                        form={form}
-                        sourceKeys={sourceKeys}
-                        type="origins"
-                        label="Origin"
-                      />
-                      <OriginPathSection
-                        form={form}
-                        sourceKeys={sourceKeys}
-                        type="paths"
-                        label="Path"
-                      />
-                    </div>
-                  </ScrollArea>
+                  <Tabs defaultValue="origin" className="mb-4">
+                    <TabsList>
+                      <TabsTrigger value="origin">Origin</TabsTrigger>
+                      <TabsTrigger value="path">Path</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="origin">
+                      <ScrollArea className="h-[48vh]">
+                        <OriginPathSection
+                          form={form}
+                          sourceKeys={sourceKeys}
+                          type="origins"
+                          label="Origin"
+                        />
+                      </ScrollArea>
+                    </TabsContent>
+                    <TabsContent value="path">
+                      <ScrollArea className="h-[48vh]">
+                        <OriginPathSection
+                          form={form}
+                          sourceKeys={sourceKeys}
+                          type="paths"
+                          label="Path"
+                        />
+                      </ScrollArea>
+                    </TabsContent>
+                  </Tabs>
                 </form.AppForm>
               )
             }
           </form.Subscribe>
-          <Button
-            className="absolute right-25 bottom-18"
-            type="submit"
-            form="create-character"
-          >
-            Create
-          </Button>
         </FieldGroup>
         <FieldGroup>
           <h1 className="text-2xl font-semibold text-center">Dependencies</h1>
@@ -225,6 +245,35 @@ function RouteComponent() {
             <CoreSourceSection form={form} />
             <ExtraSourceSection form={form} />
           </form.AppForm>
+          <div className="flex gap-2 w-full self-end justify-end mt-4">
+            {/* button with a alert dialog for canceling */}
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="destructive">Cancel</Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete
+                    your character creation progress and return you to the
+                    characters list.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => navigate({ to: "/characters" })}
+                  >
+                    Continue
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+            <Button type="submit" form="create-character">
+              Create
+            </Button>
+          </div>
         </FieldGroup>
       </form>
     </Border>

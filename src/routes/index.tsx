@@ -16,6 +16,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useSourceStore } from "@/store/sourceStore";
 import { useCharacterStore } from "@/store/characterStore";
+import About from "@/components/about";
 
 export const Route = createFileRoute("/")({
   component: SourcesIndexPage,
@@ -57,6 +58,7 @@ export default function SourcesIndexPage() {
 
   return (
     <Border>
+      <About />
       <Section>
         <SectionHeader>
           <Link to="/characters">
@@ -65,7 +67,7 @@ export default function SourcesIndexPage() {
           <SectionDescription>Manage your Characters here.</SectionDescription>
           <SectionAction>
             <Link to="/characters/create">
-              <Button variant="secondary">Create Character</Button>
+              <Button variant="outline">Create Character</Button>
             </Link>
             <Link to="/characters/import">
               <Button variant="default">Import Character</Button>
@@ -83,7 +85,7 @@ export default function SourcesIndexPage() {
           </Link>
           <SectionDescription>Manage your sources here.</SectionDescription>
           <SectionAction>
-            <Button variant="secondary" className="cursor-not-allowed">
+            <Button variant="outline" className="cursor-not-allowed">
               Create Source
             </Button>
             <Link to="/sources/import">

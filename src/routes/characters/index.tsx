@@ -48,7 +48,7 @@ export default function CharactersIndexPage() {
           <SectionDescription>Manage your Characters here.</SectionDescription>
           <SectionAction>
             <Link to="/characters/create">
-              <Button variant="secondary">Create Character</Button>
+              <Button variant="outline">Create Character</Button>
             </Link>
             <Link to="/characters/import">
               <Button variant="default">Import Character</Button>

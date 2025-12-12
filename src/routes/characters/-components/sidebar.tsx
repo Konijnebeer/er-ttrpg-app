@@ -38,9 +38,13 @@ import { useDraggable, useDroppable } from "@dnd-kit/core";
 export function CharacterSidebar({
   open,
   onOpenChange,
+  onCreateItem,
+  onCreateAspect,
 }: {
-  open: boolean;
-  onOpenChange: Dispatch<SetStateAction<boolean>>;
+  open:            boolean;
+  onOpenChange:    Dispatch<SetStateAction<boolean>>;
+  onCreateItem?:   () => void;
+  onCreateAspect?: () => void;
 }) {
   const { setNodeRef } = useDroppable({
     id: "sidebar-drop-zone",
@@ -78,16 +82,32 @@ export function CharacterSidebar({
             <TabsTrigger value="self">Character</TabsTrigger>
           </TabsList>
           <TabsContent value="all">
-            <ContentSection type="all" />
+            <ContentSection
+              type="all"
+              onCreateItem={onCreateItem}
+              onCreateAspect={onCreateAspect}
+            />
           </TabsContent>
           <TabsContent value="core">
-            <ContentSection type="core" />
+            <ContentSection
+              type="core"
+              onCreateItem={onCreateItem}
+              onCreateAspect={onCreateAspect}
+            />
           </TabsContent>
           <TabsContent value="extra">
-            <ContentSection type="extra" />
+            <ContentSection
+              type="extra"
+              onCreateItem={onCreateItem}
+              onCreateAspect={onCreateAspect}
+            />
           </TabsContent>
           <TabsContent value="self">
-            <ContentSection type="self" />
+            <ContentSection
+              type="self"
+              onCreateItem={onCreateItem}
+              onCreateAspect={onCreateAspect}
+            />
           </TabsContent>
         </Tabs>
         <SheetFooter>
@@ -100,18 +120,26 @@ export function CharacterSidebar({
   );
 }
 
-function ContentSection({ type }: { type: "all" | "core" | "extra" | "self" }) {
+function ContentSection({
+  type,
+  onCreateItem,
+  onCreateAspect,
+}: {
+  type:            "all" | "core" | "extra" | "self";
+  onCreateItem?:   () => void;
+  onCreateAspect?: () => void;
+}) {
   const { getSourceDataArray } = useSourceStore();
   const { character } = useCharacterStore();
   const itemsCore = getSourceDataArray(character.versionRef, "items") ?? [];
   const itemsExtra = (character.dependencies ?? []).flatMap(
-    (dep) => getSourceDataArray(dep, "items") ?? []
+    (dep) => getSourceDataArray(dep, "items") ?? [],
   );
   const itemsCharacter = [] as Item[];
 
   const aspectsCore = getSourceDataArray(character.versionRef, "aspects") ?? [];
   const aspectsExtra = (character.dependencies ?? []).flatMap(
-    (dep) => getSourceDataArray(dep, "aspects") ?? []
+    (dep) => getSourceDataArray(dep, "aspects") ?? [],
   );
   const aspectsCharacter = [] as Aspect[];
 
@@ -144,34 +172,48 @@ function ContentSection({ type }: { type: "all" | "core" | "extra" | "self" }) {
 
   return (
     <Card>
-      <CardHeader className="md:flex">
-        <Input
-          placeholder="Search by name..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+      <CardHeader>
+        <div className="md:flex gap-2">
+          <Input
+            placeholder="Search by name..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
 
-        <Select value={filter} onValueChange={setFilter}>
-          <SelectTrigger className="w-[200px]">
-            <SelectValue placeholder="Filter" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All</SelectItem>
-            <SelectGroup>
-              <SelectLabel>Backpack</SelectLabel>
-              <SelectItem value="Oddement">Oddements</SelectItem>
-              <SelectItem value="Fragment">Fragments</SelectItem>
-              <SelectItem value="CampingGear">Camping Gear</SelectItem>
-            </SelectGroup>
-            <SelectGroup>
-              <SelectLabel>Aspects & Relics</SelectLabel>
-              <SelectItem value="Trait">Traits</SelectItem>
-              <SelectItem value="Gear">Gear</SelectItem>
-              <SelectItem value="Habit">Habits</SelectItem>
-              <SelectItem value="Relic">Relics</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+          <Select value={filter} onValueChange={setFilter}>
+            <SelectTrigger className="w-[200px]">
+              <SelectValue placeholder="Filter" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All</SelectItem>
+              <SelectGroup>
+                <SelectLabel>Backpack</SelectLabel>
+                <SelectItem value="Oddement">Oddements</SelectItem>
+                <SelectItem value="Fragment">Fragments</SelectItem>
+                <SelectItem value="CampingGear">Camping Gear</SelectItem>
+              </SelectGroup>
+              <SelectGroup>
+                <SelectLabel>Aspects & Relics</SelectLabel>
+                <SelectItem value="Trait">Traits</SelectItem>
+                <SelectItem value="Gear">Gear</SelectItem>
+                <SelectItem value="Habit">Habits</SelectItem>
+                <SelectItem value="Relic">Relics</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+        {type === "self" && (
+          <div className="flex items-center gap-2">
+            <p>Create: </p>
+            <Button size="sm" onClick={onCreateItem}>
+              Item
+            </Button>
+            <Button size="sm">Tag</Button>
+            <Button size="sm" onClick={onCreateAspect}>
+              Aspect
+            </Button>
+          </div>
+        )}
       </CardHeader>
       <CardContent>
         <ScrollArea className="h-[60vh]">
@@ -194,7 +236,7 @@ function ContentSection({ type }: { type: "all" | "core" | "extra" | "self" }) {
 
 function ContentCard({ content }: { content: Item | Aspect }) {
   const { attributes, listeners, setNodeRef } = useDraggable({
-    id: `content-${content.id}`,
+    id:   `content-${content.id}`,
     data: {
       content,
       type: "content",
