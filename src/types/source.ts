@@ -110,7 +110,7 @@ export type AspectCatagory = z.infer<typeof aspectCatagorySchema>;
 
 export const aspectSchema = z.object({
   id: idSchema,
-  name: z.string(),
+  name: z.string().min(2).max(40),
   image: z.base64().optional(),
   description: z.string().min(2).max(200),
   maxTrack: z.int().min(1).max(10),

@@ -137,4 +137,11 @@ code {
   body {
     @apply bg-background text-foreground;
   }
+  
+  *::-webkit-scrollbar {
+    display: none;
+  }
+  * {
+    scrollbar-width: none; 
+  }
 }

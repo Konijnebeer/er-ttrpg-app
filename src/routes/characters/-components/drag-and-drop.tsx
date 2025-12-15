@@ -22,13 +22,13 @@ import {
 import { useState } from "react";
 import { useCharacterStore } from "@/store/characterStore";
 import type { Item, Aspect } from "@/types/source";
-import type { Reference } from "@/types/refrence";
+import { haveSameTags, normalizeTagsForRef } from "@/lib/itemTagHelpers";
 
 export function DragOverlay({
   children,
   dropAnimation,
 }: {
-  children: React.ReactNode;
+  children:       React.ReactNode;
   dropAnimation?: any;
 }) {
   return (
@@ -63,10 +63,10 @@ export function SheetDropComponent({
   const { character, updateCharacter } = useCharacterStore();
 
   const [activeContent, setActiveContent] = useState<Item | Aspect | null>(
-    null
+    null,
   );
   const [pendingContent, setPendingContent] = useState<Item | Aspect | null>(
-    null
+    null,
   );
   const [dialogOpen, setDialogOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
@@ -84,7 +84,6 @@ export function SheetDropComponent({
 
     // If dropped on sidebar or nowhere, cancel
     if (!over || over.id === "sidebar-drop-zone") {
-      console.log("Dropped on sidebar or outside - not adding");
       setActiveContent(null);
       return;
     }
@@ -92,9 +91,6 @@ export function SheetDropComponent({
     // Only add if dropped on sheet
     if (over.id === "sheet-drop-zone") {
       const content = active.data.current?.content as Item | Aspect;
-      console.log("Dragged:", active.id);
-      console.log("Dropped on:", over.id);
-      console.log("Content data:", content);
 
       // Open dialog with the content
       setPendingContent(content);
@@ -123,12 +119,6 @@ export function SheetDropComponent({
   function handleSave() {
     if (!pendingContent) return;
 
-    console.log("Adding to character:", {
-      content: pendingContent,
-      quantity: isItem(pendingContent) ? quantity : undefined,
-      track: isAspect(pendingContent) ? track : undefined,
-    });
-
     if (isItem(pendingContent)) {
       // Determine which backpack array to use
       let backpackKey: keyof typeof character.data.backpack;
@@ -152,40 +142,29 @@ export function SheetDropComponent({
         setQuantity(1000);
       }
 
-      // Find if item already exists in backpack (same ref and same tags)
-      function haveSameTags(
-        tags1: Reference[] | undefined,
-        tags2: Reference[] | undefined
-      ): boolean {
-        const arr1 = tags1 ?? [];
-        const arr2 = tags2 ?? [];
-        if (arr1.length !== arr2.length) return false;
-        const sorted1 = [...arr1].sort();
-        const sorted2 = [...arr2].sort();
-        return sorted1.every((tag, index) => tag === sorted2[index]);
-      }
+      const normalizedPendingTags = normalizeTagsForRef(
+        pendingContent.id,
+        pendingContent.tags,
+      );
 
       const existingIndex = character.data.backpack[backpackKey].findIndex(
         (ref) =>
-          ref.ref === pendingContent.id &&
-          haveSameTags(ref.tags, pendingContent.tags)
+          ref.ref === pendingContent.id && haveSameTags(ref.tags, normalizedPendingTags),
       );
 
       const updatedBackpackArray = [...character.data.backpack[backpackKey]];
 
       if (existingIndex !== -1) {
         const existingItem = updatedBackpackArray[existingIndex];
-        // Same item with same tags - update quantity
         updatedBackpackArray[existingIndex] = {
           ...existingItem,
           quantity: existingItem.quantity + quantity,
         };
       } else {
-        // Add new item reference
         updatedBackpackArray.push({
           ref: pendingContent.id,
           quantity,
-          tags: pendingContent.tags,
+          tags: normalizedPendingTags,
         });
       }
 
@@ -204,7 +183,7 @@ export function SheetDropComponent({
       const updatedAspects = [
         ...character.data.aspects,
         {
-          ref: pendingContent.id,
+          ref:   pendingContent.id,
           track: track,
         },
       ];
@@ -277,7 +256,7 @@ export function SheetDropComponent({
                   id="quantity"
                   type="number"
                   min={1}
-                  value={quantity}
+                  value={quantity || ""}
                   onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
                 />
               </div>
@@ -291,15 +270,16 @@ export function SheetDropComponent({
                 <Input
                   id="track"
                   type="number"
+                  className="[appearance:textfield]"
                   min={0}
                   max={pendingContent.maxTrack}
-                  value={track}
+                  value={track || ""}
                   onChange={(e) =>
                     setTrack(
                       Math.min(
                         parseInt(e.target.value) || 0,
-                        pendingContent.maxTrack
-                      )
+                        pendingContent.maxTrack,
+                      ),
                     )
                   }
                 />

@@ -59,8 +59,7 @@ export type Backpack = z.infer<typeof BackpackSchema>;
 export const clockSchema = z.object({
   food: z.number().min(0).max(2),
   sleep: z.number().min(0).max(2),
-  dawn: z.number().min(0).max(3),
-  dusk: z.number().min(0).max(3),
+  dawnDusk: z.number().min(0).max(6),
 });
 
 export type clock = z.infer<typeof clockSchema>;

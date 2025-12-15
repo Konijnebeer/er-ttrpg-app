@@ -26,8 +26,6 @@ export default function SourcesIndexPage() {
     loadAllSourcesMetadata();
   }, [loadAllSourcesMetadata]);
 
-  console.log(groupedSources);
-
   const latestSources = [
     ...groupedSources.Core.map((group) => group.metadata[0]),
     ...groupedSources.Extra.map((group) => group.metadata[0]),

@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { withCharacterForm } from "@/hooks/character.form";
-import { ensureRefrence, makeRefrence } from "@/lib/versioningHelpers";
+import { ensureRefrence } from "@/lib/versioningHelpers";
 import { useSourceStore } from "@/store/sourceStore";
 import type { SourceKey } from "@/types/refrence";
 import type { OriginPath } from "@/types/source";
@@ -56,7 +56,6 @@ export const OriginPathSection = withCharacterForm({
         });
 
         setOrigins(allOrigins);
-        console.log(`All ${type}:", ${allOrigins}`);
       }
     }, [sourceKeys, getSourceDataArray]);
 
@@ -92,9 +91,6 @@ export const OriginPathSection = withCharacterForm({
         name={name}
         listeners={{
           onChange: ({ value }) => {
-            console.log(
-              `${type} changed to: ${value}, resetting Edges & Skills`
-            );
             form.setFieldValue(selectedEdges, []);
             form.setFieldValue(selectedSkills, []);
             form.setFieldValue(selectedOddements, []);

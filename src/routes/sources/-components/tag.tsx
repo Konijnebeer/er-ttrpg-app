@@ -17,6 +17,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import type { Tag } from "@/types/source";
 import * as LucideIcons from "lucide-react";
+import { X } from "lucide-react";
 
 function getLucideIcon(name?: string) {
   if (!name) return null;
@@ -80,19 +81,36 @@ function TagSection({ tags }: { tags: Tag[] }) {
   );
 }
 
-function TagBadge({ tag }: { tag: Tag }) {
+function TagBadge({
+  tag,
+  onRemove,
+  className,
+  ...props
+}: { tag: Tag; onRemove?: () => void } & React.ComponentProps<typeof Badge>) {
   const Icon = getLucideIcon(tag.icon);
   const iconStyle = tag.color ? { color: tag.color } : undefined;
+  const classes = ["inline-flex items-center gap-1", className]
+    .filter(Boolean)
+    .join(" ");
   return (
-    <Badge variant="outline" className="flex items-center">
-      {Icon ? (
-        <Icon style={iconStyle} className="w-4 h-4 mr-2" />
-      ) : (
-        <span className="w-4 h-4 mr-2" style={iconStyle}>
-          {tag.icon}
-        </span>
+    <Badge variant="outline" className={classes} {...props}>
+      {Icon && (
+        <Icon style={iconStyle} className="w-4 h-4" />
       )}
       {tag.name}
+      {onRemove && (
+        <button
+          type="button"
+          aria-label={`Remove ${tag.name}`}
+          className="flex h-4 w-4 items-center justify-center rounded-full hover:bg-muted"
+          onClick={(e) => {
+            e.stopPropagation();
+            onRemove();
+          }}
+        >
+          <X className="h-3 w-3" />
+        </button>
+      )}
     </Badge>
   );
 }

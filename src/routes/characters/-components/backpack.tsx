@@ -9,28 +9,29 @@ import { ItemCard } from "./item";
 import type { Backpack } from "@/types/character";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
+import { useDialogStore } from "@/store/dialogStore";
 
 export function BackpackSection({
   items,
   className,
-  onAddItem,
 }: {
   items:      Backpack;
   className?: string;
-  onAddItem?: () => void;
 }) {
+  const { openDialog } = useDialogStore();
+
   return (
     <Section className={className}>
       <SectionHeader>
         <SectionTitle className="text-center flex items-center gap-2">
           <h2 className="flex-1 ml-10">Backpack </h2>
-          <Button size="icon-sm" className="mr-4" onClick={onAddItem}>
+          <Button size="icon-sm" className="mr-4 -mb-1" onClick={() => openDialog("item")}>
             <PlusIcon />
           </Button>
         </SectionTitle>
       </SectionHeader>
-      <SectionContent className="grid grid-rows-3 gap-4">
-        <div className="row-span-1">
+      <SectionContent className="md:flex xl:grid md:flex-row gap-4 h-full">
+        <div className="row-span-1 md:flex-1">
           <h3 className="font-semibold">Oddements</h3>
           <ScrollArea className="h-[120px]">
             <div className="flex flex-wrap items-center p-2 space-x-2">
@@ -39,6 +40,7 @@ export function BackpackSection({
                   <ItemCard
                     key={`${item.ref}-${index}`}
                     reference={item}
+                    index={index}
                     type="oddements"
                   />
                 );
@@ -47,7 +49,7 @@ export function BackpackSection({
           </ScrollArea>
         </div>
 
-        <div className="row-span-1">
+        <div className="row-span-1 md:flex-1">
           <h3 className="font-semibold">Fragments</h3>
           <ScrollArea className="h-[120px]">
             <div className="flex flex-wrap items-center p-2 space-x-2">
@@ -56,6 +58,7 @@ export function BackpackSection({
                   <ItemCard
                     key={`${item.ref}-${index}`}
                     reference={item}
+                    index={index}
                     type="fragments"
                   />
                 );
@@ -64,7 +67,7 @@ export function BackpackSection({
           </ScrollArea>
         </div>
 
-        <div className="row-span-1">
+        <div className="row-span-1 md:flex-1">
           <h3 className="font-semibold">Camping Gear</h3>
           <ScrollArea className="h-[120px]">
             <div className="flex flex-wrap items-center p-2 space-x-2">
@@ -73,6 +76,7 @@ export function BackpackSection({
                   <ItemCard
                     key={`${item.ref}-${index}`}
                     reference={item}
+                    index={index}
                     type="campingGear"
                   />
                 );

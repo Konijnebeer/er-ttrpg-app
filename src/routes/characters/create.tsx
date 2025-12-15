@@ -30,7 +30,6 @@ import z from "zod";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useCreateCharacter } from "@/lib/createCharacter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Scroll } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -127,8 +126,6 @@ function RouteComponent() {
       onSubmit: characterCreateFormSchema,
     },
     onSubmit: async ({ value }) => {
-      console.log("handleSubmit called with value:", value);
-
       toast.promise(
         createCharacter({
           value,

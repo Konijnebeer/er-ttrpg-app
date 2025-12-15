@@ -12,13 +12,14 @@ import { CharacterSection } from "./-components/character";
 import { CharacterSidebar } from "./-components/sidebar";
 import { SheetDropComponent } from "./-components/drag-and-drop";
 import { EdgeSkillSection } from "./-components/edgeSkill";
-import { CreateDialog } from "./-components/create-dialog";
+import { CreateDialog } from "./-components/form/create-dialog/create-dialog";
 // Helpers
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 // Stores
 import { useCharacterStore } from "@/store/characterStore";
 import { useSourceStore } from "@/store/sourceStore";
+import { useDialogStore } from "@/store/dialogStore";
 
 export const Route = createFileRoute("/characters/$characterId/preview")({
   component: CharacterPreview,
@@ -27,13 +28,7 @@ export const Route = createFileRoute("/characters/$characterId/preview")({
 function CharacterPreview() {
   const { characterId } = Route.useParams();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [createDialogOpen, setCreateDialogOpen] = useState(false);
-  const [dialogType, setDialogType] = useState<"item" | "aspect" | null>(null);
-
-  const openCreateDialog = (type: "item" | "aspect") => {
-    setDialogType(type);
-    setCreateDialogOpen(true);
-  };
+  const { open, type, closeDialog } = useDialogStore();
 
   const {
     character,
@@ -121,21 +116,19 @@ function CharacterPreview() {
         <CharacterSidebar
           open={sidebarOpen}
           onOpenChange={setSidebarOpen}
-          onCreateItem={() => openCreateDialog("item")}
-          onCreateAspect={() => openCreateDialog("aspect")}
         />
         <CreateDialog
-          open={createDialogOpen}
-          onOpenChange={setCreateDialogOpen}
-          type={dialogType}
+          open={open}
+          onOpenChange={closeDialog}
+          type={type}
         />
         <ScrollArea
           className={`h-[85vh] max-h-[90vh] w-full ${sidebarOpen ? "cursor-not-allowed" : ""}`}
         >
           <div
-            className={`md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 ${sidebarOpen ? "pointer-events-none" : ""}`}
+            className={`flex flex-col gap-4 md:grid md:grid-cols-2 xl:grid-cols-3 ${sidebarOpen ? "pointer-events-none" : ""}`}
           >
-            <div>
+            <div className="md:col-span-1">
               <div className="pointer-events-none relative">
                 <p className="-rotate-45 absolute font-bold text-md backdrop-blur-xs rounded-2xl p-2 -left-4 top-4">
                   Now Digital
@@ -159,17 +152,15 @@ function CharacterPreview() {
             </div>
             <CharacterSection
               character={character.data.character}
-              className={sidebarOpen ? "col-3 row-1" : ""}
+              className={`md:col-span-1 ${sidebarOpen ? "xl:col-span-1 xl:row-start-1" : ""}`}
             />
             <BackpackSection
               items={character.data.backpack}
-              className={sidebarOpen ? "col-2 row-1" : ""}
-              onAddItem={() => openCreateDialog("item")}
+              className={`md:col-span-2 ${sidebarOpen ? "xl:col-span-1 xl:row-start-1" : "xl:col-span-1"}`}
             />
             <AspectSection
               aspects={character.data.aspects}
-              className={sidebarOpen ? "col-span-2" : "col-span-3"}
-              onAddAspect={() => openCreateDialog("aspect")}
+              className={sidebarOpen ? "col-span-2 grid-cols-1 xl:grid-cols-2" : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3 md:col-span-2 xl:col-span-3"}
             />
           </div>
         </ScrollArea>

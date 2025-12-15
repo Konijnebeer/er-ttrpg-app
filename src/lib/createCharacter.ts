@@ -8,6 +8,7 @@ import type {
 } from "@/types/character";
 import type { SourceKey } from "@/types/refrence";
 import { ensureRefrence } from "./versioningHelpers";
+import { mergeItemRefs } from "./itemTagHelpers";
 import { useCharacterStore } from "@/store/characterStore";
 
 export function useCreateCharacter() {
@@ -112,43 +113,24 @@ export function useCreateCharacter() {
           skill.level += 1;
         }
       });
-      console.log(skillsArray);
-      console.log(edgesArray);
 
-      // TODO Needs to add the tags from the oddement to the saved character
-      const allOddements: ItemReference[] = [
-        ...value.selectedOriginOddements,
-        ...value.selectedPathOddements,
-      ].reduce((acc: ItemReference[], itemRef: ItemReference) => {
-        const existingItem = acc.find((item) => item.ref === itemRef.ref);
-        if (existingItem) {
-          existingItem.quantity += itemRef.quantity ?? 1;
-        } else {
-          acc.push({ ref: itemRef.ref, quantity: itemRef.quantity ?? 1 });
-        }
-        return acc;
-      }, []);
-      console.log(allOddements);
+      const resolveItemTags = (ref: string) =>
+        resolveRefrence(ref, "items")?.tags;
 
-      const allFragements: ItemReference[] = [
-        ...value.selectedOriginFragements,
-        ...value.selectedPathFragements,
-      ].reduce((acc: ItemReference[], itemRef: ItemReference) => {
-        const existingItem = acc.find((item) => item.ref === itemRef.ref);
-        if (existingItem) {
-          existingItem.quantity += itemRef.quantity ?? 1;
-        } else {
-          acc.push({ ref: itemRef.ref, quantity: itemRef.quantity ?? 1 });
-        }
-        return acc;
-      }, []);
-      console.log(allFragements);
+      const allOddements: ItemReference[] = mergeItemRefs(
+        [...value.selectedOriginOddements, ...value.selectedPathOddements],
+        resolveItemTags,
+      );
+
+      const allFragements: ItemReference[] = mergeItemRefs(
+        [...value.selectedOriginFragements, ...value.selectedPathFragements],
+        resolveItemTags,
+      );
 
       const allAspects: AspectReference[] = [
         ...value.selectedOriginAspects,
         ...value.selectedPathAspects,
       ];
-      console.log(allAspects);
 
       const character = {
         id:           value.id,
@@ -185,10 +167,9 @@ export function useCreateCharacter() {
               currentTrack: 0,
             },
             clock: {
-              food:  0,
-              sleep: 0,
-              dawn:  0,
-              dusk:  0,
+              food:     0,
+              sleep:    0,
+              dawnDusk: 0,
             },
           },
           edges:    edgesArray,

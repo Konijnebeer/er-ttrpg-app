@@ -18,7 +18,7 @@ import {
   HopeCheckbox,
 } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Plus, Bell } from "lucide-react";
 import { useForm } from "@tanstack/react-form";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
@@ -45,7 +45,7 @@ export function CharacterSection({
   character,
   className,
 }: {
-  character: CharacterSelf;
+  character:  CharacterSelf;
   className?: string;
 }) {
   return (
@@ -72,20 +72,20 @@ function CharacterFields({ characterSelf }: { characterSelf: CharacterSelf }) {
   const { updateCharacter, character } = useCharacterStore();
 
   const characterSelfSchemaForm = characterSelfSchema.pick({
-    name: true,
-    origin: true,
-    player: true,
-    path: true,
-    pronouns: true,
+    name:       true,
+    origin:     true,
+    player:     true,
+    path:       true,
+    pronouns:   true,
     milestones: true,
   });
   const form = useForm({
     defaultValues: {
-      name: characterSelf.name,
-      origin: characterSelf.origin,
-      player: characterSelf.player,
-      path: characterSelf.path,
-      pronouns: characterSelf.pronouns,
+      name:       characterSelf.name,
+      origin:     characterSelf.origin,
+      player:     characterSelf.player,
+      path:       characterSelf.path,
+      pronouns:   characterSelf.pronouns,
       milestones: characterSelf.milestones,
     },
     validators: {
@@ -97,11 +97,11 @@ function CharacterFields({ characterSelf }: { characterSelf: CharacterSelf }) {
           ...character.data,
           character: {
             ...character.data.character,
-            name: value.name,
-            origin: value.origin,
-            player: value.player,
-            path: value.path,
-            pronouns: value.pronouns,
+            name:       value.name,
+            origin:     value.origin,
+            player:     value.player,
+            path:       value.path,
+            pronouns:   value.pronouns,
             milestones: value.milestones,
           },
         },
@@ -111,7 +111,7 @@ function CharacterFields({ characterSelf }: { characterSelf: CharacterSelf }) {
 
   return (
     <form
-      className="md:grid grid-cols-2 gap-4 space-y-2 items-start"
+      className="md:grid grid-cols-2 gap-2 space-y-2 md:space-y-0 items-start"
       id="edit-character-self"
       onSubmit={(e) => {
         e.preventDefault();
@@ -122,7 +122,7 @@ function CharacterFields({ characterSelf }: { characterSelf: CharacterSelf }) {
         name="name"
         listeners={{
           onChangeDebounceMs: 500,
-          onChange: () => {
+          onChange:           () => {
             form.handleSubmit();
           },
         }}
@@ -159,7 +159,7 @@ function CharacterFields({ characterSelf }: { characterSelf: CharacterSelf }) {
         name="origin"
         listeners={{
           onChangeDebounceMs: 500,
-          onChange: () => {
+          onChange:           () => {
             form.handleSubmit();
           },
         }}
@@ -197,7 +197,7 @@ function CharacterFields({ characterSelf }: { characterSelf: CharacterSelf }) {
         name="player"
         listeners={{
           onChangeDebounceMs: 500,
-          onChange: () => {
+          onChange:           () => {
             form.handleSubmit();
           },
         }}
@@ -235,7 +235,7 @@ function CharacterFields({ characterSelf }: { characterSelf: CharacterSelf }) {
         name="path"
         listeners={{
           onChangeDebounceMs: 500,
-          onChange: () => {
+          onChange:           () => {
             form.handleSubmit();
           },
         }}
@@ -273,7 +273,7 @@ function CharacterFields({ characterSelf }: { characterSelf: CharacterSelf }) {
         name="pronouns"
         listeners={{
           onChangeDebounceMs: 500,
-          onChange: () => {
+          onChange:           () => {
             form.handleSubmit();
           },
         }}
@@ -311,7 +311,7 @@ function CharacterFields({ characterSelf }: { characterSelf: CharacterSelf }) {
         name="milestones"
         listeners={{
           onChangeDebounceMs: 500,
-          onChange: () => {
+          onChange:           () => {
             form.handleSubmit();
           },
         }}
@@ -325,11 +325,11 @@ function CharacterFields({ characterSelf }: { characterSelf: CharacterSelf }) {
             >
               <FieldLabel htmlFor={field.name}>Milestones:</FieldLabel>
               <Input
-                className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                className="[appearance:textfield]"
                 id={field.name}
                 name={field.name}
                 type="number"
-                value={field.state.value}
+                value={field.state.value || ""}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(Number(e.target.value))}
                 aria-invalid={isInvalid}
@@ -441,7 +441,7 @@ function FalloutCurse({
   type,
 }: {
   entity: FalloutCurse;
-  type: "fallout" | "curse";
+  type:   "fallout" | "curse";
 }) {
   const { updateCharacter, character } = useCharacterStore();
   const { getAllSourcesDataArray, resolveRefrence } = useSourceStore();
@@ -477,7 +477,7 @@ function FalloutCurse({
               [type]: {
                 ...character.data.character[type],
                 currentTrack: 0,
-                level: entity.level + 1,
+                level:        entity.level + 1,
               },
             },
           },
@@ -498,7 +498,7 @@ function FalloutCurse({
             [type]: {
               ...character.data.character[type],
               condition: "",
-              level: 0,
+              level:     0,
             },
           },
         },
@@ -512,7 +512,7 @@ function FalloutCurse({
             [type]: {
               ...character.data.character[type],
               condition: value,
-              level: 1,
+              level:     1,
             },
           },
         },
@@ -547,7 +547,7 @@ function FalloutCurse({
     if (!currentCondition || entity.level === 0) return null;
 
     const levelData = currentCondition.levels.find(
-      (l) => l.level === entity.level
+      (l) => l.level === entity.level,
     );
 
     if (levelData) {
@@ -576,11 +576,9 @@ function FalloutCurse({
         <div className="flex flex-col items-center gap-2">
           <Input
             type="number"
-            className="w-10 h-10 text-center p-0 rounded-full border-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-            value={entity.level}
+            className="w-10 h-10 text-center p-0 rounded-full border-2 [appearance:textfield]"
+            value={entity.level || ""}
             onChange={(e) => handleLevelChange(e.target.value)}
-            onFocus={(e) => e.target.select()}
-            min={0}
           />
         </div>
         <div className="space-y-2">
@@ -644,10 +642,7 @@ function FalloutCurse({
 function Clock({ clock }: { clock: clock }) {
   const { updateCharacter, character } = useCharacterStore();
 
-  const handleTrackChange = (
-    type: "food" | "sleep" | "dawn" | "dusk",
-    newLevel: number
-  ) => {
+  const handleTrackChange = (type: keyof clock, newLevel: number) => {
     if (!character.data.character.clock) return;
     updateCharacter({
       data: {
@@ -665,7 +660,7 @@ function Clock({ clock }: { clock: clock }) {
 
   return (
     <div className="md:grid grid-cols-2 gap-4 space-y-2">
-      <div className="p-2">
+      <div className="flex flex-col p-2 gap-2">
         <p className="text-xl uppercase">Ticking Clock</p>
         <div className="grid grid-cols-[2fr_3fr]">
           <p>Food:</p>
@@ -688,19 +683,70 @@ function Clock({ clock }: { clock: clock }) {
           </div>
         </div>
       </div>
-      <div>
-        <p>Dusk:</p>
-        <Track
-          track={clock.dusk}
-          maxTrack={3}
-          onChange={(newLevel) => handleTrackChange("dusk", newLevel)}
-        />
-        <p>Dawn:</p>
-        <Track
-          track={clock.dawn}
-          maxTrack={3}
-          onChange={(newLevel) => handleTrackChange("dawn", newLevel)}
-        />
+      <div className="flex flex-col items-center gap-4">
+        <div className="relative w-32 h-32 shrink-0">
+          {/* Circular container */}
+          <div className="absolute inset-0 rounded-full border-2 border-primary" />
+
+          {/* Pill shape with dawn and dusk - centered */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border-2 rounded-full flex items-center justify-between bg-secondary px-3 py-1 min-w-40">
+            {/* Dawn label */}
+            <p className="text-sm font-semibold whitespace-nowrap">Dawn</p>
+
+            {/* Dusk label */}
+            <p className="text-sm font-semibold whitespace-nowrap">Dusk</p>
+          </div>
+          {/* Bell in circular container - stacked on top */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border-2 p-2 rounded-full flex items-center justify-center bg-background z-10">
+            <Bell className="w-7 h-7 " />
+          </div>
+
+          {/* Top curved tracks (3 boxes) */}
+          <div className="absolute left-1/2 -translate-x-1/2 top-3 flex gap-3">
+            {[0, 1, 2].map((i) => (
+              <div
+                key={`top-${i}`}
+                className="w-5 h-6 shrink-0"
+                style={{
+                  transform: `translateY(${Math.abs(i - 1) * 10}px)`,
+                }}
+              >
+                <Checkbox
+                  checked={clock.dawnDusk > i}
+                  onCheckedChange={() => {
+                    handleTrackChange(
+                      "dawnDusk",
+                      clock.dawnDusk > i ? i : i + 1,
+                    );
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Bottom curved tracks (3 boxes) */}
+          <div className="absolute left-1/2 -translate-x-1/2 bottom-2 flex gap-3">
+            {[3, 4, 5].map((i) => (
+              <div
+                key={`bottom-${i}`}
+                className="w-5 h-6 shrink-0"
+                style={{
+                  transform: `translateY(-${Math.abs(i - 4) * 10}px)`,
+                }}
+              >
+                <Checkbox
+                  checked={clock.dawnDusk > i}
+                  onCheckedChange={() => {
+                    handleTrackChange(
+                      "dawnDusk",
+                      clock.dawnDusk > i ? i : i + 1,
+                    );
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

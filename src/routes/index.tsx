@@ -33,8 +33,6 @@ export default function SourcesIndexPage() {
     loadAllCharactersMetadata();
   }, [loadAllCharactersMetadata]);
 
-  console.log(characters);
-
   const {
     groupedSources,
     loadAllSourcesMetadata,
@@ -44,8 +42,6 @@ export default function SourcesIndexPage() {
   useEffect(() => {
     loadAllSourcesMetadata();
   }, [loadAllSourcesMetadata]);
-
-  console.log(groupedSources);
 
   const latestSources = [
     ...groupedSources.Core.map((group) => group.metadata[0]),

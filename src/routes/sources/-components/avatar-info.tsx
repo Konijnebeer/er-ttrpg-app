@@ -44,20 +44,30 @@ export default function AvatarInfo({
             </span>
           </p>
           {contributor.contact?.map((contact) => {
-            const Icon =
-              contact.type === "Github"
-                ? IconBrandGithub
-                : contact.type === "Youtube"
-                  ? IconBrandYoutube
-                  : contact.type === "Instagram"
-                    ? IconBrandInstagram
-                    : contact.type === "Bluesky"
-                      ? IconBrandBluesky
-                      : contact.type === "Discord"
-                        ? IconBrandDiscord
-                        : contact.type === "Patreon"
-                          ? IconBrandPatreon
-                          : IconExternalLink;
+            let Icon;
+
+            switch (contact.type) {
+              case "Github":
+                Icon = IconBrandGithub;
+                break;
+              case "Youtube":
+                Icon = IconBrandYoutube;
+                break;
+              case "Instagram":
+                Icon = IconBrandInstagram;
+                break;
+              case "Bluesky":
+                Icon = IconBrandBluesky;
+                break;
+              case "Discord":
+                Icon = IconBrandDiscord;
+                break;
+              case "Patreon":
+                Icon = IconBrandPatreon;
+                break;
+              default:
+                Icon = IconExternalLink;
+            }
 
             return (
               <div key={contact.type}>

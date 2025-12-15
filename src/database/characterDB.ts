@@ -219,6 +219,23 @@ export async function importCharacter(file: File): Promise<Character> {
 }
 
 /**
+ * Export a character to a JSON file.
+ * @param id - The character identifier
+ * @returns The character JSON as a string
+ */
+export async function exportCharacter(id: Id): Promise<string> {
+  try {
+    const character = await getCharacter(id);
+    if (!character) {
+      throw new Error(`Character with id ${id} not found`);
+    }
+    return JSON.stringify(character, null, 2);
+  } catch (error) {
+    throw error;
+  }
+}
+
+/**
  * Check if a character with the given id exists.
  * @param id - The character identifier
  * @returns True if the character exists, false otherwise

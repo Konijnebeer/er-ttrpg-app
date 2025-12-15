@@ -22,7 +22,7 @@
       "hope": 3,
       "fallout": {
         "level": 1,
-        "condition": "Exhausted",
+        "condition": "alpha-playtest@1.0.0:broken-bone",
         "maxTrack": 4,
         "currentTrack": 2
       },
@@ -35,8 +35,7 @@
       "clock": {
         "food": 0,
         "sleep": 0,
-        "dawn": 1,
-        "dusk": 0
+        "dawnDusk": 2
       }
     },
     "backpack": {

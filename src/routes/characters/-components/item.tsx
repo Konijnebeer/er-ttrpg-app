@@ -4,29 +4,41 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { TagBadge } from "../../sources/-components/tag";
-
-import { useSourceStore } from "@/store/sourceStore";
-import { ensureRefrence, parseRefrence } from "@/lib/versioningHelpers";
-import type { ItemReference } from "@/types/character";
+import type { Backpack, ItemReference } from "@/types/character";
 import { Button } from "@/components/ui/button";
-import { Minus, Plus, Trash } from "lucide-react";
+import { Minus, Plus, PlusIcon, Trash } from "lucide-react";
 import type { Reference } from "@/types/refrence";
 import { Input } from "@/components/ui/input";
 import { ButtonGroup, ButtonGroupText } from "@/components/ui/button-group";
 import { useCharacterStore } from "@/store/characterStore";
-import { useEffect, useState } from "react";
-import { Dialog } from "@/components/ui/dialog";
+import { useEffect, useMemo, useState } from "react";
+import { useResolveReference } from "@/hooks/use-resolve-reference";
+import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { useSourceStore } from "@/store/sourceStore";
+import { useDialogStore } from "@/store/dialogStore";
 
 function ItemCard({
   reference,
   type,
+  index,
 }: {
   reference: ItemReference;
-  type:      "oddements" | "fragments" | "campingGear";
+  type:      keyof Backpack;
+  index:     number;
 }) {
-  const { resolveRefrence } = useSourceStore();
+  const { resolveReference } = useResolveReference();
   const { character, updateCharacter } = useCharacterStore();
-  const item = resolveRefrence(reference.ref, "items");
+  const item = resolveReference(reference.ref, "items");
 
   if (!item) {
     return <p>Item Not Found</p>;
@@ -47,12 +59,35 @@ function ItemCard({
     return sorted1.every((tag, index) => tag === sorted2[index]);
   }
 
+  function removeTag(tagRef: Reference) {
+    const updatedBackpackArray = [...character.data.backpack[type]];
+    const itemEntry = updatedBackpackArray[index];
+    if (!itemEntry) return;
+
+    const nextTags = (itemEntry.tags ?? []).filter((tag) => tag !== tagRef);
+    updatedBackpackArray[index] = {
+      ...itemEntry,
+      tags: nextTags,
+    };
+
+    updateCharacter({
+      data: {
+        ...character.data,
+        backpack: {
+          ...character.data.backpack,
+          [type]: updatedBackpackArray,
+        },
+      },
+    });
+  }
+
   // Update item when quantity changes
   useEffect(() => {
     const existingIndex = character.data.backpack[type].findIndex(
-      (ref) => ref.ref === item.id && haveSameTags(ref.tags, reference.tags),
+      (ref) =>
+        ref.ref === reference.ref && haveSameTags(ref.tags, reference.tags),
     );
-    if (existingIndex === -1) return; // Item not found, do nothing
+    if (existingIndex === -1) return;
 
     const updatedBackpackArray = [...character.data.backpack[type]];
     updatedBackpackArray[existingIndex] = {
@@ -73,8 +108,8 @@ function ItemCard({
 
   function onDelete() {
     const updatedBackpackArray = character.data.backpack[type].filter(
-      // @ts-expect-error
-      (ref) => !(ref.ref === item.id && haveSameTags(ref.tags, reference.tags)),
+      (ref) =>
+        !(ref.ref === reference.ref && haveSameTags(ref.tags, reference.tags)),
     );
 
     updateCharacter({
@@ -87,8 +122,6 @@ function ItemCard({
       },
     });
   }
-
-  const { sourceKey } = parseRefrence(item.id);
 
   return (
     <Popover>
@@ -103,29 +136,32 @@ function ItemCard({
       </PopoverTrigger>
       <PopoverContent>
         <header>
-          {reference.tags && reference.tags.length > 0 && (
-            <div className="flex flex-wrap">
-              {reference.tags.map((tag) => {
-                const tagObject = resolveRefrence(
-                  ensureRefrence(sourceKey, tag),
-                  "tags",
-                );
-                if (!tagObject) {
+          <div className="flex flex-wrap gap-1">
+            {reference.tags && reference.tags.length > 0 && (
+              <>
+                {reference.tags.map((tag) => {
+                  const tagObject = resolveReference(tag, "tags");
+
+                  if (!tagObject) {
+                    return <Badge key={tag}>Tag not Found</Badge>;
+                  }
+
                   return (
-                    <span key={tag} className="mr-2 mb-2 inline-block">
-                      Tag not Found
-                    </span>
+                    <TagBadge
+                      tag={tagObject}
+                      key={tagObject.id}
+                      onRemove={() => removeTag(tag)}
+                    />
                   );
-                }
-                return (
-                  <span key={tagObject.id} className="mr-2 mb-2 inline-block">
-                    <TagBadge tag={tagObject} />
-                  </span>
-                );
-              })}
-            </div>
-          )}
-          {/* Optional from which source it comes */}
+                })}
+              </>
+            )}
+            <AddTagDialog itemIndex={index} type={type}>
+              <Badge className="w-5.5 aspect-square p-0 cursor-pointer">
+                <PlusIcon />
+              </Badge>
+            </AddTagDialog>
+          </div>
         </header>
         <div className="mt-2">
           <div className="flex gap-4">
@@ -182,7 +218,7 @@ function ItemCard({
           </ButtonGroup>
 
           <Button size="icon-sm" onClick={onDelete}>
-            <Trash></Trash>
+            <Trash />
           </Button>
         </footer>
       </PopoverContent>
@@ -190,12 +226,110 @@ function ItemCard({
   );
 }
 
-function ItemDialog() {
+function AddTagDialog({
+  itemIndex,
+  type,
+  children,
+}: {
+  itemIndex: number;
+  type:      keyof Backpack;
+  children:  React.ReactNode;
+}) {
+  const { getAllSourcesDataArray } = useSourceStore();
+  const { character, updateCharacter, getCharacterDataArray } =
+    useCharacterStore();
+  const allSourceTags = getAllSourcesDataArray("tags") ?? [];
+  const allCustomTags = getCharacterDataArray("customTags") ?? [];
+  const allTags = [...allSourceTags, ...allCustomTags];
+  const [search, setSearch] = useState("");
+  const { openDialog } = useDialogStore();
+
+  const searchedTags = useMemo(() => {
+    const currentItem = character.data.backpack[type]?.[itemIndex];
+    const existingTagIds = new Set(currentItem?.tags ?? []);
+
+    return allTags
+      .filter((tag) => !existingTagIds.has(tag.id))
+      .filter((tag) => {
+        if (!search) return true;
+        const q = search.toLowerCase();
+        return (
+          tag.name.toLowerCase().includes(q) ||
+          (tag.description ?? "").toLowerCase().includes(q)
+        );
+      });
+  }, [allTags, character.data.backpack, itemIndex, search, type]);
+
+  function addTag(tagRef: Reference) {
+    const item = character.data.backpack[type][itemIndex];
+    if (!item) return;
+    const updatedItem = {
+      ...item,
+      tags: [...(item.tags || []), tagRef],
+    };
+    const updatedBackpackArray = [...character.data.backpack[type]];
+    updatedBackpackArray[itemIndex] = updatedItem;
+    updateCharacter({
+      data: {
+        ...character.data,
+        backpack: {
+          ...character.data.backpack,
+          [type]: updatedBackpackArray,
+        },
+      },
+    });
+  }
+
   return (
     <Dialog>
-      
+      {/* Element is slightly lower and/or larger then the badges  */}
+      <DialogTrigger className="w-5 h-5 p-0 m-0 relative bottom-0.5">
+        {children}
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Add Tag to Item</DialogTitle>
+          <DialogDescription>
+            Search for an existing tag or create a new tag
+          </DialogDescription>
+        </DialogHeader>
+        {/* Search bar shows all tags (badges) from every source  */}
+        <div className="mb-4">
+          <Input
+            placeholder="Search tags..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+        {/* List of tags as badges */}
+        <div className="flex flex-wrap gap-2 mb-4 max-h-60 overflow-y-auto">
+          {searchedTags.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No tags found</p>
+          ) : (
+            searchedTags.map((tag) => (
+              <DialogClose asChild key={tag.id}>
+                <TagBadge
+                  className="cursor-pointer"
+                  tag={tag}
+                  onClick={() => addTag(tag.id)}
+                />
+              </DialogClose>
+            ))
+          )}
+          <Badge className="cursor-help" onClick={() => openDialog("tag")}>
+            Custom Tag
+            <PlusIcon />
+          </Badge>
+        </div>
+
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button>Cancel</Button>
+          </DialogClose>
+        </DialogFooter>
+      </DialogContent>
     </Dialog>
-  )
+  );
 }
 
 export { ItemCard };

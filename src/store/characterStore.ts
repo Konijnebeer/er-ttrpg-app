@@ -2,6 +2,7 @@ import type {
   Character,
   CharacterMetadata,
   CharacterSelf,
+  CharacterData,
 } from "@/types/character";
 import { characterSchema } from "@/types/character";
 import { create } from "zustand";
@@ -10,10 +11,15 @@ import {
   getAllCharactersMetadata,
   getCharacter,
   importCharacter,
+  exportCharacter,
   saveCharacter,
   deleteCharacter,
 } from "@/database/characterDB";
 import { SAVE_DEBOUNCE_MS } from "@/lib/constants";
+
+// Omitting keys, for character & backpack  since they are not arrays
+export type CharacterDataArrays = Omit<CharacterData, "character" | "backpack">;
+export type CharacterDataKey = keyof CharacterDataArrays;
 
 interface CharacterStoreState {
   // State
@@ -56,17 +62,31 @@ interface CharacterStoreState {
   /** Save character immediately (for manual saves) */
   saveCharacter: () => Promise<void>;
 
+  // Export character to json file
+  exportCharacter: (id: Id) => Promise<void>;
+
   /** Make a new character in the Database */
   createNewCharacter: (Character: Character) => Promise<void>;
+
+  /** Get character data array (edges, skills, aspects, customItems, etc.) */
+  getCharacterDataArray: <T extends CharacterDataKey>(
+    dataType: T,
+  ) => NonNullable<CharacterDataArrays[T]> | null;
+
+  /** Resolve reference by id within character's custom data */
+  resolveReference: <T extends CharacterDataKey>(
+    id: Id,
+    dataType: T,
+  ) => NonNullable<CharacterDataArrays[T]>[number] | null;
 }
 
 export const useCharacterStore = create<CharacterStoreState>((set, get) => ({
-  character: {} as Character,
+  character:  {} as Character,
   characters: [] as (CharacterMetadata & { character: CharacterSelf })[],
-  isLoading: false,
-  isSaving: false,
-  error: null,
-  saveTimer: null,
+  isLoading:  false,
+  isSaving:   false,
+  error:      null,
+  saveTimer:  null,
 
   loadCharacter: async (id: Id) => {
     // Check cache first - avoid unnecessary DB calls
@@ -104,7 +124,7 @@ export const useCharacterStore = create<CharacterStoreState>((set, get) => ({
 
       set({
         characters: metadata,
-        isLoading: false,
+        isLoading:  false,
       });
     } catch (error) {
       const errorMessage =
@@ -163,7 +183,7 @@ export const useCharacterStore = create<CharacterStoreState>((set, get) => ({
 
       // Save to database
       await importCharacter(
-        new File([text], filename, { type: "application/json" })
+        new File([text], filename, { type: "application/json" }),
       );
 
       set({ isLoading: false });
@@ -267,5 +287,62 @@ export const useCharacterStore = create<CharacterStoreState>((set, get) => ({
       console.error("Failed to save character:", error);
       throw error;
     }
+  },
+
+  exportCharacter: async (id: Id) => {
+    try {
+      const characterJson = await exportCharacter(id);
+      const blob = new Blob([characterJson], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+
+      const element = document.createElement("a");
+      element.href = url;
+      element.download = `ER-RPG_character_${id}.json`;
+      element.click();
+
+      // Clean up - revoke the URL to free memory
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      set({ error: errorMessage });
+      console.error("Failed to export character:", error);
+      throw error;
+    }
+  },
+
+  getCharacterDataArray: <T extends CharacterDataKey>(
+    dataType: T,
+  ): NonNullable<CharacterDataArrays[T]> | null => {
+    const character = get().character;
+    if (!character?.data) return null;
+
+    const dataArray = character.data[dataType];
+    return dataArray && Array.isArray(dataArray)
+      ? (dataArray as NonNullable<CharacterDataArrays[T]>)
+      : null;
+  },
+
+  // Resolve refrence of item, tag or aspect by id within the character
+  resolveReference: <T extends CharacterDataKey>(
+    id: Id,
+    dataType: T,
+  ): NonNullable<CharacterDataArrays[T]>[number] | null => {
+    const dataArray = get().getCharacterDataArray(dataType);
+
+    if (!dataArray || !Array.isArray(dataArray)) {
+      console.error(`Data type "${dataType}" not found in character data`);
+      return null;
+    }
+
+    // Find the item by id
+    const entity = dataArray.find((item: any) => item.id === id);
+
+    if (!entity) {
+      console.error(`Item "${id}" not found in ${dataType} of character`);
+      return null;
+    }
+
+    return entity as NonNullable<CharacterDataArrays[T]>[number];
   },
 }));

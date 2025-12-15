@@ -35,20 +35,20 @@ export default function About() {
         <DialogHeader>
           <DialogTitle>Welcome!</DialogTitle>
         </DialogHeader>
-        <DialogDescription className="text-primary text-md space-y-2">
-          <p>
+        <DialogDescription className="text-primary text-md space-y-2 flex flex-col">
+          <span>
             This website is a <strong>fan-made</strong> project created to help
             players of the Eternal Ruins TTRPG. It is not affiliated with
             Mythworks.
-          </p>
-          <p>
+          </span>
+          <span>
             The website provides easy to use digital character sheets and
             content references, to make play easier.
-          </p>
-          <p>
+          </span>
+          <span>
             Please support Sam Carr and Mythworks by following their Kickstarter
             and following their socials via the links below.
-          </p>
+          </span>
         </DialogDescription>
         <DialogFooter className="grid grid-cols-2 gap-4">
           <div className="flex flex-col items-start">

@@ -36,7 +36,6 @@ export const CoreSourceSection = withCharacterForm({
         name="versionRef"
         listeners={{
           onChange: ({ value }) => {
-            console.log(`versionRef changed to: ${value}, resetting Origin`);
             (form as any).setFieldValue("data.character.originRef", "");
             (form as any).setFieldValue("data.character.pathRef", "");
           },

@@ -17,7 +17,6 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Field,
-  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
@@ -187,10 +186,11 @@ function EdgeEditCard({
                   <Field data-invalid={isInvalid}>
                     <FieldLabel htmlFor={field.name}>Max Track</FieldLabel>
                     <Input
-                      type="number"
                       id={field.name}
                       name={field.name}
-                      value={field.state.value}
+                      type="number"
+                      className="[appearance:textfield]"
+                      value={field.state.value || ''}
                       onBlur={field.handleBlur}
                       onChange={(e) =>
                         field.handleChange(Number(e.target.value))

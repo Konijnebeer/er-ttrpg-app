@@ -26,8 +26,6 @@ export default function CharactersIndexPage() {
     loadAllCharactersMetadata();
   }, [loadAllCharactersMetadata]);
 
-  console.log(characters);
-
   if (isLoading) {
     return <div>loading...</div>;
   }

@@ -1,6 +1,4 @@
 import type { AspectReference } from "@/types/character";
-import SpriteBorder from "../../../../public/ruins edges.svg";
-import { useSourceStore } from "@/store/sourceStore";
 import {
   Card,
   CardAction,
@@ -20,16 +18,17 @@ import { useCharacterStore } from "@/store/characterStore";
 import { Track } from "./track";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
+import { useResolveReference } from "@/hooks/use-resolve-reference";
+import { useDialogStore } from "@/store/dialogStore";
 
 export function AspectSection({
   aspects,
   className = "",
-  onAddAspect,
 }: {
-  aspects:      AspectReference[];
-  className?:   string;
-  onAddAspect?: () => void;
+  aspects:    AspectReference[];
+  className?: string;
 }) {
+  const { openDialog } = useDialogStore();
   return (
     <Section className={className}>
       <SectionHeader>
@@ -38,14 +37,12 @@ export function AspectSection({
         </SectionTitle>
         <SectionDescription>(Add 1d6 if appropriate)</SectionDescription>
         <SectionAction>
-          <Button size="icon-sm" className="mr-4" onClick={onAddAspect}>
+          <Button size="icon-sm" className="mr-4" onClick={() => openDialog("aspect")}>
             <PlusIcon />
           </Button>
         </SectionAction>
       </SectionHeader>
-      <SectionContent
-        className={`${className === "col-span-3" ? "grid-cols-3" : "grid-cols-2"} grid gap-4`}
-      >
+      <SectionContent className={`grid gap-4 ${className}`}>
         {aspects.map((aspect, index) => (
           <AspectCard key={index} aspect={aspect} aspectIndex={index} />
         ))}
@@ -61,9 +58,9 @@ function AspectCard({
   aspect:      AspectReference;
   aspectIndex: number;
 }) {
-  const { resolveRefrence } = useSourceStore();
+  const { resolveReference } = useResolveReference();
   const { updateCharacter, character } = useCharacterStore();
-  const aspectObject = resolveRefrence(aspect.ref, "aspects");
+  const aspectObject = resolveReference(aspect.ref, "aspects");
 
   const handleLevelChange = (newLevel: number) => {
     if (!character?.data?.aspects) return;

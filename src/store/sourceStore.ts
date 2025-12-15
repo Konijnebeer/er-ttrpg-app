@@ -150,7 +150,7 @@ export const useSourceStore = create<SourceStoreState>((set, get) => ({
     }
   },
 
-  downloadSource: async (id: Id, version: Version, filename: string) => {
+  downloadSource: async (id: Id, _version: Version, filename: string) => {
     set({ isLoading: true, error: null });
     try {
       // Fetch the source from the public folder
@@ -298,54 +298,6 @@ export const useSourceStore = create<SourceStoreState>((set, get) => ({
       throw error;
     }
   },
-
-  // This version removes any source from the sources map that is not in the sourceKey array
-  // Probally dont use it as it created more db calls as it removed cached results
-  // loadSources: async (sourceKeys: SourceKey[]) => {
-  //   set({ isLoading: true, error: null });
-
-  //   // Check which sources aren't already cached
-  //   const currentSources = get().sources;
-  //   const uncachedKeys = sourceKeys.filter((key) => !currentSources.has(key));
-
-  //   try {
-  //     // Load uncached sources
-  //     const loadPromises = uncachedKeys.map(async (sourceKey) => {
-  //       const { id, version } = parseSourceKey(sourceKey);
-  //       const source = await getSource(id, version);
-  //       if (!source) {
-  //         throw new Error(`Failed to load source: ${sourceKey}`);
-  //       }
-  //       return { key: sourceKey, source };
-  //     });
-
-  //     const results = await Promise.all(loadPromises);
-
-  //     // Create new map with only requested sources
-  //     const sources = new Map<SourceKey, Source>();
-
-  //     // Add cached sources that are in the requested array
-  //     sourceKeys.forEach((key) => {
-  //       const cached = currentSources.get(key);
-  //       if (cached) {
-  //         sources.set(key, cached);
-  //       }
-  //     });
-
-  //     // Add newly loaded sources
-  //     results.forEach(({ key, source }) => {
-  //       sources.set(key, source);
-  //     });
-
-  //     set({ sources, isLoading: false });
-  //   } catch (error) {
-  //     const errorMessage =
-  //       error instanceof Error ? error.message : String(error);
-  //     set({ error: errorMessage, isLoading: false });
-  //     console.error("Failed to load sources:", error);
-  //     throw error;
-  //   }
-  // },
 
   loadAllSourcesMetadata: async () => {
     set({ isLoading: true, error: null });
@@ -565,7 +517,7 @@ export const useSourceStore = create<SourceStoreState>((set, get) => ({
     // use getSourceDataArray for all loaded sources and combine results
     const sources = get().sources;
     let combinedArray: NonNullable<SourceData[T]> = [];
-    sources.forEach((source, sourceKey) => {
+    sources.forEach((_source, sourceKey) => {
       const dataArray = get().getSourceDataArray(sourceKey, dataType);
       if (dataArray) {
         combinedArray = [...combinedArray, ...dataArray] as NonNullable<SourceData[T]>;

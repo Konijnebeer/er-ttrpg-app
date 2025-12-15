@@ -12,6 +12,8 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+import { useCharacterStore } from "@/store/characterStore";
 
 function CharacterCard({
   character,
@@ -20,6 +22,15 @@ function CharacterCard({
 }) {
   const date = new Date(character.dateModified * 1000);
   const formatedDate = `${date.getFullYear()}/${date.getMonth()}/${date.getDay()}`;
+  const { exportCharacter } = useCharacterStore();
+
+  function exportFunction() {
+    toast.promise(exportCharacter(character.id), {
+      loading: "Exporting character...",
+      success: "Character exported successfully!",
+      error:   "Failed to export character.",
+    });
+  }
 
   return (
     <Card>
@@ -48,11 +59,14 @@ function CharacterCard({
             params={{
               characterId: character.id,
             }}
-          > */}
+          >
           <Button variant="outline" className="cursor-not-allowed">
             Edit
           </Button>
-          {/* </Link> */}
+          </Link> */}
+          <Button variant="outline" onClick={exportFunction}>
+            Export
+          </Button>
           <Link
             to="/characters/$characterId/preview"
             params={{
