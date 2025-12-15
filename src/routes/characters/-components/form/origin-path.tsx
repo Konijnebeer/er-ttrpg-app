@@ -90,7 +90,7 @@ export const OriginPathSection = withCharacterForm({
       <form.Field
         name={name}
         listeners={{
-          onChange: ({ value }) => {
+          onChange: () => {
             form.setFieldValue(selectedEdges, []);
             form.setFieldValue(selectedSkills, []);
             form.setFieldValue(selectedOddements, []);

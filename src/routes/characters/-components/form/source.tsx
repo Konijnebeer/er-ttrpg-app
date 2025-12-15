@@ -35,7 +35,7 @@ export const CoreSourceSection = withCharacterForm({
       <form.AppField
         name="versionRef"
         listeners={{
-          onChange: ({ value }) => {
+          onChange: () => {
             (form as any).setFieldValue("data.character.originRef", "");
             (form as any).setFieldValue("data.character.pathRef", "");
           },
