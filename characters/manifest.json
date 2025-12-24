@@ -1,0 +1,92 @@
+{
+  "characters": [
+    {
+      "id": "impetuous-caro",
+      "versions": [
+        {
+          "versionNumber": "1.0.0",
+          "versionRef": "beta-playtest@1.0.0",
+          "dependencies": [],
+          "filename": "impetuous-caro-1.0.0.json"
+        }
+      ]
+    },
+    {
+      "id": "bracken-of-low-walls",
+      "versions": [
+        {
+          "versionNumber": "1.0.0",
+          "versionRef": "beta-playtest@1.0.0",
+          "dependencies": [],
+          "filename": "bracken-of-low-walls-1.0.0.json"
+        }
+      ]
+    },
+    {
+      "id": "gigi",
+      "versions": [
+        {
+          "versionNumber": "1.0.0",
+          "versionRef": "beta-playtest@1.0.0",
+          "dependencies": [],
+          "filename": "gigi-1.0.0.json"
+        }
+      ]
+    },
+    {
+      "id": "tali-red-hand",
+      "versions": [
+        {
+          "versionNumber": "1.0.0",
+          "versionRef": "beta-playtest@1.0.0",
+          "dependencies": [],
+          "filename": "tali-red-hand-1.0.0.json"
+        }
+      ]
+    },
+    {
+      "id": "quick-caeri",
+      "versions": [
+        {
+          "versionNumber": "1.0.0",
+          "versionRef": "beta-playtest@1.0.0",
+          "dependencies": [],
+          "filename": "quick-caeri-1.0.0.json"
+        }
+      ]
+    },
+    {
+      "id": "kal",
+      "versions": [
+        {
+          "versionNumber": "1.0.0",
+          "versionRef": "beta-playtest@1.0.0",
+          "dependencies": [],
+          "filename": "kal-1.0.0.json"
+        }
+      ]
+    },
+    {
+      "id": "friendful-ulli",
+      "versions": [
+        {
+          "versionNumber": "1.0.0",
+          "versionRef": "beta-playtest@1.0.0",
+          "dependencies": [],
+          "filename": "friendful-ulli-1.0.0.json"
+        }
+      ]
+    },
+    {
+      "id": "elias-twistfinger",
+      "versions": [
+        {
+          "versionNumber": "1.0.0",
+          "versionRef": "beta-playtest@1.0.0",
+          "dependencies": [],
+          "filename": "elias-twistfinger-1.0.0.json"
+        }
+      ]
+    }
+  ]
+}

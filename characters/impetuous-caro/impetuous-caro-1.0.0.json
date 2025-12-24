@@ -1,0 +1,175 @@
+{
+  "id": "impetuous-caro",
+  "name": "Impetuous Caro",
+  "description": "This A character port",
+  "author": "Pregen",
+  "sheetVersion": "1.0.0",
+  "dateCreated": 1765923971,
+  "dateModified": 1765924428,
+  "versionRef": "beta-playtest@1.0.0",
+  "dependencies": [],
+  "data": {
+    "character": {
+      "name": "Impetuous Caro",
+      "player": "Pregen",
+      "pronouns": "",
+      "origin": "Bridge-Broken",
+      "originRef": "beta-playtest@1.0.0:bridge-broken",
+      "path": "Rascal",
+      "pathRef": "beta-playtest@1.0.0:rascal",
+      "milestones": 0,
+      "dispair": 0,
+      "hope": 2,
+      "fallout": {
+        "level": 0,
+        "condition": "",
+        "maxTrack": 5,
+        "currentTrack": 0
+      },
+      "curse": {
+        "level": 0,
+        "condition": "",
+        "maxTrack": 4,
+        "currentTrack": 0
+      },
+      "clock": {
+        "food": 0,
+        "sleep": 0,
+        "dawnDusk": 0
+      }
+    },
+    "edges": [
+      {
+        "ref": "beta-playtest@1.0.0:stone",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:wind",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:lore",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:instinct",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:light",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:shadow",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:smoke",
+        "level": 0
+      }
+    ],
+    "skills": [
+      {
+        "ref": "beta-playtest@1.0.0:scramble",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:delve",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:muse",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:puzzle",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:wreck",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:hunt",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:blend",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:tinker",
+        "level": 2
+      },
+      {
+        "ref": "beta-playtest@1.0.0:soothe",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:bargain",
+        "level": 1
+      }
+    ],
+    "backpack": {
+      "oddements": [
+        {
+          "ref": "beta-playtest@1.0.0:loop-of-rope",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:a-bats-wing",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:ridged-hairpin",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:liquorice-root",
+          "quantity": 1
+        }
+      ],
+      "fragments": [
+        {
+          "ref": "beta-playtest@1.0.0:chasm",
+          "quantity": 1,
+          "tags": ["beta-playtest@1.0.0:feature"]
+        },
+        {
+          "ref": "beta-playtest@1.0.0:collapsed",
+          "quantity": 1,
+          "tags": ["beta-playtest@1.0.0:detail"]
+        },
+        {
+          "ref": "beta-playtest@1.0.0:bridge",
+          "quantity": 1,
+          "tags": ["beta-playtest@1.0.0:feature"]
+        },
+        {
+          "ref": "beta-playtest@1.0.0:crooked",
+          "quantity": 1,
+          "tags": ["beta-playtest@1.0.0:detail"]
+        }
+      ],
+      "campingGear": []
+    },
+    "aspects": [
+      {
+        "ref": "beta-playtest@1.0.0:rope-and-grapple",
+        "track": 4
+      },
+      {
+        "ref": "beta-playtest@1.0.0:flared-cloak",
+        "track": 3
+      },
+      {
+        "ref": "beta-playtest@1.0.0:one-eye-open",
+        "track": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:surefooted",
+        "track": 3
+      }
+    ]
+  }
+}

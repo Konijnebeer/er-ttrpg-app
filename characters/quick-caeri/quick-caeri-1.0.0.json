@@ -1,0 +1,171 @@
+{
+  "id": "quick-caeri",
+  "name": "Quick Caeri",
+  "description": "This A character port",
+  "author": "Pregen",
+  "sheetVersion": "1.0.0",
+  "dateCreated": 1766576474,
+  "dateModified": 1766611575,
+  "versionRef": "beta-playtest@1.0.0",
+  "dependencies": [],
+  "data": {
+    "character": {
+      "name": "Quick Caeri",
+      "player": "Pregen",
+      "pronouns": "",
+      "origin": "Bank-Broken",
+      "originRef": "beta-playtest@1.0.0:bank-broken",
+      "path": "Rascal",
+      "pathRef": "beta-playtest@1.0.0:rascal",
+      "milestones": 0,
+      "dispair": 1,
+      "hope": 1,
+      "fallout": {
+        "level": 0,
+        "condition": "",
+        "maxTrack": 3,
+        "currentTrack": 0
+      },
+      "curse": {
+        "level": 0,
+        "condition": "",
+        "maxTrack": 6,
+        "currentTrack": 0
+      },
+      "clock": {
+        "food": 0,
+        "sleep": 0,
+        "dawnDusk": 0
+      }
+    },
+    "edges": [
+      {
+        "ref": "beta-playtest@1.0.0:stone",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:wind",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:lore",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:instinct",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:light",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:shadow",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:smoke",
+        "level": 0
+      }
+    ],
+    "skills": [
+      {
+        "ref": "beta-playtest@1.0.0:scramble",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:delve",
+        "level": 2
+      },
+      {
+        "ref": "beta-playtest@1.0.0:muse",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:puzzle",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:wreck",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:hunt",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:blend",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:tinker",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:soothe",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:bargain",
+        "level": 0
+      }
+    ],
+    "backpack": {
+      "oddements": [
+        {
+          "ref": "beta-playtest@1.0.0:waterlogged-journal",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:crab-net",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:hand-bandages",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:potent-spice-leaves",
+          "quantity": 1
+        }
+      ],
+      "fragments": [
+        {
+          "ref": "beta-playtest@1.0.0:stream",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:fountain",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:bridge",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:collapsed",
+          "quantity": 1
+        }
+      ],
+      "campingGear": []
+    },
+    "aspects": [
+      {
+        "ref": "beta-playtest@1.0.0:copper-plated-dowsing-rod",
+        "track": 3
+      },
+      {
+        "ref": "beta-playtest@1.0.0:toes-in-the-water",
+        "track": 4
+      },
+      {
+        "ref": "beta-playtest@1.0.0:fighting-dirty",
+        "track": 4
+      },
+      {
+        "ref": "beta-playtest@1.0.0:winding-scarf",
+        "track": 3
+      }
+    ]
+  }
+}

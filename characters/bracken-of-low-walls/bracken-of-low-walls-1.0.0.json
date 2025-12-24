@@ -1,0 +1,176 @@
+{
+  "id": "bracken-of-low-walls",
+  "name": "Bracken of Low Walls",
+  "description": "This A character port",
+  "author": "Pregen",
+  "sheetVersion": "1.0.0",
+  "dateCreated": 1765923971,
+  "dateModified": 1765924428,
+  "versionRef": "beta-playtest@1.0.0",
+  "dependencies": [],
+  "data": {
+    "character": {
+      "name": "Bracken of Low Walls",
+      "player": "pregen",
+      "pronouns": "",
+      "origin": "Bank-Broken",
+      "originRef": "beta-playtest@1.0.0:bank-broken",
+      "path": "Pioneer",
+      "pathRef": "beta-playtest@1.0.0:pioneer",
+      "milestones": 0,
+      "dispair": 0,
+      "hope": 2,
+      "fallout": {
+        "level": 0,
+        "condition": "",
+        "maxTrack": 3,
+        "currentTrack": 0
+      },
+      "curse": {
+        "level": 0,
+        "condition": "",
+        "maxTrack": 6,
+        "currentTrack": 0
+      },
+      "clock": {
+        "food": 0,
+        "sleep": 0,
+        "dawnDusk": 0
+      }
+    },
+    "edges": [
+      {
+        "ref": "beta-playtest@1.0.0:stone",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:wind",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:lore",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:instinct",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:light",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:shadow",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:smoke",
+        "level": 0
+      }
+    ],
+    "skills": [
+      {
+        "ref": "beta-playtest@1.0.0:scramble",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:delve",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:muse",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:puzzle",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:wreck",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:hunt",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:blend",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:tinker",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:soothe",
+        "level": 2
+      },
+      {
+        "ref": "beta-playtest@1.0.0:bargain",
+        "level": 1
+      }
+    ],
+    "backpack": {
+      "oddements": [
+        {
+          "ref": "beta-playtest@1.0.0:leaky-bucket",
+          "quantity": 1,
+          "tags": ["beta-playtest@1.0.0:leaky"]
+        },
+        {
+          "ref": "beta-playtest@1.0.0:gorse-towel",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:cofcof-beans",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:travelers-thistle",
+          "quantity": 1
+        }
+      ],
+      "fragments": [
+        {
+          "ref": "beta-playtest@1.0.0:fountain",
+          "quantity": 1,
+          "tags": ["beta-playtest@1.0.0:feature"]
+        },
+        {
+          "ref": "beta-playtest@1.0.0:raining",
+          "quantity": 1,
+          "tags": ["beta-playtest@1.0.0:detail"]
+        },
+        {
+          "ref": "beta-playtest@1.0.0:tower",
+          "quantity": 1,
+          "tags": ["beta-playtest@1.0.0:feature"]
+        },
+        {
+          "ref": "beta-playtest@1.0.0:flowering",
+          "quantity": 1,
+          "tags": ["beta-playtest@1.0.0:detail"]
+        }
+      ],
+      "campingGear": []
+    },
+    "aspects": [
+      {
+        "ref": "beta-playtest@1.0.0:opal-circlet",
+        "track": 2
+      },
+      {
+        "ref": "beta-playtest@1.0.0:longstepper-chimes",
+        "track": 3
+      },
+      {
+        "ref": "beta-playtest@1.0.0:wading-bird",
+        "track": 2
+      },
+      {
+        "ref": "beta-playtest@1.0.0:three-pronged-spear",
+        "track": 3
+      }
+    ]
+  }
+}

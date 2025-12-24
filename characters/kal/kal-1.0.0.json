@@ -1,0 +1,171 @@
+{
+  "id": "kal",
+  "name": "Kal",
+  "description": "This A character port",
+  "author": "Pregen",
+  "sheetVersion": "1.0.0",
+  "dateCreated": 1766612398,
+  "dateModified": 1766613163,
+  "versionRef": "beta-playtest@1.0.0",
+  "dependencies": [],
+  "data": {
+    "character": {
+      "name": "Kal",
+      "player": "Pregen",
+      "pronouns": "",
+      "origin": "Bridge-Broken",
+      "originRef": "beta-playtest@1.0.0:bridge-broken",
+      "path": "Chronicler",
+      "pathRef": "beta-playtest@1.0.0:chronicler",
+      "milestones": 0,
+      "dispair": 1,
+      "hope": 1,
+      "fallout": {
+        "level": 0,
+        "condition": "",
+        "maxTrack": 4,
+        "currentTrack": 0
+      },
+      "curse": {
+        "level": 0,
+        "condition": "",
+        "maxTrack": 5,
+        "currentTrack": 0
+      },
+      "clock": {
+        "food": 0,
+        "sleep": 0,
+        "dawnDusk": 0
+      }
+    },
+    "edges": [
+      {
+        "ref": "beta-playtest@1.0.0:stone",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:wind",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:lore",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:instinct",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:light",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:shadow",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:smoke",
+        "level": 1
+      }
+    ],
+    "skills": [
+      {
+        "ref": "beta-playtest@1.0.0:scramble",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:delve",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:muse",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:puzzle",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:wreck",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:hunt",
+        "level": 2
+      },
+      {
+        "ref": "beta-playtest@1.0.0:blend",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:tinker",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:soothe",
+        "level": 2
+      },
+      {
+        "ref": "beta-playtest@1.0.0:bargain",
+        "level": 0
+      }
+    ],
+    "backpack": {
+      "oddements": [
+        {
+          "ref": "beta-playtest@1.0.0:shattered-keystone",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:cobblemoss",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:palewing-quill",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:sunflower-seeds",
+          "quantity": 1
+        }
+      ],
+      "fragments": [
+        {
+          "ref": "beta-playtest@1.0.0:bridge",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:collapsed",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:library",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:flowering",
+          "quantity": 1
+        }
+      ],
+      "campingGear": []
+    },
+    "aspects": [
+      {
+        "ref": "beta-playtest@1.0.0:choices-choices",
+        "track": 2
+      },
+      {
+        "ref": "beta-playtest@1.0.0:overlook-bow",
+        "track": 3
+      },
+      {
+        "ref": "beta-playtest@1.0.0:haruspex",
+        "track": 5
+      },
+      {
+        "ref": "beta-playtest@1.0.0:spirit-favour",
+        "track": 3
+      }
+    ]
+  }
+}

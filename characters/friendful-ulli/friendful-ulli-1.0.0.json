@@ -1,0 +1,171 @@
+{
+  "id": "friendful-ulli",
+  "name": "Friendful Ulli",
+  "description": "This A character port",
+  "author": "Pregen",
+  "sheetVersion": "1.0.0",
+  "dateCreated": 1766613901,
+  "dateModified": 1766614060,
+  "versionRef": "beta-playtest@1.0.0",
+  "dependencies": [],
+  "data": {
+    "character": {
+      "name": "Friendful Ulli",
+      "player": "Pregen",
+      "pronouns": "",
+      "origin": "Mass-Broken",
+      "originRef": "beta-playtest@1.0.0:mass-broken",
+      "path": "Scrounger",
+      "pathRef": "beta-playtest@1.0.0:scrounger",
+      "milestones": 0,
+      "dispair": 1,
+      "hope": 1,
+      "fallout": {
+        "level": 0,
+        "condition": "",
+        "maxTrack": 5,
+        "currentTrack": 0
+      },
+      "curse": {
+        "level": 0,
+        "condition": "",
+        "maxTrack": 4,
+        "currentTrack": 0
+      },
+      "clock": {
+        "food": 0,
+        "sleep": 0,
+        "dawnDusk": 0
+      }
+    },
+    "edges": [
+      {
+        "ref": "beta-playtest@1.0.0:stone",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:wind",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:lore",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:instinct",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:light",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:shadow",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:smoke",
+        "level": 0
+      }
+    ],
+    "skills": [
+      {
+        "ref": "beta-playtest@1.0.0:scramble",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:delve",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:muse",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:puzzle",
+        "level": 2
+      },
+      {
+        "ref": "beta-playtest@1.0.0:wreck",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:hunt",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:blend",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:tinker",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:soothe",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:bargain",
+        "level": 2
+      }
+    ],
+    "backpack": {
+      "oddements": [
+        {
+          "ref": "beta-playtest@1.0.0:bright-scarf",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:nourishing-moss",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:stone-ring",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:pickled-grubs",
+          "quantity": 1
+        }
+      ],
+      "fragments": [
+        {
+          "ref": "beta-playtest@1.0.0:tower",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:staircase",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:fountain",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:crooked",
+          "quantity": 1
+        }
+      ],
+      "campingGear": []
+    },
+    "aspects": [
+      {
+        "ref": "beta-playtest@1.0.0:unbroken-fist",
+        "track": 4
+      },
+      {
+        "ref": "beta-playtest@1.0.0:willow-wood-ocarina",
+        "track": 2
+      },
+      {
+        "ref": "beta-playtest@1.0.0:deft-needlework",
+        "track": 3
+      },
+      {
+        "ref": "beta-playtest@1.0.0:analytical-mind",
+        "track": 4
+      }
+    ]
+  }
+}

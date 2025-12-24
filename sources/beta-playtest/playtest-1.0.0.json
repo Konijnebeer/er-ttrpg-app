@@ -1,0 +1,2401 @@
+{
+  "id": "beta-playtest",
+  "version": "1.0.0",
+  "name": "The Eternal Ruins RPG - Beta Playtest",
+  "description": "A roleplaying game of exploration and discovery set in the endless labyrinth of the Eternal Ruins. \n This is a port of the Beta Playtest.",
+  "url": "https://www.eternalruins.com",
+  "status": "release",
+  "sourceInfo": {
+    "homebrew": false,
+    "isCore": true
+  },
+  "license": "Copyright 2025 Mythworks / Sam Carr. All rights reserved.",
+  "language": "en-GB",
+  "contributors": [
+    {
+      "id": "1",
+      "title": "Artist & Creator",
+      "name": "Sam Carr",
+      "contact": [
+        {
+          "type": "Website",
+          "name": "Eternal Ruins",
+          "url": "https://www.eternalruins.com"
+        },
+        {
+          "type": "Youtube",
+          "name": "Eternal Ruins",
+          "url": "https://www.youtube.com/@Eternal_ruins"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Writer",
+      "name": "Felix Isaacs",
+      "contact": [
+        {
+          "type": "Website",
+          "name": "Mythworks",
+          "url": "https://www.myth.works"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Writer",
+      "name": "Rob Leigh",
+      "contact": [
+        {
+          "type": "Website",
+          "name": "Mythworks",
+          "url": "https://www.myth.works"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Code & Porting",
+      "name": "Konijnebeer",
+      "contact": [
+        {
+          "type": "Github",
+          "name": "@Konijnebeer",
+          "url": "https://github.com/Konijnebeer"
+        }
+      ]
+    }
+  ],
+  "acknowledgements": [
+    {
+      "id": "1",
+      "title": "Publisher",
+      "name": "Mythworks",
+      "contribution": "Publication and distribution",
+      "contact": [
+        {
+          "type": "Website",
+          "name": "Mythworks",
+          "url": "https://www.myth.works"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Game Inspirations",
+      "name": "Ico, The Last Guardian, Zelda, and Hollow Knight",
+      "contribution": "With their emphasis on exploring strange, overgrown ruins and featuring childlike protagonists have been a big influence on Sam’s artwork, and the development of this RPG"
+    },
+    {
+      "id": "3",
+      "title": "Film Inspirations",
+      "name": "Studio Ghibli, Princess Mononoke, Castle in the Sky, Spirited Away, and Nausicaä Valley of the Wind",
+      "contribution": "With their strange spirits and demons, focus on nature, and heroic but pacifist protagonists are also an influence on the setting and RPG."
+    },
+    {
+      "id": "4",
+      "title": "RPG Inspirations",
+      "name": "Emily Allen, The Gardens of Ynn and Stygian Librarian, The Wildsea and PICO",
+      "contribution": "Have inspired the exploration mechanic used in this book. The Wildsea and PICO, as other Wild Words games, are obviously an influence as well"
+    }
+  ],
+  "dateCreated": 1765837401,
+  "dateModified": 1765837401,
+  "data": {
+    "edges": [
+      {
+        "id": "stone",
+        "name": "Stone",
+        "maxTrack": 1,
+        "description": "An edge of uncompromising presence and direct action, used to strike foes, win arguments, and withstand hardships."
+      },
+      {
+        "id": "wind",
+        "name": "Wind",
+        "maxTrack": 1,
+        "description": "An edge of movement and change, used to leap and tumble, quip and fast-talk."
+      },
+      {
+        "id": "lore",
+        "name": "Lore",
+        "maxTrack": 1,
+        "description": "An edge of lost knowledge and deep thought, used to decipher glyphs, understand mechanisms, and solve puzzles."
+      },
+      {
+        "id": "instinct",
+        "name": "Instinct",
+        "maxTrack": 1,
+        "description": "An edge of innate understanding and reflex, used to perceive the world around you, sense others' emotions, and react instinctively."
+      },
+      {
+        "id": "light",
+        "name": "Light",
+        "maxTrack": 1,
+        "description": "An edge of openness and honesty, used to make friends, put people at ease, and keep worries at bay."
+      },
+      {
+        "id": "shadow",
+        "name": "Shadow",
+        "maxTrack": 1,
+        "description": "An edge of secrecy and stealth, used to steal, conceal, and creep around undetected."
+      },
+      {
+        "id": "smoke",
+        "name": "Smoke",
+        "maxTrack": 1,
+        "description": "An edge of luck and fate, used to submit to the whim of chance, and manipulate the esoteric and the occult."
+      }
+    ],
+    "skills": [
+      {
+        "id": "scramble",
+        "name": "Scramble",
+        "maxTrack": 2,
+        "description": "Climbing, athletics, movement over difficult terrain (going up)"
+      },
+      {
+        "id": "delve",
+        "name": "Delve",
+        "maxTrack": 2,
+        "description": "Swimming, caving, squirming through things (going down)"
+      },
+      {
+        "id": "muse",
+        "name": "Muse",
+        "maxTrack": 2,
+        "description": "Sixth sense, mental exploration, understanding spirits and demons"
+      },
+      {
+        "id": "puzzle",
+        "name": "Puzzle",
+        "maxTrack": 2,
+        "description": "Investigating, interacting with servitors, using logic on problems"
+      },
+      {
+        "id": "wreck",
+        "name": "Wreck",
+        "maxTrack": 2,
+        "description": "Breaking things, scavenging, close combat"
+      },
+      {
+        "id": "hunt",
+        "name": "Hunt",
+        "maxTrack": 2,
+        "description": "Perception, spotting, listening, shooting bows & slings, natural understanding"
+      },
+      {
+        "id": "blend",
+        "name": "Blend",
+        "maxTrack": 2,
+        "description": "Using organic oddments to create food or medicine. Also covers brewing drinks, etc."
+      },
+      {
+        "id": "tinker",
+        "name": "Tinker",
+        "maxTrack": 2,
+        "description": "Using inorganic oddments to create items. Also covers unlocking doors, etc."
+      },
+      {
+        "id": "soothe",
+        "name": "Soothe",
+        "maxTrack": 2,
+        "description": "Calming animals and other wanderers, helping teammates in times of stress."
+      },
+      {
+        "id": "bargain",
+        "name": "Bargain",
+        "maxTrack": 2,
+        "description": "Making deals and impressing others, be it wanderers or spirits. Getting your way."
+      }
+    ],
+    "tags": [
+      {
+        "id": "watterlogged",
+        "name": "Watterlogged"
+      },
+      {
+        "id": "leaky",
+        "name": "Leaky"
+      },
+      {
+        "id": "fresh",
+        "name": "Fresh"
+      },
+      {
+        "id": "shattered",
+        "name": "Shattered"
+      },
+      {
+        "id": "bright",
+        "name": "Bright"
+      },
+      {
+        "id": "invigorating",
+        "name": "Invigorating"
+      },
+      {
+        "id": "nourishing",
+        "name": "Nourishing"
+      },
+      {
+        "id": "refreshing",
+        "name": "Refreshing"
+      },
+      {
+        "id": "hearty",
+        "name": "Hearty"
+      },
+      {
+        "id": "soft",
+        "name": "Soft"
+      },
+      {
+        "id": "reinforced",
+        "name": "Reinforced"
+      },
+      {
+        "id": "potent",
+        "name": "Potent"
+      },
+      {
+        "id": "stinking",
+        "name": "Stinking"
+      },
+      {
+        "id": "sticky",
+        "name": "Sticky"
+      },
+      {
+        "id": "tough",
+        "name": "Tough"
+      },
+      {
+        "id": "pickled",
+        "name": "Pickled"
+      },
+      {
+        "id": "broken",
+        "name": "Broken"
+      },
+      {
+        "id": "old",
+        "name": "Old"
+      },
+      {
+        "id": "juicy",
+        "name": "Juicy"
+      },
+      {
+        "id": "worn",
+        "name": "Worn"
+      },
+      {
+        "id": "frayed",
+        "name": "Frayed"
+      },
+      {
+        "id": "faded",
+        "name": "Faded"
+      },
+      {
+        "id": "spongy",
+        "name": "Spongy"
+      },
+      {
+        "id": "smooth",
+        "name": "Smooth"
+      },
+      {
+        "id": "dusty",
+        "name": "Dusty"
+      },
+      {
+        "id": "plump",
+        "name": "Plump"
+      },
+      {
+        "id": "strong",
+        "name": "Strong"
+      },
+      {
+        "id": "vibrant",
+        "name": "Vibrant"
+      },
+      {
+        "id": "sleepy",
+        "name": "Sleepy"
+      },
+      {
+        "id": "glowing",
+        "name": "Glowing"
+      },
+      {
+        "id": "weathered",
+        "name": "Weathered"
+      },
+      {
+        "id": "flourishing",
+        "name": "Flourishing"
+      },
+      {
+        "id": "frozen",
+        "name": "Frozen"
+      },
+      {
+        "id": "brittle",
+        "name": "Brittle"
+      },
+      {
+        "id": "large",
+        "name": "Large"
+      },
+      {
+        "id": "peaceful",
+        "name": "Peaceful"
+      },
+      {
+        "id": "prismatic",
+        "name": "Prismatic"
+      },
+      {
+        "id": "thorny-tag",
+        "name": "Thorny"
+      },
+      {
+        "id": "beautiful",
+        "name": "Beautiful"
+      },
+      {
+        "id": "colourful",
+        "name": "Colourful"
+      },
+      {
+        "id": "mossy",
+        "name": "Mossy"
+      },
+      {
+        "id": "gleaming",
+        "name": "Gleaming"
+      },
+      {
+        "id": "squashed",
+        "name": "Squashed"
+      },
+      {
+        "id": "tattered",
+        "name": "Tattered"
+      },
+      {
+        "id": "rusty",
+        "name": "Rusty"
+      },
+      {
+        "id": "moldy",
+        "name": "Moldy"
+      },
+      {
+        "id": "bitter",
+        "name": "Bitter"
+      },
+      {
+        "id": "hardened",
+        "name": "Hardened"
+      }
+    ],
+    "oddements": [
+      {
+        "id": "waterlogged-journal",
+        "name": "Waterlogged Journal",
+        "tags": ["watterlogged"]
+      },
+      {
+        "id": "woven-kelp-rope",
+        "name": "Woven Kelp Rope"
+      },
+      {
+        "id": "crab-net",
+        "name": "Crab Net"
+      },
+      {
+        "id": "leaky-bucket",
+        "name": "Leaky Bucket",
+        "tags": ["leaky"]
+      },
+      {
+        "id": "fish-in-a-jar",
+        "name": "Fish in a Jar"
+      },
+      {
+        "id": "gorse-towel",
+        "name": "Gorse Towel"
+      },
+      {
+        "id": "shattered-keystone",
+        "name": "Shattered Keystone",
+        "tags": ["shattered"]
+      },
+      {
+        "id": "a-sketch-of-pillars",
+        "name": "A Sketch of Pillars"
+      },
+      {
+        "id": "underspar-mushrooms",
+        "name": "Underspar Mushrooms"
+      },
+      {
+        "id": "loop-of-rope",
+        "name": "Loop of Rope"
+      },
+      {
+        "id": "cobblemoss",
+        "name": "Cobblemoss"
+      },
+      {
+        "id": "a-bats-wing",
+        "name": "A Bat's Wing"
+      },
+      {
+        "id": "bright-scarf",
+        "name": "Bright Scarf",
+        "tags": ["bright"]
+      },
+      {
+        "id": "invigorating-incense",
+        "name": "Invigorating Incense",
+        "tags": ["invigorating"]
+      },
+      {
+        "id": "nourishing-moss",
+        "name": "Nourishing Moss",
+        "tags": ["nourishing"]
+      },
+      {
+        "id": "enamel-bowl",
+        "name": "Enamel Bowl"
+      },
+      {
+        "id": "ball-of-string",
+        "name": "Ball of String"
+      },
+      {
+        "id": "refreshing-mint-leaves",
+        "name": "Refreshing Mint Leaves",
+        "tags": ["refreshing"]
+      },
+      {
+        "id": "bark-shoes",
+        "name": "Bark Shoes"
+      },
+      {
+        "id": "herbal-poultice",
+        "name": "Herbal Poultice"
+      },
+      {
+        "id": "lotus-seeds",
+        "name": "Lotus Seeds"
+      },
+      {
+        "id": "vine-rope",
+        "name": "Vine Rope"
+      },
+      {
+        "id": "leafy-bandage",
+        "name": "Leafy Bandage"
+      },
+      {
+        "id": "hearty-mushroom",
+        "name": "Hearty Mushroom",
+        "tags": ["hearty"]
+      },
+      {
+        "id": "palewing-quill",
+        "name": "Palewing Quill"
+      },
+      {
+        "id": "jar-of-ink",
+        "name": "Jar of Ink"
+      },
+      {
+        "id": "sunflower-seeds",
+        "name": "Sunflower Seeds"
+      },
+      {
+        "id": "soft-cloak",
+        "name": "Soft Cloak",
+        "tags": ["soft"]
+      },
+      {
+        "id": "ginger-root",
+        "name": "Ginger Root"
+      },
+      {
+        "id": "fresh-honeycomb",
+        "name": "Fresh Honeycomb",
+        "tags": ["fresh"]
+      },
+      {
+        "id": "metal-pitons",
+        "name": "Metal Pitons"
+      },
+      {
+        "id": "bronze-bell",
+        "name": "Bronze Bell"
+      },
+      {
+        "id": "traveller-s-thistle",
+        "name": "Traveller's Thistle"
+      },
+      {
+        "id": "reinforced-rope",
+        "name": "Reinforced Rope",
+        "tags": ["reinforced"]
+      },
+      {
+        "id": "cofcof-beans",
+        "name": "Cofcof Beans"
+      },
+      {
+        "id": "pearl-sprigs",
+        "name": "Pearl Sprigs"
+      },
+      {
+        "id": "ridged-hairpin",
+        "name": "Ridged Hairpin"
+      },
+      {
+        "id": "high-pitched-whistle",
+        "name": "High-Pitched Whistle"
+      },
+      {
+        "id": "potent-spice-leaves",
+        "name": "Potent Spice Leaves",
+        "tags": ["potent"]
+      },
+      {
+        "id": "hand-bandages",
+        "name": "Hand Bandages"
+      },
+      {
+        "id": "liquorice-root",
+        "name": "Liquorice Root"
+      },
+      {
+        "id": "stinking-cheese",
+        "name": "Stinking Cheese",
+        "tags": ["stinking"]
+      },
+      {
+        "id": "knotted-cord",
+        "name": "Knotted Cord"
+      },
+      {
+        "id": "sticky-sap",
+        "name": "Sticky Sap",
+        "tags": ["sticky"]
+      },
+      {
+        "id": "tough-jerky",
+        "name": "Tough Jerky",
+        "tags": ["tough"]
+      },
+      {
+        "id": "stone-ring",
+        "name": "Stone Ring"
+      },
+      {
+        "id": "lavender-flowers",
+        "name": "Lavender Flowers"
+      },
+      {
+        "id": "pickled-grubs",
+        "name": "Pickled Grubs",
+        "tags": ["pickled"]
+      },
+      {
+        "id": "broken-pot",
+        "name": "Broken Pot",
+        "tags": ["broken"]
+      },
+      {
+        "id": "old-bone",
+        "name": "Old Bone",
+        "tags": ["old"]
+      },
+      {
+        "id": "demon-shell-scrap",
+        "name": "Demon Shell Scrap"
+      },
+      {
+        "id": "fresh-greens",
+        "name": "Fresh Greens",
+        "tags": ["fresh"]
+      },
+      {
+        "id": "juicy-insect",
+        "name": "Juicy Insect",
+        "tags": ["juicy"]
+      },
+      {
+        "id": "worn-stone",
+        "name": "Worn Stone",
+        "tags": ["worn"]
+      },
+      {
+        "id": "twisted-piton",
+        "name": "Twisted Piton"
+      },
+      {
+        "id": "frayed-ropes",
+        "name": "Frayed Ropes",
+        "tags": ["frayed"]
+      },
+      {
+        "id": "sprigs-of-lamp-blossom",
+        "name": "Sprigs of Lamp Blossom"
+      },
+      {
+        "id": "stone-shard",
+        "name": "Stone Shard"
+      },
+      {
+        "id": "soft-moss",
+        "name": "Soft Moss",
+        "tags": ["soft"]
+      },
+      {
+        "id": "tough-vine",
+        "name": "Tough Vine",
+        "tags": ["tough"]
+      },
+      {
+        "id": "faded-journal",
+        "name": "Faded Journal",
+        "tags": ["faded"]
+      },
+      {
+        "id": "worn-shoes",
+        "name": "Worn Shoes",
+        "tags": ["worn"]
+      },
+      {
+        "id": "spongy-lichen",
+        "name": "Spongy Lichen",
+        "tags": ["spongy"]
+      },
+      {
+        "id": "birds-egg",
+        "name": "Bird’s Egg"
+      },
+      {
+        "id": "towermouse-tail",
+        "name": "Towermouse Tail"
+      },
+      {
+        "id": "carved-wooden-spar",
+        "name": "Carved Wooden Spar"
+      },
+      {
+        "id": "bullrush-cattail",
+        "name": "Bullrush Cattail"
+      },
+      {
+        "id": "fresh-fish",
+        "name": "Fresh Fish",
+        "tags": ["fresh"]
+      },
+      {
+        "id": "smooth-pebble",
+        "name": "Smooth Pebble",
+        "tags": ["smooth"]
+      },
+      {
+        "id": "bookworm-husk",
+        "name": "Bookworm Husk"
+      },
+      {
+        "id": "dusty-tome",
+        "name": "Dusty Tome",
+        "tags": ["dusty"]
+      },
+      {
+        "id": "broken-spectacles",
+        "name": "Broken Spectacles",
+        "tags": ["broken"]
+      },
+      {
+        "id": "plump-dewlet",
+        "name": "Plump Dewlet",
+        "tags": ["plump"]
+      },
+      {
+        "id": "lily-pad",
+        "name": "Lily Pad"
+      },
+      {
+        "id": "fresh-water",
+        "name": "Fresh Water",
+        "tags": ["fresh"]
+      },
+      {
+        "id": "screepit-berries",
+        "name": "Screepit Berries"
+      },
+      {
+        "id": "vine-cutting",
+        "name": "Vine Cutting"
+      },
+      {
+        "id": "silver-lotus-petals",
+        "name": "Silver Lotus Petals"
+      },
+      {
+        "id": "jar-of-mystery-meat",
+        "name": "Jar of Mystery Meat"
+      },
+      {
+        "id": "strong-rope",
+        "name": "Strong Rope",
+        "tags": ["strong"]
+      },
+      {
+        "id": "stone-statuette",
+        "name": "Stone Statuette"
+      },
+      {
+        "id": "vibrant-moss",
+        "name": "Vibrant Moss",
+        "tags": ["vibrant"]
+      },
+      {
+        "id": "sleepy-dewlet",
+        "name": "Sleepy Dewlet",
+        "tags": ["sleepy"]
+      },
+      {
+        "id": "glowing-stone",
+        "name": "Glowing Stone",
+        "tags": ["glowing"]
+      },
+      {
+        "id": "purple-heather",
+        "name": "Purple Heather"
+      },
+      {
+        "id": "umbrella-peppercaps",
+        "name": "Umbrella Peppercaps"
+      },
+      {
+        "id": "weathered-flag",
+        "name": "Weathered Flag",
+        "tags": ["weathered"]
+      },
+      {
+        "id": "flourishing-moss",
+        "name": "Flourishing Moss",
+        "tags": ["flourishing"]
+      },
+      {
+        "id": "hailstones",
+        "name": "Hailstones"
+      },
+      {
+        "id": "obsidian-shard",
+        "name": "Obsidian Shard"
+      },
+      {
+        "id": "metal-plate",
+        "name": "Metal Plate"
+      },
+      {
+        "id": "fresh-ashes",
+        "name": "Fresh Ashes",
+        "tags": ["fresh"]
+      },
+      {
+        "id": "frozen-plant",
+        "name": "Frozen Plant",
+        "tags": ["frozen"]
+      },
+      {
+        "id": "ice-shard",
+        "name": "Ice Shard"
+      },
+      {
+        "id": "brittle-feather",
+        "name": "Brittle Feather",
+        "tags": ["brittle"]
+      },
+      {
+        "id": "talotu-roots",
+        "name": "Talotu Roots"
+      },
+      {
+        "id": "broken-stone",
+        "name": "Broken Stone",
+        "tags": ["broken"]
+      },
+      {
+        "id": "hardy-fern",
+        "name": "Hardy Fern"
+      },
+      {
+        "id": "dusty-pendant",
+        "name": "Dusty Pendant",
+        "tags": ["dusty"]
+      },
+      {
+        "id": "vantage-peppercaps",
+        "name": "Vantage Peppercaps"
+      },
+      {
+        "id": "splinters-of-old-stone",
+        "name": "Splinters of Old Stone"
+      },
+      {
+        "id": "bright-flowers",
+        "name": "Bright Flowers",
+        "tags": ["bright"]
+      },
+      {
+        "id": "fresh-tomatoes",
+        "name": "Fresh Tomatoes",
+        "tags": ["fresh"]
+      },
+      {
+        "id": "spearcrest-feathers",
+        "name": "Spearcrest Feathers"
+      },
+      {
+        "id": "dusty-mushrooms",
+        "name": "Dusty Mushrooms",
+        "tags": ["dusty"]
+      },
+      {
+        "id": "broken-compass",
+        "name": "Broken Compass",
+        "tags": ["broken"]
+      },
+      {
+        "id": "clinging-spiderweb",
+        "name": "Clinging Spiderweb"
+      },
+      {
+        "id": "large-snail",
+        "name": "Large Snail",
+        "tags": ["large"]
+      },
+      {
+        "id": "sinister-statuette",
+        "name": "Sinister Statuette"
+      },
+      {
+        "id": "peaceful-dewlet",
+        "name": "Peaceful Dewlet",
+        "tags": ["peaceful"]
+      },
+      {
+        "id": "greenseal-lichen",
+        "name": "Greenseal Lichen"
+      },
+      {
+        "id": "prismatic-pebble",
+        "name": "Prismatic Pebble",
+        "tags": ["prismatic"]
+      },
+      {
+        "id": "scraps-of-patterned-cloth",
+        "name": "Scraps of Patterned Cloth"
+      },
+      {
+        "id": "pierceberries",
+        "name": "Pierceberries"
+      },
+      {
+        "id": "thorny-vine",
+        "name": "Thorny Vine",
+        "tags": ["thorny-tag"]
+      },
+      {
+        "id": "beautiful-bloom",
+        "name": "Beautiful Bloom",
+        "tags": ["beautiful"]
+      },
+      {
+        "id": "ruins-bumbler",
+        "name": "Ruins Bumbler"
+      },
+      {
+        "id": "colourful-hummingbird",
+        "name": "Colourful Hummingbird",
+        "tags": ["colourful"]
+      },
+      {
+        "id": "stone-tusk",
+        "name": "Stone Tusk"
+      },
+      {
+        "id": "mineral-shard",
+        "name": "Mineral Shard"
+      },
+      {
+        "id": "mossy-hide",
+        "name": "Mossy Hide",
+        "tags": ["mossy"]
+      },
+      {
+        "id": "fox-fur",
+        "name": "Fox Fur"
+      },
+      {
+        "id": "gleaming-moonstone",
+        "name": "Gleaming Moonstone",
+        "tags": ["gleaming"]
+      },
+      {
+        "id": "shed-velvet",
+        "name": "Shed Velvet"
+      },
+      {
+        "id": "broken-antler",
+        "name": "Broken Antler",
+        "tags": ["broken"]
+      },
+      {
+        "id": "squashed-fruit",
+        "name": "Squashed Fruit",
+        "tags": ["squashed"]
+      },
+      {
+        "id": "thornproof-hide",
+        "name": "Thornproof Hide"
+      },
+      {
+        "id": "stonescale-venom",
+        "name": "Stonescale Venom"
+      },
+      {
+        "id": "camouflage-scale",
+        "name": "Camouflage Scale"
+      },
+      {
+        "id": "razor-claw",
+        "name": "Razor Claw"
+      },
+      {
+        "id": "bluegill-mushroom",
+        "name": "Bluegill Mushroom"
+      },
+      {
+        "id": "whitecap-mushroom",
+        "name": "Whitecap Mushroom"
+      },
+      {
+        "id": "tough-shell",
+        "name": "Tough Shell",
+        "tags": ["tough"]
+      },
+      {
+        "id": "mudmoss",
+        "name": "Mudmoss"
+      },
+      {
+        "id": "chunk-of-ruin-rock",
+        "name": "Chunk of Ruin-Rock"
+      },
+      {
+        "id": "newly-revealed-treasure",
+        "name": "Newly Revealed Treasure"
+      },
+      {
+        "id": "finely-ground-stones",
+        "name": "Finely-Ground Stones"
+      },
+      {
+        "id": "tattered-cloak",
+        "name": "Tattered Cloak",
+        "tags": ["tattered"]
+      },
+      {
+        "id": "rusty-knife",
+        "name": "Rusty Knife",
+        "tags": ["rusty"]
+      },
+      {
+        "id": "moldy-fruit",
+        "name": "Moldy Fruit",
+        "tags": ["moldy"]
+      },
+      {
+        "id": "shone-rag",
+        "name": "Shone Rag"
+      },
+      {
+        "id": "fragment-of-old-pottery",
+        "name": "Fragment of Old Pottery"
+      },
+      {
+        "id": "keeper-s-bones",
+        "name": "Keeper’s Bones"
+      },
+      {
+        "id": "fragment-of-wander-stone",
+        "name": "Fragment of Wander-Stone"
+      },
+      {
+        "id": "shard-of-demon-shell",
+        "name": "Shard of Demon Shell"
+      },
+      {
+        "id": "bitter-water",
+        "name": "Bitter Water",
+        "tags": ["bitter"]
+      },
+      {
+        "id": "glob-of-demon-shell",
+        "name": "Glob of Demon Shell"
+      },
+      {
+        "id": "black-ooze",
+        "name": "Black Ooze"
+      },
+      {
+        "id": "hardened-ooze",
+        "name": "Hardened Ooze",
+        "tags": ["hardened"]
+      },
+      {
+        "id": "segmented-stretch-limb",
+        "name": "Segmented Stretch-Limb"
+      },
+      {
+        "id": "servitor-stone",
+        "name": "Servitor Stone"
+      }
+    ],
+    "fragments": [
+      {
+        "id": "stream",
+        "name": "Stream",
+        "type": "Feature"
+      },
+      {
+        "id": "path",
+        "name": "Path",
+        "type": "Feature"
+      },
+      {
+        "id": "scenic",
+        "name": "Scenic",
+        "type": "Detail"
+      },
+      {
+        "id": "fountain",
+        "name": "Fountain",
+        "type": "Feature"
+      },
+      {
+        "id": "purifying",
+        "name": "Purifying",
+        "type": "Detail"
+      },
+      {
+        "id": "raining",
+        "name": "Raining",
+        "type": "Detail"
+      },
+      {
+        "id": "chasm",
+        "name": "Chasm",
+        "type": "Feature"
+      },
+      {
+        "id": "windy",
+        "name": "Windy",
+        "type": "Detail"
+      },
+      {
+        "id": "bridge",
+        "name": "Bridge",
+        "type": "Feature"
+      },
+      {
+        "id": "collapsed",
+        "name": "Collapsed",
+        "type": "Detail"
+      },
+      {
+        "id": "flowering",
+        "name": "Flowering",
+        "type": "Detail"
+      },
+      {
+        "id": "tower",
+        "name": "Tower",
+        "type": "Feature"
+      },
+      {
+        "id": "staircase",
+        "name": "Staircase",
+        "type": "Feature"
+      },
+      {
+        "id": "thorny",
+        "name": "Thorny",
+        "type": "Detail"
+      },
+      {
+        "id": "garden",
+        "name": "Garden",
+        "type": "Feature"
+      },
+      {
+        "id": "library",
+        "name": "Library",
+        "type": "Feature"
+      },
+      {
+        "id": "crooked",
+        "name": "Crooked",
+        "type": "Detail"
+      }
+    ],
+    "campingGear": [
+      {
+        "id": "the-clothes-on-your-back",
+        "name": "The Clothes on Your Back",
+        "description": "Though this keeps burdens light, it does little to stave off the cold or add any comfort to a long night on the hard floor of the ruins.",
+        "effect": "When you sleep with nothing more than the Clothes on Your Back, you only mark one box on the sleep track. When the ticking clock is filled and you make a sleep-based Morale roll, you gain no special benefits.",
+        "stakes": 0
+      },
+      {
+        "id": "woolen-bedrolls",
+        "name": "Woollen Bedrolls",
+        "description": "Easily rolled up and eminently portable, these bedrolls provide an extra layer of insulation and a surprising amount of additional comfort.",
+        "effect": "When you sleep with Woollen Bedrolls, you can fully mark the sleep track.",
+        "stakes": 1
+      },
+      {
+        "id": "broadleaf-blankets",
+        "name": "Broadleaf Blankets",
+        "description": "They might look thin, but the emerald-green leaves of the broadleaf tree are soft, pliable, and surprisingly warm. Wanderers who sleep wrapped in these giant leaves often dream of other places in the ruins.",
+        "effect": "When you sleep with Broadleaf Blankets, you can fully mark the sleep track. In addition, thanks to the strange dreams, you gain a fragment.",
+        "stakes": 2
+      },
+      {
+        "id": "hangsilk-hammocks",
+        "name": "Hangsilk Hammocks",
+        "description": "Woven from long strands of downy spiderweb, these hammocks are comfortable, light, and stow away into surprisingly small packages. The strands are inherently sticky and easy to attach to the scenery.",
+        "effect": "When you sleep in Hangsilk Hammocks, you can fully mark the sleep track. In addition, you may ignore any penalties to sleeping in locations with steep, dangerous or uneven ground.",
+        "stakes": 2
+      },
+      {
+        "id": "xylophone-slats",
+        "name": "Xylophone Slats",
+        "description": "Resembling a kind of broad-boarded rope ladder, these slats are carefully carved to form a comfortable indentation for a sleeper once unrolled. You could almost forget you’re sleeping on wood!",
+        "effect": "When you sleep on Xylophone Slats, you can fully mark the sleep track. In addition, sleeping upon a set of Xylophone Slats leaves one immune to nightmares.",
+        "stakes": 2
+      },
+      {
+        "id": "your-own-hands",
+        "name": "Your Own Hands",
+        "description": "It’s possible to prepare meals with no utensils, but the results will never come close to what even a simple pot or skewer could provide.",
+        "effect": "When you create a sustaining meal with nothing more than Your Own Hands, you only add one mark to the food track. When the ticking clock is filled and you make a food-based Morale roll, you gain no special benefits.",
+        "stakes": 0
+      },
+      {
+        "id": "ceramic-bowl",
+        "name": "Ceramic Bowl",
+        "description": "The cornerstone of the stewmaster’s art, while a bowl offers little in the way of culinary flair it certainly beats having to hold your ingredients in blistered fingers.",
+        "effect": "When you create a sustaining meal with a Ceramic Bowl, consuming it allows you to fully mark the food track.",
+        "stakes": 1
+      },
+      {
+        "id": "copper-pot",
+        "name": "Copper Pot",
+        "description": "An excellent conductor of heat, giving stew-like food cooked within it a depth of flavour that a simple pot could never achieve.",
+        "effect": "When you create a sustaining meal with a Copper Pot, consuming it allows you to fully mark the food track. In addition, any meal with at least one liquid oddment cooked in a Copper Pot gives you an additional 2 flavour points.",
+        "stakes": 2
+      },
+      {
+        "id": "iron-skewers",
+        "name": "Iron Skewers",
+        "description": "A classic utensil used to aid in the grilling of meats and vegetables.",
+        "effect": "When you create a sustaining meal with Iron Skewers, consuming it allows you to fully mark the food track. Additionally, if the meal’s ingredients consist of at least one meat-based oddment and one vegetable-based oddment, gain an additional 2 flavour points.",
+        "stakes": 2
+      },
+      {
+        "id": "searing-pan",
+        "name": "Searing Pan",
+        "description": "There’s no better way to prepare large amounts of meat than with a hearty sear, perfect for filling bellies and thrilling taste buds.",
+        "effect": "When you create a sustaining meal with a Searing Pan, consuming it allows you to fully mark the food track. Additionally, if the meal’s ingredients consist of at least two meat-based oddments, gain an additional 2 flavour points.",
+        "stakes": 2
+      },
+      {
+        "id": "scavenged-kindling",
+        "name": "Scavenged Kindling",
+        "description": "A rough fireplace made from a few scavenged stones and whatever burnable fuel you can find. Such fires are small and give off little heat, making for a miserable evening.",
+        "effect": "When you make camp around Scavenged Kindling, you gain 1 point of Despair.",
+        "stakes": 0
+      },
+      {
+        "id": "kindlecap-mushrooms-and-firewood",
+        "name": "Kindlecap Mushrooms and Firewood",
+        "description": "A good supply of flammable kindlecaps and well-dried firewood means you can quickly get a good campfire going that sheds light and warmth.",
+        "effect": "When you make camp with Kindlecap Mushrooms and Firewood, you do not gain Despair from the dark or cold.",
+        "stakes": 1
+      },
+      {
+        "id": "eternal-flame-torch",
+        "name": "Eternal Flame Torch",
+        "description": "A magically sustained flame that never burns out, providing a reliable source of light and heat no matter how long you need it.",
+        "effect": "When you make camp with an Eternal Flame Torch, you do not gain Despair from the dark or cold. In addition, the torch’s light reveals hidden details in your surroundings, granting you advantage on Perception rolls made to notice hidden threats or clues while camping.",
+        "stakes": 2
+      },
+      {
+        "id": "portable-hearth",
+        "name": "Portable Hearth",
+        "description": "A small ceramic hearth designed to contain embers and amplify heat, yet still be light and easy to carry. Makes any campsite warm and inviting.",
+        "effect": "When you make camp with a Portable Hearth, each wanderer can choose to either gain a point of Hope or remove a point of Despair from their track.",
+        "stakes": 2
+      },
+      {
+        "id": "bronze-firebowl",
+        "name": "Bronze Firebowl",
+        "description": "A large bowl carved with slots that, when a fire burns inside, send bright silhouettes dancing over the campsite.",
+        "effect": "When you make camp with a Bronze Firebowl and someone takes the Music and Storytelling action, all wanderers may clear an additional mark from a Habit aspect.",
+        "stakes": 2
+      },
+      {
+        "id": "clay-oven",
+        "name": "Clay Oven",
+        "description": "It might be heavy and awkward, but there’s nothing quite like gathering around this small oven and basking in the heat it spreads and the smells of food cooking in its heart.",
+        "effect": "When you make camp with a Clay Oven and cook a sustaining meal, if the meal has a baked component, gain an additional 2 flavour points.",
+        "stakes": 2
+      },
+      {
+        "id": "canvas-tent",
+        "name": "Canvas Tent",
+        "description": "A simple but comfortable temporary dwelling, enough to keep the elements at bay.",
+        "effect": "Ignore any negative effects stemming from heat, cold, or wind when camping with a canvas tent.",
+        "stakes": 2
+      },
+      {
+        "id": "orchidium-tent",
+        "name": "Orchidium Tent",
+        "description": "A ‘tent’ created by carefully weaving plantlife together, usually finished off with an interior studded with blossoms and flowers.",
+        "effect": "When you make camp with an Orchidium in a Garden (or similarly plant-filled location), you are undetectable to all but the most inquisitive flora and fauna, and can ignore any negative effects stemming from wind or heat. Additionally, cooking in an Orchidium allows you to add a free oddment to any meal you create, either Orchidium Fruit or Orchidium Petals.",
+        "stakes": 2
+      },
+      {
+        "id": "clatterfang-canvas",
+        "name": "Clatterfang Canvas",
+        "description": "As much a construction of metal, fur, and bone as it is traditional tenting materials, the clatterfang canvas is made with a hunter’s aesthetic in mind.",
+        "effect": "When you make camp with a Clatterfang Canvas, ignore any negative effects stemming from wind or cold. Additionally, any tasks you undertake to hunt, gather, or fish while camping ignore cut for difficulty, OR allow a wanderer to treat conflicts as triumphs.",
+        "stakes": 2
+      },
+      {
+        "id": "glowgrub-terrarium",
+        "name": "Glowgrub Terrarium",
+        "description": "Little more than a large glass jar with several glowgrubs inside, dropping in a rock for them to eat sets the little insects glowing with a surprisingly soothing light.",
+        "effect": "Consume a rock-based oddment to light the Glowgrub Terrarium, allowing all wanderers to clear a mark from their Curse gauge.",
+        "stakes": 1
+      },
+      {
+        "id": "incense-lamp",
+        "name": "Incense Lamp",
+        "description": "This carved stone lamp not only sheds bright light but also emits a pungent incense that keeps the various denizens of the ruins away from the camp.",
+        "effect": "Lighting an Incense Lamp means the wanderers will not experience a Camp Encounter.",
+        "stakes": 1
+      },
+      {
+        "id": "spiritlure-lantern",
+        "name": "Spiritlure Lantern",
+        "description": "Something about the gentle flickering light of this brass lamp seems to attract spirits and sprites, and put them in a more congenial mood.",
+        "effect": "Lighting a Spiritlure Lantern makes Camp Encounters with spirits or sprites more likely. If rolling for an encounter, you may re-roll the first result if you wish.",
+        "stakes": 2
+      },
+      {
+        "id": "vaultwolf-cub",
+        "name": "Vaultwolf Cub",
+        "description": "This loyal pup has decided you are a worthy companion and now follows you everywhere, usually at a safe distance. When you camp, it draws closer and offers its protection in return for pats and scritches.",
+        "effect": "Camping with a Vaultwolf Cub allows you to re-roll the first negative camping encounter you have per bell.",
+        "stakes": 1
+      },
+      {
+        "id": "tame-burrowball",
+        "name": "Tame Burrowball",
+        "description": "Wriggling into your pack where its safe and warm, this squishy ball of fur is a delight to cuddle on a dark night, its gentle presence a welcome balm at the end of a hard journey.",
+        "effect": "Camping with a Tame Burrowball allows a single wanderer to clear a mark from either their fallout or curse gauge.",
+        "stakes": 1
+      },
+      {
+        "id": "pilfering-raccoon",
+        "name": "Pilfering Raccoon",
+        "description": "You’re not sure if this little bandit is a pet or partner in crime. Regardless, they excel at finding interesting things and don't mind sharing them with you.",
+        "effect": "Camping with a Pilfering Raccoon generates a random material oddment (chosen by the Guide).",
+        "stakes": 1
+      },
+      {
+        "id": "slinking-malk",
+        "name": "Slinking Malk",
+        "description": "A rangy feline companion who spends most of the day somewhere out of sight, only to appear when you make camp. They excel at hunting small creatures, leaving you one as an offering.",
+        "effect": "Camping with a Slinking Malk generates a random meat-based oddment (chosen by the Guide).",
+        "stakes": 1
+      },
+      {
+        "id": "icebox",
+        "name": "Icebox",
+        "description": "A heavy box that keeps whatever is placed inside fresh and cool. Don’t ask how it works, we don’t know.",
+        "effect": "The Icebox can hold 6 edible or medical oddments, but these can only be accessed while camping.",
+        "stakes": 1
+      },
+      {
+        "id": "record-tome",
+        "name": "Record Tome",
+        "description": "A large, leatherbound book in which the wanderers record the various rumours they’ve heard about other parts of the ruins.",
+        "effect": "The Record Tome can hold 6 fragments, but these can only be accessed while camping.",
+        "stakes": 1
+      },
+      {
+        "id": "traveller-s-chest",
+        "name": "Traveller’s Chest",
+        "description": "A little unwieldy, but an excellent source of additional storage.",
+        "effect": "The Traveller’s Chest can hold 6 material oddments, but these can only be accessed while camping.",
+        "stakes": 1
+      },
+      {
+        "id": "portable-seating",
+        "name": "Portable Seating",
+        "description": "The kind that unfolds, and ever so rarely folds back up with you still sitting inside.",
+        "effect": "When you undertake a task while camping, you may also choose to make a luck roll. On a 4, 5, or 6, you may clear a mark from any of your traits or habits. On a 2 or 3 you get a pleasant bit of relaxation, but no mechanical benefit. On a 1, the seating attempts to tangle you within itself - lose a point of Hope as you extricate yourself with as much dignity as possible.",
+        "stakes": 1
+      },
+      {
+        "id": "puffmoss-cushion",
+        "name": "Puffmoss Cushion",
+        "description": "An organic seat of unparalleled comfort - just make sure there are no scuttling sorts hanging around before you sit down.",
+        "effect": "Whenever a wanderer use a Music and Storytelling task, everyone present can clear a mark from their Curse gauge.",
+        "stakes": 1
+      },
+      {
+        "id": "herbalist-s-gear",
+        "name": "Herbalist's Gear",
+        "description": "A small wooden box that unfolds into a workstation filled with tools for making medicines and concoctions from the natural bounty of the ruins.",
+        "effect": "While crafting medicinal items or foraging, treat results of 6, 5, or 4 as if they were the same number when determining whether you rolled doubles.",
+        "stakes": 1
+      },
+      {
+        "id": "maintenance-gear",
+        "name": "Maintenance Gear",
+        "description": "A portable workstation complete with nails, leather scraps, and tiny hammers - the essentials.",
+        "effect": "While performing a maintenance task, or crafting something material, treat results of 6, 5, or 4 as if they were the same number when determining whether you rolled doubles.",
+        "stakes": 1
+      }
+    ],
+    "origins": [
+      {
+        "id": "bank-broken",
+        "name": "Bank-Broken",
+        "description": "Your earliest memories are of shards hitting water, a splash and ripple as your stone egg hatched. Did you wade to the shore, stumbling to the solid safety of moss-covered stone, or luxuriate in movement after a near- eternity of stillness? \n The bank-broken are some of the rarest wanderers, and also seldom join up with others as they travel. Part of this is a desire to stick close to the streams and waterways of the ruins, but there's also an element of the mercurial to their nature that's hard for others to understand.",
+        "edges": ["stone", "wind", "instinct"],
+        "skills": ["scramble", "muse", "blend", "delve", "hunt", "soothe"],
+        "oddements": [
+          "waterlogged-journal",
+          "leaky-bucket",
+          "woven-kelp-rope",
+          "fish-in-a-jar",
+          "crab-net",
+          "gorse-towel"
+        ],
+        "fragments": [
+          "stream",
+          "fountain",
+          "path",
+          "purifying",
+          "scenic",
+          "raining"
+        ],
+        "gaugeBonuses": { "fallout": 1, "curse": 4 },
+        "aspects": [
+          "wading-bird",
+          "fishers-lung",
+          "three-pronged-spear",
+          "baitbox",
+          "copper-plated-dowsing-rod",
+          "coracle",
+          "toes-in-the-water",
+          "riverling"
+        ]
+      },
+      {
+        "id": "bridge-broken",
+        "name": "Bridge-Broken",
+        "description": "Some wake to darkness, companionship, or rushing waters, but the bridge-broken wakes to an entire world spread out both below and to either side of them - a perch above pathways, a conduit of choice. The first decisions they make as they shake off the stone dream are often the hardest, and many wait multiple bells before choosing a direction to wander. \n As an explorer, the bridge-broken has a natural inclination toward high places and vantage points, and their keener eyes let them spot details across the distance of the ruins that others might miss - few confine themselves to the ground for long if they can help it.",
+        "edges": ["wind", "lore", "smoke"],
+        "skills": ["scramble", "muse", "wreck", "hunt", "tinker", "soothe"],
+        "oddements": [
+          "shattered-keystone",
+          "loop-of-rope",
+          "a-sketch-of-pillars",
+          "cobblemoss",
+          "underspar-mushrooms",
+          "a-bats-wing"
+        ],
+        "fragments": [
+          "chasm",
+          "bridge",
+          "stream",
+          "collapsed",
+          "windy",
+          "flowering"
+        ],
+        "gaugeBonuses": {
+          "fallout": 3,
+          "curse": 2
+        },
+        "aspects": [
+          "keen-observer",
+          "keystone-dance",
+          "familiar-haunts",
+          "apex-spyglass",
+          "flared-cloak",
+          "overlook-bow",
+          "choices-choices",
+          "surefooted"
+        ]
+      },
+      {
+        "id": "mass-broken",
+        "name": "Mass-Broken",
+        "description": "You awoke surrounded by silent ranks of other statues, the wanderers within still sleeping. Rather than unnerving, you found the sight reassuring; there are so many of your fellows just waiting for their time to wake, how could you feel lonely? \n Filled with a sense that you’re never really alone, you seem blessed with an easier start in the ruins than other wanderers. Others who woke from their statues before you left plenty of serviceable gear for you to find, just as you did in turn for those still sleeping, and you have an affable, more sociable nature than some more introverted wanderers.",
+        "edges": ["instinct", "light", "smoke"],
+        "skills": ["scramble", "muse", "puzzle", "blend", "soothe", "bargain"],
+        "oddements": [
+          "bright-scarf",
+          "enamel-bowl",
+          "invigorating-incense",
+          "ball-of-string",
+          "nourishing-moss",
+          "refreshing-mint-leaves"
+        ],
+        "fragments": [
+          "tower",
+          "fountain",
+          "staircase",
+          "scenic",
+          "flowering",
+          "purifying"
+        ],
+        "gaugeBonuses": {
+          "fallout": 2,
+          "curse": 3
+        },
+        "aspects": [
+          "optimistic-outlook",
+          "fortune-favoured",
+          "embroidered-cloak",
+          "wanderer-s-journal",
+          "unbroken-fist",
+          "willow-wood-ocarina",
+          "gregarious-nature",
+          "sprite-magnet"
+        ]
+      },
+      {
+        "id": "root-broken",
+        "name": "Root-Broken",
+        "description": "Your statue was wrapped in the roots of a great tree, and when you awoke, it was to the gentle green shade of its branches. You’ve always been comfortable with the plants and animals that inhabit the ruins, perhaps because you were surrounded by them while you slept in your statue. \n Climbing, crawling and clambering over the natural additions to the ruins is second nature to you, and you excel at hunting for food and hiding from the larger animals that might see you, in turn, as a tasty morsel.",
+        "edges": ["wind", "instinct", "shadow"],
+        "skills": ["scramble", "delve", "wreck", "hunt", "blend", "soothe"],
+        "oddements": [
+          "bark-shoes",
+          "vine-rope",
+          "herbal-poultice",
+          "leafy-bandage",
+          "lotus-seeds",
+          "hearty-mushroom"
+        ],
+        "fragments": [
+          "stream",
+          "garden",
+          "fountain",
+          "flowering",
+          "thorny",
+          "scenic"
+        ],
+        "gaugeBonuses": {
+          "fallout": 4,
+          "curse": 1
+        },
+        "aspects": [
+          "squirrel-taught",
+          "sharp-senses",
+          "tough",
+          "ruinstone-axe",
+          "broadleaf-mantle",
+          "experimental-infusions",
+          "old-dreams",
+          "deep-whispers"
+        ]
+      }
+    ],
+    "paths": [
+      {
+        "id": "chronicler",
+        "name": "Chronicler",
+        "description": "A collector of knowledge, stories, and maps, you strive to understand the countless mysteries contained within the ruins. In doing so, you have gained more than a passing knowledge of sprites, spirits, and demons. Perhaps you seek to pass on what you have learned to other wanderers, or maybe you want to unravel a particular secret of the ruins yourself. \n The chronicler is a repository of information and tales, someone who sees everything as a story to record or a puzzle to unravel. They tend to take a more intellectual, observational role in a group of wanderers, preferring to use their brain rather than brawn to deal with any problems they might encounter.",
+        "edges": ["lore", "instinct", "smoke"],
+        "skills": ["muse", "puzzle", "hunt", "tinker", "soothe", "bargain"],
+        "oddements": [
+          "palewing-quill",
+          "soft-cloak",
+          "jar-of-ink",
+          "ginger-root",
+          "sunflower-seeds",
+          "fresh-honeycomb"
+        ],
+        "fragments": [
+          "library",
+          "tower",
+          "fountain",
+          "scenic",
+          "flowering",
+          "collapsed"
+        ],
+        "gaugeBonuses": {
+          "fallout": 1,
+          "curse": 3
+        },
+        "aspects": [
+          "haruspex",
+          "brightspark",
+          "spirit-favour",
+          "book-of-tales",
+          "lantern-staff",
+          "shared-stories",
+          "eidetic-memory",
+          "sharptongue-scold"
+        ]
+      },
+      {
+        "id": "pioneer",
+        "name": "Pioneer",
+        "description": "The average pioneer treats their time in the ruins as one big adventure, a vast story they’re lucky enough to play a part in. And other wanderers? Well, they’re more than just a supporting cast - the bold decisiveness of a pioneer almost ensures they’ll have friends or followers wherever they go, making the sprawl of the world just that little bit less empty, that little bit more warm. \n The pioneer is a natural leader, but that doesn't mean they have to force their views and decisions on others. Instead, multiple pioneer aspects focus on helping the whole team and bolstering fellow wanderers.",
+        "edges": ["stone", "instinct", "light"],
+        "skills": ["scramble", "delve", "wreck", "tinker", "soothe", "bargain"],
+        "oddements": [
+          "metal-pitons",
+          "reinforced-rope",
+          "bronze-bell",
+          "cofcof-beans",
+          "traveller-s-thistle",
+          "pearl-sprigs"
+        ],
+        "fragments": [
+          "path",
+          "staircase",
+          "tower",
+          "flowering",
+          "scenic",
+          "collapsed"
+        ],
+        "gaugeBonuses": {
+          "fallout": 2,
+          "curse": 2
+        },
+        "aspects": [
+          "not-the-first",
+          "lead-by-example",
+          "opal-circlet",
+          "groundbreaker-s-chart",
+          "longstepper-chimes",
+          "ornery-blade",
+          "strident",
+          "no-time-to-waste"
+        ]
+      },
+      {
+        "id": "rascal",
+        "name": "Rascal",
+        "description": "Demons, spirits, servitors... They're all so orderly, so serious all the time. And your fellow wanderers? Survival is important, sure, but what's the point of living if you're not going to have any fun while you do it? \n The rascal embodies riot and disorder, a natural born troublemaker no matter where they were broken. They have a tendency to get into scrapes, but also to come out on top; to find themselves in perilous situations, but to escape them with a level of confidence and panache that causes more stolid wanderers to tut. In essence, they live life to the fullest - and treat the ruins as their personal playground.",
+        "edges": ["wind", "shadow", "smoke"],
+        "skills": ["scramble", "delve", "puzzle", "wreck", "tinker", "bargain"],
+        "oddements": [
+          "ridged-hairpin",
+          "hand-bandages",
+          "high-pitched-whistle",
+          "liquorice-root",
+          "potent-spice-leaves",
+          "stinking-cheese"
+        ],
+        "fragments": [
+          "bridge",
+          "tower",
+          "fountain",
+          "collapsed",
+          "crooked",
+          "windy"
+        ],
+        "gaugeBonuses": {
+          "fallout": 2,
+          "curse": 2
+        },
+        "aspects": [
+          "fighting-dirty",
+          "nimble-fingers",
+          "rope-and-grapple",
+          "troublemaker-s-slingshot",
+          "spring-wing-kite",
+          "winding-scarf",
+          "the-perpetual-game",
+          "one-eye-open"
+        ]
+      },
+      {
+        "id": "scrounger",
+        "name": "Scrounger",
+        "description": "Whether it's medicinal herbs, old pieces of gear, or tasty morsels, you’ve always been good at making the most of what the ruins have to offer. Other wanderers might be better at exploring, fighting, or understanding the world around you, but you always know where to find something to eat, something to wear, and how to look after yourself. \n The scrounger is a self-sufficient traveller who is a boon to their companions; able to fix broken gear and make the most of whatever supplies they find in the ruins. Regardless of where they are or what they encounter, a scrounger can probably find something useful.",
+        "edges": ["stone", "lore", "smoke"],
+        "skills": ["delve", "puzzle", "wreck", "blend", "tinker", "bargain"],
+        "oddements": [
+          "knotted-cord",
+          "stone-ring",
+          "sticky-sap",
+          "lavender-flowers",
+          "tough-jerky",
+          "pickled-grubs"
+        ],
+        "fragments": [
+          "tower",
+          "garden",
+          "fountain",
+          "collapsed",
+          "thorny",
+          "crooked"
+        ],
+        "gaugeBonuses": {
+          "fallout": 3,
+          "curse": 1
+        },
+        "aspects": [
+          "make-do-and-mend",
+          "pack-rat",
+          "repair-kit",
+          "sturdy-shovel",
+          "wrecking-maul",
+          "deft-needlework",
+          "an-eye-for-a-bargain",
+          "analytical-mind"
+        ]
+      }
+    ],
+    "aspects": [
+      {
+        "id": "wading-bird",
+        "name": "Wading Bird",
+        "description": "It helps to move with the current, but it's not essential once you know what you're doing.",
+        "effect": " Ignore cut for difficulty AND cut for speed that would be imposed by moving, searching, or fighting in shallow water.",
+        "category": "Trait",
+        "maxTrack": 2
+      },
+      {
+        "id": "fishers-lung",
+        "name": "Fisher's Lung",
+        "description": "Breathe in, hold it… And breathe out.",
+        "effect": "Treat Disasters as Conflicts when rolling to avoid harm from a lack of breathable air. In addition, once per bell, you can spend a point of Hope to automatically Triumph on a roll made to see whether you can effectively hold your breath under pressure.",
+        "category": "Trait",
+        "maxTrack": 4
+      },
+      {
+        "id": "three-pronged-spear",
+        "name": "Three-Pronged Spear",
+        "description": "Crafted from sharpened stone and a slightly crooked branch, this simple but surprisingly sturdy tool is the cornerstone of the impatient angler’s arsenal.",
+        "effect": "Damage dealt with this weapon carries the Subtle tag. When you use the foraging camp action near a body of water you also gain two additional edible oddments.",
+        "category": "Gear",
+        "maxTrack": 3
+      },
+      {
+        "id": "baitbox",
+        "name": "Baitbox",
+        "description": "A collection of wriggling sorts held in carefully packed jars, along with string, hooks, and twine.",
+        "effect": "Mark to either scatter bait into a body of water, attracting a particular type of known fish (or other aquatic creature that you’ve encountered) to the area without fail, or to add one mark to the food track.",
+        "category": "Gear",
+        "maxTrack": 2
+      },
+      {
+        "id": "copper-plated-dowsing-rod",
+        "name": "Copper-Plated Dowsing Rod",
+        "description": "Once a humble stick, now a finely-tuned water detection device.",
+        "effect": "Whenever you make camp, gain a fragment of your choice from the following list: Stream, Fountain, or Raining.",
+        "category": "Gear",
+        "maxTrack": 3
+      },
+      {
+        "id": "coracle",
+        "name": "Coracle",
+        "description": "Any lake or river can be crossed, with the right mindset. At least, that’s what you choose to believe.",
+        "effect": "You and your fellow wanderers can cross bodies of water in the coracle without getting wet, and by relying solely on your own Delve rolls.",
+        "category": "Gear",
+        "maxTrack": 4
+      },
+      {
+        "id": "toes-in-the-water",
+        "name": "Toes in the Water",
+        "description": "While the sound of flowing water is relaxing, feeling it on your skin is what really sets your mind at ease.",
+        "effect": "Whenever you make camp in an area with water, automatically clear one mark from your Curse gauge as you set up your campsite. If the water in the area is flowing (such as a river, stream, or fountain), clear three marks instead.",
+        "category": "Habit",
+        "maxTrack": 4
+      },
+      {
+        "id": "riverling",
+        "name": "Riverling",
+        "description": "There’s a good chance you spent as much of your early life in the water as around it.",
+        "effect": "Whenever you would gain Curse marks from panic or fear due to being submerged, gain Fallout marks instead. Whenever you would gain Fallout marks while submerged, gain one fewer than normal.",
+        "category": "Habit",
+        "maxTrack": 3
+      },
+
+      {
+        "id": "keen-observer",
+        "name": "Keen Observer",
+        "description": "Those early times of gazing down at the world below the bridge were likely the calmest you'll ever know.",
+        "effect": "Mark to gain additional information about a location, individual, or object that you can see. This information is provided by the Guide, and represents you picking out details or patterns that others might miss. If there's no information for the Guide to give, remove a point of Despair instead.",
+        "category": "Trait",
+        "maxTrack": 4
+      },
+      {
+        "id": "keystone-dance",
+        "name": "Keystone Dance",
+        "description": "A missed step no more ends the dance than a wrong turn ends a journey.",
+        "effect": "Ignore cut for speed that would be imposed for traversing crumbling or unstable ground. If that ground is elevated (such as on a bridge, tower, or staircase), ignore cut for difficulty as well.",
+        "category": "Trait",
+        "maxTrack": 3
+      },
+      {
+        "id": "familiar-haunts",
+        "name": "Familiar Haunts",
+        "description": "Perhaps it’s in the nature of the ruins to provide passage, of one sort or another.",
+        "effect": "Whenever you reach a Chasm, Stream, or Garden feature, or any location with the Collapsed detail, you may spend a point of Hope to add a Bridge feature to it too without expending any fragments.",
+        "category": "Trait",
+        "maxTrack": 2
+      },
+      {
+        "id": "apex-spyglass",
+        "name": "Apex Spyglass",
+        "description": "Perfect for those that prefer to appreciate detail and complexity from a distance.",
+        "effect": "Whenever you would lose or consume a fragment for any reason while in an elevated position (such as on a Bridge, Tower, or Staircase), make a luck roll. On a 4, 5, or 6 gain a new fragment (of the Guide's choice) in place of the one lost or consumed.",
+        "category": "Gear",
+        "maxTrack": 2
+      },
+      {
+        "id": "flared-cloak",
+        "name": "Flared Cloak",
+        "description": "A neat combination of fashion statement and utility glider, this garment can be spread out to catch the breeze with a roll of the shoulders.",
+        "effect": "Spend a point of Hope to land safely after a fall or leap from any height without having to roll. If that fall or leap was from a bridge of some kind, gain this effect without having to spend anything.",
+        "category": "Gear",
+        "maxTrack": 3
+      },
+      {
+        "id": "overlook-bow",
+        "name": "Overlook Bow",
+        "description": "Arrows aren’t easy to make, but they’re definitely worth it for when you want any potential danger to stay all the way over there.",
+        "effect": "You can deal damage to targets from a distance. Any damage you deal from high ground, or against a target that's unaware of you, gains the Subtle tag.",
+        "category": "Gear",
+        "maxTrack": 3
+      },
+      {
+        "id": "choices-choices",
+        "name": "Choices, Choices",
+        "description": "A metaphorical haunting by the spectre of 'what-if', traced back to your earliest moments of movement.",
+        "effect": "Whenever you would make a luck roll, make two instead. You decide which of the two rolled results you wish to use.",
+        "category": "Habit",
+        "maxTrack": 2
+      },
+      {
+        "id": "surefooted",
+        "name": "Surefooted",
+        "description": "As much a state of mind as a method of movement.",
+        "effect": "You and your fellow wanderers are immune to negative effects (including the gain of curse or Despair) connected to extreme heights or elevation, such as vertigo and buffeting winds.",
+        "category": "Habit",
+        "maxTrack": 3
+      },
+      {
+        "id": "optimistic-outlook",
+        "name": "Optimistic Outlook",
+        "description": "No matter what happens, you find it easy to keep a spring in your step and a smile on your face. Things might slow you down, but you bounce back quickly.",
+        "effect": "Once per bell, when a fellow wanderer gains a point of Hope, you may either gain a point of Hope yourself or erase a point of Despair.",
+        "category": "Trait",
+        "maxTrack": 4
+      },
+      {
+        "id": "fortune-favoured",
+        "name": "Fortune Favoured",
+        "description": "You seem to be naturally lucky when it comes to finding useful equipment.",
+        "effect": "Whenever you gain a material oddment, you may add a beneficial tag to it, agreed with the Guide.",
+        "category": "Trait",
+        "maxTrack": 5
+      },
+      {
+        "id": "embroidered-cloak",
+        "name": "Embroidered Cloak",
+        "description": "Found not long after you awoke, this fine cloak is woven from thick, tough cloth and protects you from more than just the elements.",
+        "effect": "Mark to ignore the effects of extreme cold or bad weather. In addition, once per bell, ignore a single instance of physical damage.",
+        "category": "Gear",
+        "maxTrack": 3
+      },
+      {
+        "id": "wanderer-s-journal",
+        "name": "Wanderer's Journal",
+        "description": "Found half-filled with another wanderer’s thoughts, and now expanded with your own observations. An essential guide to the ruins.",
+        "effect": "Mark to re-roll either the feature or detail when exploring the ruins. When you or another wanderer makes a discovery, clear one mark from this aspect’s track.",
+        "category": "Gear",
+        "maxTrack": 4
+      },
+      {
+        "id": "unbroken-fist",
+        "name": "Unbroken Fist",
+        "description": "Either one of your hands never fully broke free of your stone shell, or you decided to keep a bit of it as a handy memento.",
+        "effect": "Damage dealt with this weapon carries the Heavy tag.",
+        "category": "Gear",
+        "maxTrack": 4
+      },
+      {
+        "id": "willow-wood-ocarina",
+        "name": "Willow Wood Ocarina",
+        "description": "A simple instrument that fills the air with uplifting melodies that can dispel even the most bleak of moods.",
+        "effect": "Once per bell, spend a point of Despair to play a tune that invigorates your allies. Each wanderer may treat their next disaster as a conflict while in the current location.",
+        "category": "Gear",
+        "maxTrack": 2
+      },
+      {
+        "id": "gregarious-nature",
+        "name": "Gregarious Nature",
+        "description": "You have a natural gift for camaraderie that relaxes those around you.",
+        "effect": "When you or one of your fellow wanderers uses a Music and Storytelling task, all wanderers in your group gain the benefits.",
+        "category": "Habit",
+        "maxTrack": 2
+      },
+      {
+        "id": "sprite-magnet",
+        "name": "Sprite Magnet",
+        "description": "For some reason, sprites seem to love you. The little spirits always seem happy to see you, and even if they’re feeling mischievous, you are seldom the target of their pranks.",
+        "effect": "Mark to treat a disaster as a conflict, or a conflict as a triumph, when interacting with sprites.",
+        "category": "Habit",
+        "maxTrack": 4
+      },
+      {
+        "id": "squirrel-taught",
+        "name": "Squirrel-Taught",
+        "description": "You learned to climb by watching the little animals of the ruins, and now you move with natural grace over branch and stone.",
+        "effect": "Ignore cut for difficulty or stealth when climbing.",
+        "category": "Trait",
+        "maxTrack": 3
+      },
+      {
+        "id": "sharp-senses",
+        "name": "Sharp Senses",
+        "description": "Attuned to the quiet of the trees and roots, your senses are much sharper than those of other wanderers.",
+        "effect": "Mark to ask the Guide to supply a detail of the current scene that you and your allies have missed.",
+        "category": "Trait",
+        "maxTrack": 4
+      },
+      {
+        "id": "tough",
+        "name": "Tough",
+        "description": "You're just all-around tougher and more used to physical labour than most wanderers, able to carry heavy loads and shrug off injuries.",
+        "effect": "Mark to perform a feat of strength that would normally be beyond a wanderer, such as lifting, bending, or breaking something substantial. Once per bell, mark to clear a mark from your Fallout gauge.",
+        "category": "Trait",
+        "maxTrack": 3
+      },
+      {
+        "id": "ruinstone-axe",
+        "name": "Ruinstone Axe",
+        "description": "A broad axe with a blade fashioned from the durable stone of the ruins themselves.",
+        "effect": "Damage dealt with this weapon carries the Heavy tag. Mark to re-roll results of 1 when using this aspect as part of an action dealing with wood or plant-based obstacles and hazards.",
+        "category": "Gear",
+        "maxTrack": 5
+      },
+      {
+        "id": "broadleaf-mantle",
+        "name": "Broadleaf Mantle",
+        "description": "Woven from the deep green leaves of a broadleaf tree, this hooded mantle helps you blend into the surrounding foliage.",
+        "effect": "Treat results of 6, 5, or 4 as the same number when checking for doubles on an action to hide from or evade a hazard.",
+        "category": "Gear",
+        "maxTrack": 4
+      },
+      {
+        "id": "experimental-infusions",
+        "name": "Experimental Infusions",
+        "description": "Trust me, I know what I'm doing!",
+        "effect": "You can use medical and edible oddments interchangeably when cooking or healing.",
+        "category": "Habit",
+        "maxTrack": 3
+      },
+      {
+        "id": "old-dreams",
+        "name": "Old Dreams",
+        "description": "Strange memories persist from before you broke free of your statue, sometimes granting you curious insights into the flora and fauna of the ruins.",
+        "effect": "Consume a fragment to learn a secret about a plant or animal you have encountered or been told about.",
+        "category": "Habit",
+        "maxTrack": 4
+      },
+      {
+        "id": "deep-whispers",
+        "name": "Deep Whispers",
+        "description": "The ruins speak to you, or perhaps you're just more attuned to the gentle flow of spiritual essence that suffuses the ancient stone than others.",
+        "effect": "You have an innate sense of direction while touching bare stone. Once per bell, mark to discover a location without expending any fragments.",
+        "category": "Habit",
+        "maxTrack": 2
+      },
+
+      {
+        "id": "haruspex",
+        "name": "Haruspex",
+        "description": "You can learn a lot about a place by examining plants, materials, and items found in the immediate area.",
+        "effect": "Consume an oddment to gain a thematically-related fragment.",
+        "category": "Trait",
+        "maxTrack": 5
+      },
+      {
+        "id": "brightspark",
+        "name": "Brightspark",
+        "description": "Your mind is the sharpest tool you possess, and you seldom need anything else to tackle a problem.",
+        "effect": "Mark to re-roll any dice that result in a 1 when performing an action using Thinking skills.",
+        "category": "Trait",
+        "maxTrack": 5
+      },
+      {
+        "id": "spirit-favour",
+        "name": "Spirit Favour",
+        "description": "A small stone charm carved in the likeness of one of the great spirits.",
+        "effect": "Treat disasters as conflicts when interacting with spirits. In addition, once per bell, you can spend a point of Hope to learn a secret about a spirit or demon you have encountered.",
+        "category": "Gear",
+        "maxTrack": 3
+      },
+      {
+        "id": "book-of-tales",
+        "name": "Book of Tales",
+        "description": "A thick tome you’ve filled with stories of your travels and tales you’ve heard from other wanderers.",
+        "effect": "Mark to treat a disaster as a conflict when you perform the Music and Storytelling task.",
+        "category": "Gear",
+        "maxTrack": 4
+      },
+      {
+        "id": "lantern-staff",
+        "name": "Lantern Staff",
+        "description": "A stout staff is always useful, and one with a lantern hanging from the end doubly so.",
+        "effect": "Mark to illuminate your current location with a gentle glow. Consume a flammable oddment to inflict the dazzled effect on an opponent.",
+        "category": "Gear",
+        "maxTrack": 5
+      },
+      {
+        "id": "shared-stories",
+        "name": "Shared Stories",
+        "description": "The best stories are those you weave with your friends.",
+        "effect": "When you take the Music and Storytelling task, clear one extra mark than usual. If you consume a fragment to gain a bonus during the task, make a luck roll; on a 6 or 5, you keep the fragment.",
+        "category": "Habit",
+        "maxTrack": 3
+      },
+      {
+        "id": "eidetic-memory",
+        "name": "Eidetic Memory",
+        "description": "You can memorise vast amounts of information and recall it perfectly.",
+        "effect": "You can carry two more fragments than usual in your pack, for a total of eight. If you ever need to recall something important, make a luck roll; on a 6, 5, or 4, you can ask the Guide to assist you in remembering.",
+        "category": "Habit",
+        "maxTrack": 3
+      },
+      {
+        "id": "sharptongue-scold",
+        "name": "Sharptongue Scold",
+        "description": "It’s amazing how a few insightful words can really let the air out of an opponent.",
+        "effect": "When adding marks to the challenge or accord track of an opponent who can understand your language, treat the action as having the Subtle tag. This could also be used to inflict either the effect staggered or dispirited.",
+        "category": "Habit",
+        "maxTrack": 3
+      },
+      {
+        "id": "not-the-first",
+        "name": "Not The First",
+        "description": "...And unlikely to be the last, either.",
+        "effect": "Whenever you stop to make camp, make a luck roll. On a 5 or 6 you find a cache that contains that many oddments left behind by a previous wanderer (provided by the Guide). For every oddment your group doesn’t take from this cache, clear a mark from everyone’s Curse gauges (so leaving two oddments in the cache would allow everyone to clear two marks of Curse, for example).",
+        "category": "Trait",
+        "maxTrack": 2
+      },
+      {
+        "id": "lead-by-example",
+        "name": "Lead By Example",
+        "description": "So much looks impossible until you’re taught how.",
+        "effect": "At the beginning of each session, choose one skill you have at least a single rank in. For the rest of that session, you and your fellow wanderers treat Disasters as Conflicts when using that skill as part of an action.",
+        "category": "Trait",
+        "maxTrack": 1
+      },
+      {
+        "id": "opal-circlet",
+        "name": "Opal Circlet",
+        "description": "Not a relic, this simple band, but it fills you with confidence nonetheless.",
+        "effect": "Mark to allow you and your fellow wanderers to ignore the negative effects of a demon’s aura for a single scene. GROUNDBREAKER'S CHART (3-TRACK GEAR) Maps are rarely entirely reliable, but accuracy is often overrated. Effect: Once per Region, you may discover a location by choosing and combining any three of your fragments. These fragments aren’t consumed as they usually would be.",
+        "category": "Gear",
+        "maxTrack": 2
+      },
+      {
+        "id": "groundbreaker-s-chart",
+        "name": "Groundbreaker's Chart",
+        "description": "Maps are rarely entirely reliable, but accuracy is often overrated.",
+        "effect": "Once per Region, you may discover a location by choosing and combining any three of your fragments. These fragments aren’t consumed as they usually would be.",
+        "category": "Gear",
+        "maxTrack": 3
+      },
+      {
+        "id": "longstepper-chimes",
+        "name": "Longstepper Chimes",
+        "description": "A set of small silver bells worn on a belt, bandoleer, or pack, their tinkling cheer masking the monotony of longer walks.",
+        "effect": "Gain a point of Hope or clear a point of Despair whenever your group moves at a swift pace. Marking the Longstepper Chimes track at the same time allows your fellow wanderers to benefit from this effect as well.",
+        "category": "Gear",
+        "maxTrack": 3
+      },
+      {
+        "id": "ornery-blade",
+        "name": "Ornery Blade",
+        "description": "A simple shortsword made of deceptively light ruin-stone.",
+        "effect": "Damage dealt with this weapon carries the Swift tag.",
+        "category": "Gear",
+        "maxTrack": 4
+      },
+      {
+        "id": "strident",
+        "name": "Strident",
+        "description": "Someone needs to take the lead - why not you?",
+        "effect": "Whenever you would be surprised by a hazard or encounter while exploring, make a luck roll. On a 4 or 5, you aren’t surprised. On a 6, you surprise them instead!",
+        "category": "Habit",
+        "maxTrack": 4
+      },
+      {
+        "id": "no-time-to-waste",
+        "name": "No Time To Waste",
+        "description": "Indecision is a thief of time, but it’s amazing how much of the stuff you can save via prodding, badgering, and getting stuck in.",
+        "effect": "Spend a point of Hope to sleep or cook together while camping without adding the usual tick of time it would take.",
+        "category": "Habit",
+        "maxTrack": 3
+      },
+      {
+        "id": "fighting-dirty",
+        "name": "Fighting Dirty",
+        "description": "Scuffles and scraps are rare, especially among wanderers, but when they do break out you always have the upper hand.",
+        "effect": "Mark to treat a disaster as a conflict, or a conflict as a triumph, when taking an action to physically fight another denizen of the ruins.",
+        "category": "Trait",
+        "maxTrack": 4
+      },
+      {
+        "id": "nimble-fingers",
+        "name": "Nimble Fingers",
+        "description": "Theft may be frowned upon, but it is terribly useful in a pinch.",
+        "effect": "Spend a point of Hope, and add a point of Despair, to secretly steal a small item from a nearby NPC (wanderer, spirit, or demon) without them immediately noticing and without having to roll.",
+        "category": "Trait",
+        "maxTrack": 3
+      },
+      {
+        "id": "rope-and-grapple",
+        "name": "Rope and Grapple",
+        "description": "Any rope can be looped and climbed, but a grappling hook arrangement like yours is sure to stay put when you need it to.",
+        "effect": "Treat disasters as conflicts when scaling the rope of your own grapple. Additionally, if your grapple would ever be detached from a surface at an inopportune time, you may spend a point of Hope to have it remain in place for a little while longer.",
+        "category": "Gear",
+        "maxTrack": 4
+      },
+      {
+        "id": "troublemaker-s-slingshot",
+        "name": "Troublemaker's Slingshot",
+        "description": "Most often used to fire small stones, but the most inventive rascals become adept at turning anything they have to hand into ammunition.",
+        "effect": "You can deal damage to targets from a distance. In addition, you can consume an oddment to load it into the slingshot for an additional effect on a successful attack (decided by the Guide).",
+        "category": "Gear",
+        "maxTrack": 3
+      },
+      {
+        "id": "spring-wing-kite",
+        "name": "Spring-Wing Kite",
+        "description": "A marvellous but finicky bit of kit, this kite unfolds automatically when thrown.",
+        "effect": "Once per scene, you may make a luck roll to throw the kite. On a 5 or 6 you make a prodigious leap and land safely without rolling. On a 4 or 3, you make the same leap but land hard, adding a mark to your Fallout gauge. On a 2 or 1, the kite fails to catch the breeze and flops sadly onto the ground. When used in windy conditions, re-roll results of 1 or 2.",
+        "category": "Gear",
+        "maxTrack": 2
+      },
+      {
+        "id": "winding-scarf",
+        "name": "Winding Scarf",
+        "description": "It’s easier to laugh in the face of danger when danger can’t tell if you’re smiling or not.",
+        "effect": "Once per bell, whenever you would gain a point of Despair, gain a point of Hope instead.",
+        "category": "Gear",
+        "maxTrack": 3
+      },
+      {
+        "id": "the-perpetual-game",
+        "name": "The Perpetual Game",
+        "description": "If life is a game, you’re a move and a half ahead.",
+        "effect": "Whenever an ally rolls a disaster while trying to trick a foe, or to solve some kind of puzzle or riddle, you can ignore the usual outcome of that roll and make one of your own instead, dealing with the same situation.",
+        "category": "Habit",
+        "maxTrack": 2
+      },
+      {
+        "id": "one-eye-open",
+        "name": "One Eye Open",
+        "description": "It’s not a lack of trust that makes you a light sleeper; it’s a surfeit of experience.",
+        "effect": "Whenever you sleep while camping, you may perform an additional task at the same time.",
+        "category": "Habit",
+        "maxTrack": 1
+      },
+      {
+        "id": "make-do-and-mend",
+        "name": "Make Do and Mend",
+        "description": "Don’t throw that away, it’s still useful! You excel at getting every last bit of use from resources when maintaining your gear.",
+        "effect": "When you consume an oddment to gain a bonus during the Maintenance task, instead give it the Disassembled tag and keep it. If you consume a disassembled oddment, it’s gone forever.",
+        "category": "Trait",
+        "maxTrack": 4
+      },
+      {
+        "id": "pack-rat",
+        "name": "Pack Rat",
+        "description": "You are a master of fitting incredible amounts of gear into a small bag or satchel.",
+        "effect": "You can carry two more oddments than usual in your pack, for a total of eight.",
+        "category": "Trait",
+        "maxTrack": 4
+      },
+      {
+        "id": "repair-kit",
+        "name": "Repair Kit",
+        "description": "A leather roll filled with files, pliers, oil, and other tools vital to repairing the various pieces of equipment you scavenge from the ruins.",
+        "effect": "When you find a material oddment with a tag similar to Broken, Rusted, or Faded, you may swap it for a tag such as Repaired, Mended, or Polished.",
+        "category": "Gear",
+        "maxTrack": 5
+      },
+      {
+        "id": "sturdy-shovel",
+        "name": "Sturdy Shovel",
+        "description": "A trusty, much-repaired shovel. It serves as both a useful tool and a handy weapon in a pinch.",
+        "effect": "Mark to treat a disaster as a conflict, or a conflict as a triumph, when using this aspect as part of an action dealing with fallen earth, broken stone, rubble, or similar terrain.",
+        "category": "Gear",
+        "maxTrack": 4
+      },
+      {
+        "id": "wrecking-maul",
+        "name": "Wrecking Maul",
+        "description": "A stout hammer that is intended more for defence than simple utility.",
+        "effect": "Damage dealt with this weapon carries the Heavy tag. When using the maul as part of a combat action, as well as dealing damage to an opponent, it could inflict either the effect staggered or sundered.",
+        "category": "Gear",
+        "maxTrack": 3
+      },
+      {
+        "id": "deft-needlework",
+        "name": "Deft Needlework",
+        "description": "Sewing is sewing, right? Turns out there are a lot of similarities between repairing clothing and healing injuries.",
+        "effect": "Treat disasters as conflicts when using the Healing task.",
+        "category": "Habit",
+        "maxTrack": 3
+      },
+      {
+        "id": "an-eye-for-a-bargain",
+        "name": "An Eye For A Bargain",
+        "description": "You’ve always known where to find useful items; digging into nooks and crannies for hidden treasures, and are able to wring more usable provisions from a single source.",
+        "effect": "When you use the Foraging task, you gain an additional material oddment no matter the outcome of any associated rolls.",
+        "category": "Habit",
+        "maxTrack": 3
+      },
+      {
+        "id": "analytical-mind",
+        "name": "Analytical Mind",
+        "description": "It’s easy for you to understand the workings of simple mechanisms just by studying them for a short while, useful for spotting traps or unstable ground.",
+        "effect": "Treat conflicts as triumphs on actions used to avoid traps or environmental hazards.",
+        "category": "Habit",
+        "maxTrack": 4
+      }
+    ],
+    "conditions": [
+      {
+        "id": "bleeding",
+        "name": "Bleeding",
+        "type": "fallout",
+        "description": "This specific condition may well be applied when a wanderer’s Fallout gauge is filled due to some kind of cut or laceration, whether from a weapon or from an element of the ruins (like thorns or sharpened stones).",
+        "levels": [
+          {
+            "level": 1,
+            "description": "The wanderer is wounded, bleeding, and generally sorry for themselves. When camping, taking a task for anything other than tending to their own wounds adds a mark to the Fallout gauge."
+          },
+          {
+            "level": 2,
+            "description": "The wanderer is beginning to look pale and weak. Whenever they take a mark of damage from any other source, they take an additional mark of damage."
+          },
+          {
+            "level": 3,
+            "description": "Blood loss is a serious concern. The wanderer cuts for difficulty on all actions that require even the lightest physical exertion."
+          }
+        ],
+        "finalMoment": "There’s no coming back from this - you can’t staunch the flow."
+      },
+      {
+        "id": "broken-bone",
+        "name": "Broken Bone",
+        "type": "fallout",
+        "description": "This specific condition may well be applied when a wanderer’s Fallout gauge is filled due to falling from a height, being caught under heavy debris, or as the result of combat.",
+        "levels": [
+          {
+            "level": 1,
+            "description": " The wanderer’s limb is painful, but still usable. Actions that require the use of the limb mark the wanderer’s Fallout gauge."
+          },
+          {
+            "level": 2,
+            "description": "The broken limb is now hot to the touch and hard to use. Cut for difficulty on all actions that would require the use of that limb."
+          },
+          {
+            "level": 3,
+            "description": "Unbearable pain hampers the wanderer’s movements, even those that do not require the use of the broken limb. The wanderer counts triumphs as conflicts on all actions using Physical and Moving skills."
+          }
+        ],
+        "finalMoment": "Wracked by pain, you know you cannot take another step."
+      },
+      {
+        "id": "dazed",
+        "name": "Dazed",
+        "type": "fallout",
+        "description": "This specific condition may well be applied when a wanderer takes a knock to the head that sends them reeling, or when they inhale noxious fumes of some sort.",
+        "levels": [
+          {
+            "level": 1,
+            "description": "Dizziness, headache, and a ringing in the ears. Treat triumphs as conflicts when using the Muse or Puzzle skills."
+          },
+          {
+            "level": 2,
+            "description": "Balance is difficult, and complex thoughts take extra effort. Treat triumphs as conflict when using the Delve, Scramble, Muse, or Puzzle skills."
+          },
+          {
+            "level": 3,
+            "description": "What were you doing again? Whenever you make an action roll, a result of 1 forces you to treat the outcome of the action as a Disaster, regardless of any other results."
+          }
+        ],
+        "finalMoment": "Complete and total amnesia sets in. Whoever you were before, you’re not them now."
+      },
+      {
+        "id": "the-limb-curse",
+        "name": "The Limb Curse",
+        "type": "curse",
+        "description": "This specific condition may well be applied when a wanderer comes into contact with the grasping hands of a demon.",
+        "levels": [
+          {
+            "level": 1,
+            "description": "You feel a little too flexible, and you can’t stop your joints from popping when you move."
+          },
+          {
+            "level": 2,
+            "description": "A limb detaches, worryingly painlessly, but remains mostly under your control. Cut for difficulty when performing an action that relies on your detached limb in some way."
+          },
+          {
+            "level": 3,
+            "description": "Your detached limb now has a mind of its own, and it’s not exactly a fan of yours. The Guide can spend a point of Despair from your track any time you undertake an action that relies on your detached limb, twisting the expected outcome of the action into something inherently negative no matter the result of your roll."
+          }
+        ],
+        "finalMoment": " Following the example of your detached limb, every other part of your body separates into pieces that crawl, scuttle, or roll away under their own power."
+      },
+
+      {
+        "id": "the-mist-curse",
+        "name": "The Mist Curse",
+        "type": "curse",
+        "description": "This specific condition may well be applied when a wanderer’s Curse gauge is filled by a demon that dwells near water or mist.",
+        "levels": [
+          {
+            "level": 1,
+            "description": "Mist condenses from the wanderer’s breath in chill clouds that seem to follow them about. Treat triumphs as conflicts on any actions using Social skills."
+          },
+          {
+            "level": 2,
+            "description": "The wanderer is able to exhale a great bank of mist to conceal themselves and others. Once per bell, the wanderer can create enough mist to fill an entire location. Treat disasters as conflicts on any actions involving stealth while hidden in the mist."
+          },
+          {
+            "level": 3,
+            "description": "The wanderer seems to be filled with mist, leaking out of their eyes and ears, as well as any injuries. Whenever the wanderer marks a trait for any reason, add an additional mark."
+          }
+        ],
+        "finalMoment": "With a mournful exhalation the wanderer collapses like an empty balloon, leaving only a brief outline in the cursed mist before it disperses."
+      },
+      {
+        "id": "the-spiral-curse",
+        "name": "The Spiral Curse",
+        "type": "curse",
+        "description": "This specific condition may well be applied when a wanderer trails or tracks a demon as it moves, unwittingly following them through a labyrinth of their own devising.",
+        "levels": [
+          {
+            "level": 1,
+            "description": "Your skin starts to show signs of spirals, a maze-like mottling of the flesh."
+          },
+          {
+            "level": 2,
+            "description": "With a flick of your fingers you confuse reality momentarily, contorting dimensions. You may spend a point of Hope to rearrange your immediate surroundings (turning floors to walls, changing where a door opens to, etc)."
+          },
+          {
+            "level": 3,
+            "description": "It’s becoming harder to control - the world spirals around you in small ways whether you want it to or not. Whenever you gain an oddment, give it the Twisted tag."
+          }
+        ],
+        "finalMoment": "You lose control over reality, twisting yourself and your immediate surroundings into an hourglass of clashing, tearing dimensions. The chaos you leave behind persists, perhaps forever."
+      },
+      {
+        "id": "the-shadow-curse",
+        "name": "The Shadow Curse",
+        "type": "curse",
+        "description": "This specific condition may well be applied when a wanderer’s Curse gauge is filled by a demon that dwells in darkness.",
+        "levels": [
+          {
+            "level": 1,
+            "description": "A dark smudge appears on the wanderer’s body, often seeming to move."
+          },
+          {
+            "level": 2,
+            "description": "The darkness spreads to cover a large portion of the wanderer’s body, and they feel drawn to areas of shadow. The wanderer treats disasters as conflicts on actions involving sneaking or hiding. Cut for difficulty on actions when in areas of bright light."
+          },
+          {
+            "level": 3,
+            "description": "The wanderer’s shadow moves of its own accord, seemingly resentful of its owner. It also hisses to the wanderer in mocking, unpleasant whispers that make it hard for them to concentrate. Cut for difficulty on any actions using Social or Thinking skills."
+          }
+        ],
+        "finalMoment": "The wanderer’s shadow consumes them, wresting control of their body and using it for its own dark ends."
+      },
+      {
+        "id": "trampled",
+        "name": "Trampled",
+        "type": "fallout",
+        "description": "This specific condition may well be applied when a wanderer’s Fallout gauge is filled due to being caught underfoot by a stampede of large animals or spirits.",
+        "levels": [
+          {
+            "level": 1,
+            "description": "The wanderer is covered in bruises, and may even have a broken bone or two. Moving at a swift pace while exploring marks the wanderer’s Fallout gauge."
+          },
+          {
+            "level": 2,
+            "description": "The hue of the wanderer’s bruises deepens to an angry purple colour, and movement of almost any kind is a painful prospect. Moving at a cautious pace now also marks the wanderer’s Fallout gauge, and any movement-related actions suffer a cut for difficulty."
+          },
+          {
+            "level": 3,
+            "description": "Urgent medical attention is needed, with the wanderer barely being able to move on their own due to the pain. The affected wanderer cannot move without a fellow wanderer helping them along, and movement-related actions for both the affected wanderer and their helper now suffer a cut for difficulty."
+          }
+        ],
+        "finalMoment": "You might be able to come back from these injuries, but your time of wandering the ruins is done for now."
+      },
+      {
+        "id": "soporific-venom",
+        "name": "Soporific Venom",
+        "type": "fallout",
+        "description": "This specific condition may well be applied when a wanderer’s Fallout gauge is filled due to being bitten or stung by a venomous creature within the ruins.",
+        "levels": [
+          {
+            "level": 1,
+            "description": "The wanderer feels sleepy and their limbs feel heavy. The group cannot move at a swift pace, due to having to wait for the wanderer."
+          },
+          {
+            "level": 2,
+            "description": "The wanderer sleeps incredibly deeply, sometimes struggling to wake. Every time the wanderer sleeps, mark their Fallout gauge."
+          },
+          {
+            "level": 3,
+            "description": "The wanderer struggles to distinguish dream from reality as they sleepwalk through the ruins. When you perform an action either mark your Curse gauge or cut for speed."
+          }
+        ],
+        "finalMoment": "You drift into a sleep so deep it seems like death. You may awake, but not for a long, long time."
+      }
+    ]
+  }
+}
