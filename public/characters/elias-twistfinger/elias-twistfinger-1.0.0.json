@@ -1,0 +1,171 @@
+{
+  "id": "elias-twistfinger",
+  "name": "Elias Twistfinger",
+  "description": "This A character port",
+  "author": "Pregen",
+  "sheetVersion": "1.0.0",
+  "dateCreated": 1766614229,
+  "dateModified": 1766614426,
+  "versionRef": "beta-playtest@1.0.0",
+  "dependencies": [],
+  "data": {
+    "character": {
+      "name": "Elias Twistfinger",
+      "player": "Pregen",
+      "pronouns": "",
+      "origin": "Root-Broken",
+      "originRef": "beta-playtest@1.0.0:root-broken",
+      "path": "Pioneer",
+      "pathRef": "beta-playtest@1.0.0:pioneer",
+      "milestones": 0,
+      "dispair": 1,
+      "hope": 1,
+      "fallout": {
+        "level": 0,
+        "condition": "",
+        "maxTrack": 6,
+        "currentTrack": 0
+      },
+      "curse": {
+        "level": 0,
+        "condition": "",
+        "maxTrack": 3,
+        "currentTrack": 0
+      },
+      "clock": {
+        "food": 0,
+        "sleep": 0,
+        "dawnDusk": 0
+      }
+    },
+    "edges": [
+      {
+        "ref": "beta-playtest@1.0.0:stone",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:wind",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:lore",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:instinct",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:light",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:shadow",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:smoke",
+        "level": 0
+      }
+    ],
+    "skills": [
+      {
+        "ref": "beta-playtest@1.0.0:scramble",
+        "level": 2
+      },
+      {
+        "ref": "beta-playtest@1.0.0:delve",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:muse",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:puzzle",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:wreck",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:hunt",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:blend",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:tinker",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:soothe",
+        "level": 2
+      },
+      {
+        "ref": "beta-playtest@1.0.0:bargain",
+        "level": 0
+      }
+    ],
+    "backpack": {
+      "oddements": [
+        {
+          "ref": "beta-playtest@1.0.0:vine-rope",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:hearty-mushroom",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:metal-pitons",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:bronze-bell",
+          "quantity": 1
+        }
+      ],
+      "fragments": [
+        {
+          "ref": "beta-playtest@1.0.0:garden",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:thorny",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:flowering",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:collapsed",
+          "quantity": 1
+        }
+      ],
+      "campingGear": []
+    },
+    "aspects": [
+      {
+        "ref": "beta-playtest@1.0.0:broadleaf-mantle",
+        "track": 4
+      },
+      {
+        "ref": "beta-playtest@1.0.0:sharp-senses",
+        "track": 4
+      },
+      {
+        "ref": "beta-playtest@1.0.0:ornery-blade",
+        "track": 4
+      },
+      {
+        "ref": "beta-playtest@1.0.0:no-time-to-waste",
+        "track": 3
+      }
+    ]
+  }
+}

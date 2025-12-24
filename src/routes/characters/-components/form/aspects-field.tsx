@@ -1,7 +1,6 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Field,
-  FieldContent,
   FieldError,
   FieldLabel,
   FieldSet,
@@ -12,7 +11,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-import { useFieldContext } from "@/hooks/character.form";
+import { useFieldContext, useFormContext } from "@/hooks/character.form";
 import { useEffect, useState } from "react";
 
 import { useSourceStore } from "@/store/sourceStore";
@@ -21,6 +20,8 @@ import { ensureRefrence } from "@/lib/versioningHelpers";
 import type { Reference, SourceKey } from "@/types/refrence";
 import type { Aspect } from "@/types/source";
 import type { AspectReference } from "@/types/character";
+import { useStore } from "@tanstack/react-form";
+import { wandererExperienceEnum } from "../../create";
 
 export function AspectsField({
   originId,
@@ -32,12 +33,23 @@ export function AspectsField({
   aspectRefs: Reference[];
 }) {
   const field = useFieldContext<AspectReference[]>();
+  const form = useFormContext();
+  const wandererExperience = useStore(
+    form.store,
+    (state) => state.values.wandererExperience,
+  );
   const { resolveRefrence, isLoading } = useSourceStore();
   const [aspectObjects, setAspectObjects] = useState<Aspect[]>([]);
 
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
   const selectedAspects = field.state.value || [];
-  const maxSelection = 1;
+
+  let maxSelection = 1;
+  if (wandererExperience === wandererExperienceEnum.enum.newly) {
+    maxSelection = 1;
+  } else if (wandererExperience === wandererExperienceEnum.enum.capable) {
+    maxSelection = 2;
+  }
 
   useEffect(() => {
     // Reset state when origin changes
@@ -121,11 +133,9 @@ export function AspectsField({
                   {aspectObject.description}
                 </TooltipContent>
               </Tooltip>
-              <FieldContent>
-                <div>
-                  <strong>Effect:</strong> {aspectObject.effect}
-                </div>
-              </FieldContent>
+              <div>
+                <strong>Effect:</strong> {aspectObject.effect}
+              </div>
             </Field>
           );
         })}

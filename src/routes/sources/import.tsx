@@ -62,7 +62,7 @@ function ImportSource() {
         loading: "Importing source...",
         success: (source) => {
           navigate({
-            to: "/sources/$sourceId/preview",
+            to:     "/sources/$sourceId/preview",
             params: {
               sourceId: source.id,
             },
@@ -90,8 +90,8 @@ function ImportSource() {
         <SectionHeader>
           <SectionTitle>Import A Source</SectionTitle>
         </SectionHeader>
-        <SectionContent className="flex flex-row md:flex-col gap-16">
-          <div>
+        <SectionContent className="flex flex-col md:flex-row gap-16">
+          <div className="flex-1">
             <h2>
               <span>Download sources from </span>
               <HoverCard>
@@ -112,6 +112,7 @@ function ImportSource() {
               e.preventDefault();
               form.handleSubmit();
             }}
+            className="flex-1"
           >
             <FieldGroup>
               <form.Field

@@ -6,7 +6,9 @@ import {
   InputGroupText,
   InputGroupTextarea,
 } from "@/components/ui/input-group";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useFieldContext } from "@/hooks/character.form";
+import { wandererExperienceEnum } from "../../create";
 
 export function NameField({ label }: { label: string }) {
   const field = useFieldContext<string>();
@@ -56,7 +58,7 @@ export function DescriptionField({
   label,
   maxCharacters,
 }: {
-  label: string;
+  label:         string;
   maxCharacters: number;
 }) {
   const field = useFieldContext<string>();
@@ -83,6 +85,38 @@ export function DescriptionField({
           </InputGroupText>
         </InputGroupAddon>
       </InputGroup>
+      {isInvalid && <FieldError errors={field.state.meta.errors} />}
+    </Field>
+  );
+}
+
+export function WandererExperienceField({ label }: { label: string }) {
+  const field = useFieldContext<string>();
+  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+  return (
+    <Field data-invalid={isInvalid}>
+      <FieldLabel>{label}</FieldLabel>
+      <RadioGroup
+        name={field.name}
+        value={field.state.value}
+        onValueChange={(value) => field.handleChange(value)}
+        className="flex gap-4 flex-wrap"
+      >
+        <FieldLabel
+          htmlFor="newly-awakened"
+          className="flex items-center gap-2 cursor-pointer p-2 rounded-md border"
+        >
+          <RadioGroupItem value={wandererExperienceEnum.enum.newly} id="newly-awakened" />
+          <span>Newly-Awakened</span>
+        </FieldLabel>
+        <FieldLabel
+          htmlFor="capable-explorer"
+          className="flex items-center gap-2 cursor-pointer p-2 rounded-md border"
+        >
+          <RadioGroupItem value={wandererExperienceEnum.enum.capable} id="capable-explorer" />
+          <span>Capable Explorer</span>
+        </FieldLabel>
+      </RadioGroup>
       {isInvalid && <FieldError errors={field.state.meta.errors} />}
     </Field>
   );

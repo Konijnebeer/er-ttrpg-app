@@ -16,7 +16,6 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 import type { CampingGear } from "@/types/source";
-import { Badge } from "@/components/ui/badge";
 import {
   Popover,
   PopoverContent,

@@ -1,4 +1,4 @@
-import type { defaultCharacterFormValues } from "@/routes/characters/create";
+import { wandererExperienceEnum, type defaultCharacterFormValues } from "@/routes/characters/create";
 import { useSourceStore } from "@/store/sourceStore";
 import type {
   AspectReference,
@@ -124,7 +124,7 @@ export function useCreateCharacter() {
       );
 
       const allFragements: ItemReference[] = mergeItemRefs(
-        [...value.selectedOriginFragements, ...value.selectedPathFragements],
+        [...value.selectedOriginFragments, ...value.selectedPathFragments],
       );
 
       const allAspects: AspectReference[] = [
@@ -152,8 +152,8 @@ export function useCreateCharacter() {
             path:       pathObject.name,
             pathRef:    value.data.character.pathRef,
             milestones: 0,
-            dispair:    0,
-            hope:       2,
+            dispair:    value.wandererExperience === wandererExperienceEnum.enum.newly ? 0 : 1,
+            hope:       value.wandererExperience === wandererExperienceEnum.enum.newly ? 2 : 1,
             fallout:    {
               level:        0,
               condition:    "",

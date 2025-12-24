@@ -25,10 +25,10 @@ import { defaultCharacterFormValues } from "../../create";
 
 export const OriginPathSection = withCharacterForm({
   defaultValues: defaultCharacterFormValues,
-  props: {
+  props:         {
     sourceKeys: [] as SourceKey[],
-    type: "" as "origins" | "paths",
-    label: "" as string,
+    type:       "" as "origins" | "paths",
+    label:      "" as string,
   },
   render: function Render({ form, sourceKeys, type, label }) {
     const { sources, getSourceDataArray } = useSourceStore();
@@ -49,7 +49,7 @@ export const OriginPathSection = withCharacterForm({
             originArray.forEach((origin) => {
               allOrigins.push({
                 sourceKey: sourceKey,
-                data: origin,
+                data:      origin,
               });
             });
           }
@@ -71,9 +71,9 @@ export const OriginPathSection = withCharacterForm({
     let selectedOddements = "selectedOriginOddements" as
       | "selectedOriginOddements"
       | "selectedPathOddements";
-    let selectedFragements = "selectedOriginFragements" as
-      | "selectedOriginFragements"
-      | "selectedPathFragements";
+    let selectedFragments = "selectedOriginFragments" as
+      | "selectedOriginFragments"
+      | "selectedPathFragments";
     let selectedAspects = "selectedOriginAspects" as
       | "selectedOriginAspects"
       | "selectedPathAspects";
@@ -82,7 +82,7 @@ export const OriginPathSection = withCharacterForm({
       selectedEdges = "selectedPathEdges";
       selectedSkills = "selectedPathSkills";
       selectedOddements = "selectedPathOddements";
-      selectedFragements = "selectedPathFragements";
+      selectedFragments = "selectedPathFragments";
       selectedAspects = "selectedPathAspects";
     }
 
@@ -94,7 +94,7 @@ export const OriginPathSection = withCharacterForm({
             form.setFieldValue(selectedEdges, []);
             form.setFieldValue(selectedSkills, []);
             form.setFieldValue(selectedOddements, []);
-            form.setFieldValue(selectedFragements, []);
+            form.setFieldValue(selectedFragments, []);
             form.setFieldValue(selectedAspects, []);
           },
         }}
@@ -128,7 +128,7 @@ export const OriginPathSection = withCharacterForm({
                               key={`${origin.sourceKey}-${origin.data.id}`}
                               value={ensureRefrence(
                                 origin.sourceKey,
-                                origin.data.id
+                                origin.data.id,
                               )}
                             >
                               {origin.data.name}
@@ -188,7 +188,7 @@ export const OriginPathSection = withCharacterForm({
                           )}
                         />
                         <form.AppField
-                          name={selectedFragements}
+                          name={selectedFragments}
                           children={(field) => (
                             <field.EdgesSkillsField
                               originId={selectedOrigin.data.id}
@@ -196,7 +196,7 @@ export const OriginPathSection = withCharacterForm({
                               entityRefs={selectedOrigin.data.fragments}
                               type="fragments"
                               parentType={type}
-                              label="Fragements"
+                              label="Fragments"
                             />
                           )}
                         />
@@ -213,7 +213,7 @@ export const OriginPathSection = withCharacterForm({
                       />
                     </div>
                   ) : (
-                    "No Origin selected"
+                    `No ${label} selected`
                   )}
                 </CardContent>
                 <CardFooter>

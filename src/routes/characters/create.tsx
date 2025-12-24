@@ -47,6 +47,9 @@ export const Route = createFileRoute("/characters/create")({
   component: RouteComponent,
 });
 
+export const wandererExperienceEnum = z.enum(["newly", "capable"]);
+export type WandererExperience = z.infer<typeof wandererExperienceEnum>;
+
 const characterCreateFormSchema = characterMetadataSchema
   .pick({
     id:           true,
@@ -68,16 +71,17 @@ const characterCreateFormSchema = characterMetadataSchema
         pathRef:   z.string().nonempty("Path is required"),
       }),
     }),
-    selectedOriginEdges:      z.array(referenceSchema).length(1),
-    selectedOriginSkills:     z.array(referenceSchema).length(2),
-    selectedOriginOddements:  z.array(itemReferenceSchema).length(1),
-    selectedOriginFragements: z.array(itemReferenceSchema).length(1),
-    selectedOriginAspects:    z.array(aspectReferenceSchema).length(1),
-    selectedPathEdges:        z.array(referenceSchema).length(1),
-    selectedPathSkills:       z.array(referenceSchema).length(2),
-    selectedPathOddements:    z.array(itemReferenceSchema).length(1),
-    selectedPathFragements:   z.array(itemReferenceSchema).length(1),
-    selectedPathAspects:      z.array(aspectReferenceSchema).length(1),
+    selectedOriginEdges:     z.array(referenceSchema).min(1).max(2),
+    selectedOriginSkills:    z.array(referenceSchema).min(2).max(4),
+    selectedOriginOddements: z.array(itemReferenceSchema).min(1).max(2),
+    selectedOriginFragments: z.array(itemReferenceSchema).min(1).max(2),
+    selectedOriginAspects:   z.array(aspectReferenceSchema).min(1).max(2),
+    selectedPathEdges:       z.array(referenceSchema).min(1).max(2),
+    selectedPathSkills:      z.array(referenceSchema).min(2).max(4),
+    selectedPathOddements:   z.array(itemReferenceSchema).min(1).max(2),
+    selectedPathFragments:   z.array(itemReferenceSchema).min(1).max(2),
+    selectedPathAspects:     z.array(aspectReferenceSchema).min(1).max(2),
+    wandererExperience:      wandererExperienceEnum,
   });
 
 // Default vallues in its own constant so subforms can use the types properly
@@ -99,16 +103,18 @@ export const defaultCharacterFormValues = {
       // despair:   "",
     },
   },
-  selectedOriginEdges:      [] as Reference[],
-  selectedOriginSkills:     [] as Reference[],
-  selectedOriginOddements:  [] as OddementReference[],
-  selectedOriginFragements: [] as ItemReference[],
-  selectedOriginAspects:    [] as AspectReference[],
-  selectedPathEdges:        [] as Reference[],
-  selectedPathSkills:       [] as Reference[],
-  selectedPathOddements:    [] as OddementReference[],
-  selectedPathFragements:   [] as ItemReference[],
-  selectedPathAspects:      [] as AspectReference[],
+  selectedOriginEdges:     [] as Reference[],
+  selectedOriginSkills:    [] as Reference[],
+  selectedOriginOddements: [] as OddementReference[],
+  selectedOriginFragments: [] as ItemReference[],
+  selectedOriginAspects:   [] as AspectReference[],
+  selectedPathEdges:       [] as Reference[],
+  selectedPathSkills:      [] as Reference[],
+  selectedPathOddements:   [] as OddementReference[],
+  selectedPathFragments:   [] as ItemReference[],
+  selectedPathAspects:     [] as AspectReference[],
+  wandererExperience:      wandererExperienceEnum.enum
+    .newly as WandererExperience, // default to newly-awakened,
 };
 
 function RouteComponent() {
@@ -167,11 +173,11 @@ function RouteComponent() {
   // Subscribe to origin and path state
   const originRef = useStore(
     form.store,
-    (state) => state.values.data.character.originRef
+    (state) => state.values.data.character.originRef,
   );
   const pathRef = useStore(
     form.store,
-    (state) => state.values.data.character.pathRef
+    (state) => state.values.data.character.pathRef,
   );
 
   if (isLoading) {
@@ -182,7 +188,7 @@ function RouteComponent() {
   }
 
   return (
-    <Border>
+    <Border className="p-4">
       <ScrollArea className="h-full w-full lg:h-auto lg:overflow-visible">
         {/* Scroll bar element *NEEDED* to make sure it does scroll on smaller screens */}
         <ScrollBar orientation="vertical" />
@@ -192,7 +198,7 @@ function RouteComponent() {
             e.preventDefault();
             form.handleSubmit();
           }}
-          className="flex flex-col lg:flex-row gap-4"
+          className="flex flex-col lg:flex-row gap-4 p-2"
         >
           <FieldGroup>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -206,6 +212,31 @@ function RouteComponent() {
               />
             </div>
             <form.AppField
+              name="wandererExperience"
+              listeners={{
+                onChange: (wandererExperience) => {
+                  if (
+                    wandererExperience.value ===
+                    wandererExperienceEnum.enum.newly
+                  ) {
+                    form.setFieldValue("selectedOriginEdges", []);
+                    form.setFieldValue("selectedOriginSkills", []);
+                    form.setFieldValue("selectedOriginOddements", []);
+                    form.setFieldValue("selectedOriginFragments", []);
+                    form.setFieldValue("selectedOriginAspects", []);
+                    form.setFieldValue("selectedPathEdges", []);
+                    form.setFieldValue("selectedPathSkills", []);
+                    form.setFieldValue("selectedPathOddements", []);
+                    form.setFieldValue("selectedPathFragments", []);
+                    form.setFieldValue("selectedPathAspects", []);
+                  }
+                },
+              }}
+              children={(field) => (
+                <field.WandererExperienceField label="Wanderer Experience" />
+              )}
+            />
+            <form.AppField
               name="description"
               children={(field: any) => (
                 <field.DescriptionField
@@ -214,8 +245,7 @@ function RouteComponent() {
                 />
               )}
             />
-            <form.Subscribe
-              selector={(state) => state.values.versionRef}>
+            <form.Subscribe selector={(state) => state.values.versionRef}>
               {(versionRef) =>
                 versionRef && (
                   <form.AppForm>
@@ -225,7 +255,9 @@ function RouteComponent() {
                         <TabsTrigger value="path">Path</TabsTrigger>
                       </TabsList>
                       <TabsContent value="origin">
-                        <ScrollArea className={`${originRef ? "h-[75vh]" : "h-[22vh]"} lg:h-[48vh] overflow-hidden`}>
+                        <ScrollArea
+                          className={`${originRef ? "h-[75vh]" : "h-[22vh]"} lg:h-[48vh] overflow-hidden`}
+                        >
                           <OriginPathSection
                             form={form}
                             sourceKeys={sourceKeys}
@@ -235,7 +267,9 @@ function RouteComponent() {
                         </ScrollArea>
                       </TabsContent>
                       <TabsContent value="path">
-                        <ScrollArea className={`${pathRef ? "h-[75vh]" : "h-[22vh]"} lg:h-[48vh] overflow-hidden`}>
+                        <ScrollArea
+                          className={`${pathRef ? "h-[75vh]" : "h-[22vh]"} lg:h-[48vh] overflow-hidden`}
+                        >
                           <OriginPathSection
                             form={form}
                             sourceKeys={sourceKeys}

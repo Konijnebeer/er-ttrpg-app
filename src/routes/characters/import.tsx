@@ -90,8 +90,8 @@ function ImportCharacter() {
         <SectionHeader>
           <SectionTitle>Import A Character</SectionTitle>
         </SectionHeader>
-        <SectionContent className="flex flex-row md:flex-col gap-16">
-          <div>
+        <SectionContent className="flex flex-col md:flex-row gap-16">
+          <div className="flex-1">
             <h2>
               <span>Download characters from </span>
               <HoverCard>
@@ -112,6 +112,7 @@ function ImportCharacter() {
               e.preventDefault();
               form.handleSubmit();
             }}
+            className="flex-1"
           >
             <FieldGroup>
               <form.Field

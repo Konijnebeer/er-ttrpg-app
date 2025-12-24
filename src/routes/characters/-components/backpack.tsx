@@ -10,7 +10,6 @@ import type { Backpack } from "@/types/character";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 import { useDialogStore } from "@/store/dialogStore";
-import { Badge } from "@/components/ui/badge";
 
 export function BackpackSection({
   items,

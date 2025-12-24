@@ -6,7 +6,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-import { useFieldContext } from "@/hooks/character.form";
+import { useFieldContext, useFormContext } from "@/hooks/character.form";
 import { useEffect, useState } from "react";
 
 import { ensureRefrence } from "@/lib/versioningHelpers";
@@ -15,6 +15,8 @@ import { useSourceStore } from "@/store/sourceStore";
 import type { Reference, SourceKey } from "@/types/refrence";
 import type { EdgeSkill } from "@/types/source";
 import type { ItemReference, OddementReference } from "@/types/character";
+import { useStore } from "@tanstack/react-form";
+import { wandererExperienceEnum } from "../../create";
 
 export function EdgesSkillsField({
   originId,
@@ -32,6 +34,20 @@ export function EdgesSkillsField({
   label:      string;
 }) {
   const field = useFieldContext<Reference[] | OddementReference[]>();
+  const form = useFormContext();
+  const wandererExperience = useStore(
+    form.store,
+    (state) => state.values.wandererExperience,
+  );
+  let otherEdge: Reference[] = [];
+  if (type === "edges" && parentType === "origins") {
+    otherEdge = useStore(form.store, (state) => state.values.selectedPathEdges);
+  } else if (type === "edges" && parentType === "paths") {
+    otherEdge = useStore(
+      form.store,
+      (state) => state.values.selectedOriginEdges,
+    );
+  }
   const { resolveRefrence } = useSourceStore();
   const [entityObjects, setEntityObjects] = useState<EdgeSkill[]>([]);
 
@@ -40,15 +56,28 @@ export function EdgesSkillsField({
     | Reference[]
     | OddementReference[];
   // default max for edges/skills, items
+  // Linstener for wandererExperience to change the max selection
   let maxSelection = 1;
-  if (type === "edges") {
-    maxSelection = 1;
-  }
-  if (type === "skills") {
-    maxSelection = 2;
-  }
-  if (type === "oddements" || type === "fragments") {
-    maxSelection = 1;
+  if (wandererExperience === wandererExperienceEnum.enum.newly) {
+    if (type === "edges") {
+      maxSelection = 1;
+    }
+    if (type === "skills") {
+      maxSelection = 2;
+    }
+    if (type === "oddements" || type === "fragments") {
+      maxSelection = 1;
+    }
+  } else if (wandererExperience === wandererExperienceEnum.enum.capable) {
+    if (type === "edges") {
+      maxSelection = 1;
+    }
+    if (type === "skills") {
+      maxSelection = 4;
+    }
+    if (type === "oddements" || type === "fragments") {
+      maxSelection = 2;
+    }
   }
 
   useEffect(() => {
@@ -126,10 +155,15 @@ export function EdgesSkillsField({
                 )
               : (selectedEntities as Reference[]).includes(ref);
 
+          // Check if this edge is already selected in the other field (origin vs path)
+          const isSelectedInOtherField =
+            type === "edges" && otherEdge.includes(ref);
+
           const isDisabled =
-            !isChecked &&
-            selectedEntities.length >= maxSelection &&
-            maxSelection !== Infinity;
+            isSelectedInOtherField ||
+            (!isChecked &&
+              selectedEntities.length >= maxSelection &&
+              maxSelection !== Infinity);
 
           const labelContent = (
             <FieldLabel htmlFor={`${parentType}-${type}-${entityObject.id}`}>

@@ -25,7 +25,7 @@ import type { Oddement, Fragment, CampingGear, Aspect } from "@/types/source";
 
 type ItemUnion = Oddement | Fragment | CampingGear;
 import { haveSameTags, normalizeTagsForRef } from "@/lib/itemTagHelpers";
-import type { ItemReference, OddementReference } from "@/types/character";
+import type { OddementReference } from "@/types/character";
 
 export function DragOverlay({
   children,
@@ -68,9 +68,9 @@ export function SheetDropComponent({
   const [activeContent, setActiveContent] = useState<ItemUnion | Aspect | null>(
     null,
   );
-  const [pendingContent, setPendingContent] = useState<ItemUnion | Aspect | null>(
-    null,
-  );
+  const [pendingContent, setPendingContent] = useState<
+    ItemUnion | Aspect | null
+  >(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [track, setTrack] = useState(0);
@@ -125,11 +125,11 @@ export function SheetDropComponent({
     if (isItem(pendingContent)) {
       // Determine which backpack array to use
       let backpackKey: keyof typeof character.data.backpack;
-      
+
       // Determine type by checking properties
-    if ('type' in pendingContent) {
+      if ("type" in pendingContent) {
         backpackKey = "fragments";
-      } else if ('stakes' in pendingContent) {
+      } else if ("stakes" in pendingContent) {
         backpackKey = "campingGear";
       } else {
         backpackKey = "oddements";
@@ -141,15 +141,18 @@ export function SheetDropComponent({
       }
 
       // Only normalize tags for oddements
-      const normalizedPendingTags = ('tags' in pendingContent && pendingContent.tags) 
-        ? normalizeTagsForRef(pendingContent.id, pendingContent.tags)
-        : undefined;
+      const normalizedPendingTags =
+        "tags" in pendingContent && pendingContent.tags
+          ? normalizeTagsForRef(pendingContent.id, pendingContent.tags)
+          : undefined;
 
       const existingIndex = character.data.backpack[backpackKey].findIndex(
         (ref) => {
           if (backpackKey === "oddements") {
-            return ref.ref === pendingContent.id && 
-                   haveSameTags((ref as any).tags, normalizedPendingTags);
+            return (
+              ref.ref === pendingContent.id &&
+              haveSameTags((ref as any).tags, normalizedPendingTags)
+            );
           }
           return ref.ref === pendingContent.id;
         },
@@ -168,12 +171,12 @@ export function SheetDropComponent({
           ref: pendingContent.id,
           quantity,
         };
-        
+
         // Only add tags for oddements
         if (backpackKey === "oddements" && normalizedPendingTags) {
           newItem.tags = normalizedPendingTags;
         }
-        
+
         updatedBackpackArray.push(newItem);
       }
 
@@ -219,9 +222,12 @@ export function SheetDropComponent({
     // Fragments have type field
     // CampingGear has stakes and effect fields
     return (
-      ('tags' in content || !('type' in content) && !('category' in content ) && !('stakes' in content)) ||
-      'type' in content ||
-      ('stakes' in content && 'effect' in content)
+      "tags" in content ||
+      (!("type" in content) &&
+        !("category" in content) &&
+        !("stakes" in content)) ||
+      "type" in content ||
+      ("stakes" in content && "effect" in content)
     );
   }
 
