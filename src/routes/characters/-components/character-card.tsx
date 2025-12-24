@@ -14,6 +14,18 @@ import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useCharacterStore } from "@/store/characterStore";
+import { Trash } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 function CharacterCard({
   character,
@@ -22,14 +34,25 @@ function CharacterCard({
 }) {
   const date = new Date(character.dateModified * 1000);
   const formatedDate = `${date.getFullYear()}/${date.getMonth()}/${date.getDay()}`;
-  const { exportCharacter } = useCharacterStore();
+  const { exportCharacter, deleteCharacter, loadAllCharactersMetadata } = useCharacterStore();
 
-  function exportFunction() {
+  function onExport() {
     toast.promise(exportCharacter(character.id), {
       loading: "Exporting character...",
       success: "Character exported successfully!",
       error:   "Failed to export character.",
     });
+  }
+
+  async function onDelete() { 
+    toast.promise(
+      deleteCharacter(character.id).then(() => loadAllCharactersMetadata()),
+      {
+        loading: "Deleting character...",
+        success: "Character deleted successfully!",
+        error:   "Failed to delete character.",
+      }
+    );
   }
 
   return (
@@ -64,7 +87,26 @@ function CharacterCard({
             Edit
           </Button>
           </Link> */}
-          <Button variant="outline" onClick={exportFunction}>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="destructive" size="icon">
+                <Trash />
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Delete Character?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Are you sure you want to delete "{character.name}"? This action cannot be undone.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={onDelete}>Delete</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+          <Button variant="outline" onClick={onExport}>
             Export
           </Button>
           <Link
@@ -75,6 +117,7 @@ function CharacterCard({
           >
             <Button variant="default">Open</Button>
           </Link>
+        
         </div>
       </CardFooter>
     </Card>
@@ -99,4 +142,4 @@ function CharacterCardGrid({
   );
 }
 
-export { CharacterCard, CharacterCardGrid };
+export { CharacterCardGrid };

@@ -1,13 +1,46 @@
 {
   "characters": [
     {
-      "id": "test-character",
+      "id": "impetuous-caro",
       "versions": [
         {
           "versionNumber": "1.0.0",
-          "versionRef": "alpha-playtest@1.0.0",
+          "versionRef": "beta-playtest@1.0.0",
           "dependencies": [],
-          "filename": "test-character.json"
+          "filename": "impetuous-caro-1.0.0.json"
+        }
+      ]
+    },
+    {
+      "id": "bracken-of-low-walls",
+      "versions": [
+        {
+          "versionNumber": "1.0.0",
+          "versionRef": "beta-playtest@1.0.0",
+          "dependencies": [],
+          "filename": "bracken-of-low-walls-1.0.0.json"
+        }
+      ]
+    },
+    {
+      "id": "gigi",
+      "versions": [
+        {
+          "versionNumber": "1.0.0",
+          "versionRef": "beta-playtest@1.0.0",
+          "dependencies": [],
+          "filename": "gigi-1.0.0.json"
+        }
+      ]
+    },
+    {
+      "id": "tali-red-hand",
+      "versions": [
+        {
+          "versionNumber": "1.0.0",
+          "versionRef": "beta-playtest@1.0.0",
+          "dependencies": [],
+          "filename": "tali-red-hand-1.0.0.json"
         }
       ]
     }

@@ -25,91 +25,79 @@ import {
 } from "@/components/ui/field";
 import { useForm } from "@tanstack/react-form";
 import { useCharacterStore } from "@/store/characterStore";
-import type { CustomItem } from "@/types/character";
+import type { CustomFragment } from "@/types/character";
 import { toast } from "sonner";
-import { itemSchema, type ItemCategory } from "@/types/source";
-import { z } from "zod";
+import { customFragmentSchema } from "@/types/character";
+import { fragmentTypeSchema, type FragmentType } from "@/types/source";
+import type z from "zod";
+
+const customFragmentFormSchema = customFragmentSchema.pick({
+  name:        true,
+  description: true,
+  type:        true,
+});
+
+const inputvalues: z.input<typeof customFragmentFormSchema> = {
+  name:        "",
+  description: "",
+  type:        "Feature"
+};
 
 interface CreateItemDialogProps {
   open:         boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-export function CreateItemDialog({
+export function CreateFragmentDialog({
   open,
   onOpenChange,
 }: CreateItemDialogProps) {
   const { character, updateCharacter } = useCharacterStore();
 
-  const itemFormSchema = itemSchema
-    .pick({ name: true, category: true })
-    .extend({
-      description: z.string(),
-    });
-
-  const itemForm = useForm({
-    defaultValues: {
-      name:        "",
-      description: "",
-      category:    "Oddement" as ItemCategory,
-    },
-    validators: {
-      onSubmit: itemFormSchema,
+  const fragmentForm = useForm({
+    defaultValues: inputvalues,
+    validators:    {
+      onSubmit: customFragmentFormSchema,
     },
     onSubmit: async ({ value }) => {
-      const newItem: CustomItem = {
-        // Filter out everyhting thats not an alpha numerical character, _ or - replace spaces with -
+      const newFragment: CustomFragment = {
+        // Filter out everything that's not an alphanumeric character, _ or - replace spaces with -
         id:          `${value.name.replace(/[^\w-]+/g, "").toLowerCase()}-${Date.now()}`,
         name:        value.name,
-        description: value.description || undefined,
-        category:    value.category,
-        tags:        [],
+        description: value.description,
+        type:        value.type,
       };
 
-      // Map category to backpack key
-      let backpackKey: "oddements" | "fragments" | "campingGear";
-      switch (value.category) {
-        case "Oddement":
-          backpackKey = "oddements";
-          break;
-        case "Fragment":
-          backpackKey = "fragments";
-          break;
-        case "CampingGear":
-          backpackKey = "campingGear";
-          break;
-      }
-
-      const updatedCustomItems = [
-        ...(character.data?.customItems || []),
-        newItem,
+      const updatedCustomFragments = [
+        ...(character.data.customFragments || []),
+        newFragment,
       ];
 
       const updatedBackpackArray = [
-        ...(character.data?.backpack[backpackKey] || []),
-        { ref: newItem.id, quantity: 1, tags: [] },
+        ...(character.data?.backpack.fragments || []),
+        { ref: newFragment.id, quantity: 1, tags: [] },
       ];
 
       updateCharacter({
         data: {
           ...character.data,
-          customItems: updatedCustomItems,
-          backpack:    {
+          customFragments: updatedCustomFragments,
+          backpack:        {
             ...character.data?.backpack,
-            [backpackKey]: updatedBackpackArray,
+            fragments: updatedBackpackArray,
           },
         },
       });
 
-      toast.success(`Item "${value.name}" created successfully`);
-      itemForm.reset();
+      toast.success(`Fragment "${value.name}" created successfully`);
+      fragmentForm.reset();
       onOpenChange(false);
     },
   });
 
   useEffect(() => {
     if (!open) {
-      itemForm.reset();
+      fragmentForm.reset();
     }
   }, [open]);
 
@@ -124,14 +112,14 @@ export function CreateItemDialog({
         </DialogHeader>
 
         <form
-          id="item-form"
+          id="fragment-form"
           onSubmit={(e) => {
             e.preventDefault();
-            itemForm.handleSubmit();
+            fragmentForm.handleSubmit();
           }}
         >
           <FieldGroup>
-            <itemForm.Field
+            <fragmentForm.Field
               name="name"
               children={(field) => {
                 const isInvalid =
@@ -156,8 +144,8 @@ export function CreateItemDialog({
               }}
             />
 
-            <itemForm.Field
-              name="category"
+            <fragmentForm.Field
+              name="type"
               children={(field) => {
                 const isInvalid =
                   field.state.meta.isTouched && !field.state.meta.isValid;
@@ -167,20 +155,18 @@ export function CreateItemDialog({
                     <Select
                       value={field.state.value}
                       onValueChange={(value) =>
-                        field.handleChange(
-                          value as "Oddement" | "Fragment" | "CampingGear",
-                        )
+                        field.handleChange(value as FragmentType)
                       }
                     >
                       <SelectTrigger id={field.name}>
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Oddement">Oddement</SelectItem>
-                        <SelectItem value="Fragment">Fragment</SelectItem>
-                        <SelectItem value="CampingGear">
-                          Camping Gear
-                        </SelectItem>
+                        {fragmentTypeSchema.options.map((option) => (
+                          <SelectItem key={option} value={option}>
+                            {option}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                     {isInvalid && (
@@ -191,7 +177,7 @@ export function CreateItemDialog({
               }}
             />
 
-            <itemForm.Field
+            <fragmentForm.Field
               name="description"
               children={(field) => {
                 const isInvalid =
@@ -224,13 +210,13 @@ export function CreateItemDialog({
             type="button"
             variant="outline"
             onClick={() => {
-              itemForm.reset();
+              fragmentForm.reset();
               onOpenChange(false);
             }}
           >
             Cancel
           </Button>
-          <Button type="submit" form="item-form">
+          <Button type="submit" form="fragment-form">
             Create
           </Button>
         </DialogFooter>

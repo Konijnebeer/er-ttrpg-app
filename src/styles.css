@@ -6,9 +6,7 @@
 
 body {
   @apply m-0;
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -19,13 +17,17 @@ code {
 }
 
 :root {
+  --font-sans: 'Figtree', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans-serif: 'Bree Serif', Georgia, 'Times New Roman', serif;
+  --font-sans-serif-small: 'Crimson Text', system-ui, -apple-system;
+  --font-scrible: 'IM Fell Great Primer', Georgia, serif;
   /* --background: #EADFD6  ; */
   /* --background: #EBE5D5   ; */
   --background: oklch(0.9694 0.0059 59.65) ;
   --foreground: oklch(0.5172 0.0964 49.54);
   --card: oklch(0.9694 0.0059 59.65);
   --card-foreground: oklch(0.5172 0.0964 49.54);
-  --popover: oklch(1 0 0);
+  --popover: oklch(0.9694 0.0059 59.65);
   --popover-foreground: oklch(0.5172 0.0964 49.54);
   --primary: oklch(0.5172 0.0964 49.54);
   --primary-foreground: oklch(0.9694 0.0059 59.65);

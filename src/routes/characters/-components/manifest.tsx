@@ -31,14 +31,14 @@ import { useCharacterStore } from "@/store/characterStore";
 import { useEffect, useState } from "react";
 
 export interface ManifestCharacter {
-  id: string;
+  id:       string;
   versions: ManifestVersion[];
 }
 
 export interface ManifestVersion {
   versionNumber: string;
-  filename: string;
-  versionRef: string;
+  filename:      string;
+  versionRef:    string;
   dependencies?: string[];
 }
 
@@ -57,7 +57,6 @@ export default function CharacterManifestTree() {
       .then((data) => setManifest(data))
       .catch((err) => console.error("Failed to load manifest:", err));
   }, [loadAllCharactersMetadata]);
-
   return (
     <Accordion type="single" collapsible className="w-fit">
       {manifest?.characters &&
@@ -76,7 +75,7 @@ function CharacterBranch({
   character,
   characters,
 }: {
-  character: ManifestCharacter;
+  character:  ManifestCharacter;
   characters: any[];
 }) {
   return (
@@ -103,8 +102,8 @@ function VersionLeaf({
   characters,
 }: {
   characterId: string;
-  version: ManifestVersion;
-  characters: any[];
+  version:     ManifestVersion;
+  characters:  any[];
 }) {
   const { downloadCharacter, deleteCharacter } = useCharacterStore();
 
@@ -115,7 +114,7 @@ function VersionLeaf({
     toast.promise(downloadCharacter(characterId, version.filename), {
       loading: `Downloading ${characterId}...`,
       success: `Successfully downloaded ${characterId}`,
-      error: (error) =>
+      error:   (error) =>
         `Failed to download: ${error instanceof Error ? error.message : "Unknown error"}`,
     });
   };
@@ -124,7 +123,7 @@ function VersionLeaf({
     toast.promise(deleteCharacter(characterId), {
       loading: `Deleting ${characterId}...`,
       success: `Successfully deleted ${characterId}`,
-      error: (error) =>
+      error:   (error) =>
         `Failed to delete: ${error instanceof Error ? error.message : "Unknown error"}`,
     });
   };

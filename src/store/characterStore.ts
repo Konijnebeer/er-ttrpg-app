@@ -170,7 +170,7 @@ export const useCharacterStore = create<CharacterStoreState>((set, get) => ({
         text.trim().startsWith("<!DOCTYPE") ||
         text.trim().startsWith("<html")
       ) {
-        throw new Error(`Character file not found at /characters/${filename}`);
+        throw new Error(`Character file not found at /characters/${id}/${filename}`);
       }
 
       const jsonData = JSON.parse(text);
@@ -181,9 +181,14 @@ export const useCharacterStore = create<CharacterStoreState>((set, get) => ({
         throw new Error(`Invalid character format`);
       }
 
+      // Give unique id to imported character
+      result.data.id = `${result.data.id}-${Date.now()}`;
+
+      const resultJson = JSON.stringify(result.data, null, 2);
+      
       // Save to database
       await importCharacter(
-        new File([text], filename, { type: "application/json" }),
+        new File([resultJson], filename, { type: "application/json" }),
       );
 
       set({ isLoading: false });

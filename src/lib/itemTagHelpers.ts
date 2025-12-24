@@ -1,4 +1,4 @@
-import type { ItemReference } from "@/types/character";
+import type { ItemReference, OddementReference } from "@/types/character";
 import type { Reference } from "@/types/refrence";
 import { ensureRefrence, parseRefrence } from "./versioningHelpers";
 
@@ -24,9 +24,9 @@ export function haveSameTags(
 }
 
 export function normalizeItemReferenceTags(
-  itemRef: ItemReference,
+  itemRef: OddementReference,
   itemTagsFromSource?: Reference[],
-): ItemReference {
+): OddementReference {
   const normalizedTags =
     itemTagsFromSource && itemTagsFromSource.length > 0
       ? normalizeTagsForRef(itemRef.ref, itemTagsFromSource)
@@ -39,19 +39,44 @@ export function normalizeItemReferenceTags(
   };
 }
 
-export function mergeItemRefs(
-  items: ItemReference[],
+export function mergeItemRefs<T extends OddementReference | ItemReference>(
+  items: T[],
   resolveItemTags?: (ref: Reference) => Reference[] | undefined,
-): ItemReference[] {
-  return items.reduce((acc: ItemReference[], itemRef: ItemReference) => {
-    const sourceTags = resolveItemTags
-      ? resolveItemTags(itemRef.ref)
-      : undefined;
-    const normalized = normalizeItemReferenceTags(itemRef, sourceTags);
-    const existing = acc.find(
-      (item) =>
-        item.ref === normalized.ref && haveSameTags(item.tags, normalized.tags),
-    );
+): T[] {
+  return items.reduce((acc: T[], itemRef: T) => {
+    // Only normalize tags for OddementReference (which can have tags)
+    const hasTagSupport = "tags" in itemRef;
+
+    let normalized: T;
+    if (hasTagSupport && resolveItemTags) {
+      const sourceTags = resolveItemTags(itemRef.ref);
+      normalized = normalizeItemReferenceTags(
+        itemRef as OddementReference,
+        sourceTags,
+      ) as T;
+    } else if (hasTagSupport) {
+      normalized = normalizeItemReferenceTags(
+        itemRef as OddementReference,
+        (itemRef as OddementReference).tags,
+      ) as T;
+    } else {
+      // For ItemReference (fragments, campingGear), just ensure quantity
+      normalized = { ...itemRef, quantity: itemRef.quantity ?? 1 };
+    }
+
+    const existing = acc.find((item) => {
+      if (hasTagSupport && "tags" in item) {
+        return (
+          item.ref === normalized.ref &&
+          haveSameTags(
+            (item as OddementReference).tags,
+            (normalized as OddementReference).tags,
+          )
+        );
+      }
+      // For ItemReference, only match by ref
+      return item.ref === normalized.ref;
+    });
 
     if (existing) {
       existing.quantity += normalized.quantity ?? 1;

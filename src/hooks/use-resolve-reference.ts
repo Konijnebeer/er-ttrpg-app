@@ -5,13 +5,15 @@ import { idSchema, trueReferenceSchema } from "@/types/refrence";
 import type { SourceData } from "@/types/source";
 
 // Keys that exist in both SourceData and CharacterData
-type CommonDataKeys = "aspects" | "items" | "tags";
+type CommonDataKeys = "aspects" | "tags" | "oddements" | "fragments" | "campingGear";
 
 // Map from common keys to character custom keys
 type CharacterCustomKeyMap = {
-  aspects: "customAspects";
-  items:   "customItems";
-  tags:    "customTags";
+  aspects:     "customAspects";
+  oddements:   "customOddements";
+  fragments:   "customFragments";
+  campingGear: "customCampingGear";
+  tags:        "customTags";
 };
 
 /**
@@ -40,9 +42,11 @@ export function useResolveReference() {
     if (idResult.success) {
       // It's just an ID, look it up in character custom data
       const customKeyMap: CharacterCustomKeyMap = {
-        aspects: "customAspects",
-        items:   "customItems",
-        tags:    "customTags",
+        aspects:     "customAspects",
+        oddements:   "customOddements",
+        fragments:   "customFragments",
+        campingGear: "customCampingGear",
+        tags:        "customTags",
       };
 
       const characterDataKey = customKeyMap[dataType];

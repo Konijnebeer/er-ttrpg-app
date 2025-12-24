@@ -1,8 +1,8 @@
 {
-  "latest": "alpha-playtest@1.0.0",
+  "latest": "beta-playtest@1.0.0",
   "sources": [
     {
-      "id": "alpha-playtest",
+      "id": "beta-playtest",
       "versions": [
         {
           "versionNumber": "1.0.0",

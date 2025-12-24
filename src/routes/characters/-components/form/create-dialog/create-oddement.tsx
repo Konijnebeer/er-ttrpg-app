@@ -18,59 +18,73 @@ import {
 } from "@/components/ui/field";
 import { useForm } from "@tanstack/react-form";
 import { useCharacterStore } from "@/store/characterStore";
-import type { CustomTag } from "@/types/character";
+import type { CustomOddement } from "@/types/character";
 import { toast } from "sonner";
-import { customTagSchema } from "@/types/character";
-import { z } from "zod";
+import { customOddementSchema } from "@/types/character";
+import z from "zod";
 
-const customTagFormSchema = customTagSchema.pick({ name: true }).extend({
-  description: z.string(),
-});
 
-const inputvalues: z.input<typeof customTagFormSchema> = {
+const customOddementFormSchema = customOddementSchema.pick({ name: true, description: true });
+
+const inputvalues: z.input<typeof customOddementFormSchema> = {
   name:        "",
   description: "",
 };
 
-interface CreateTagDialogProps {
+interface CreateItemDialogProps {
   open:         boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-export function CreateTagDialog({ open, onOpenChange }: CreateTagDialogProps) {
+export function CreateOddementDialog({
+  open,
+  onOpenChange,
+}: CreateItemDialogProps) {
   const { character, updateCharacter } = useCharacterStore();
 
-  const tagForm = useForm({
+  const oddementForm = useForm({
     defaultValues: inputvalues,
     validators:    {
-      onSubmit: customTagFormSchema,
+      onSubmit: customOddementFormSchema,
     },
     onSubmit: async ({ value }) => {
-      const newTag: CustomTag = {
-        // Filter out everyhting thats not an alpha numerical character, _ or - replace spaces with -
+      const newOddement: CustomOddement = {
+        // Filter out everything that's not an alphanumeric character, _ or - replace spaces with -
         id:          `${value.name.replace(/[^\w-]+/g, "").toLowerCase()}-${Date.now()}`,
         name:        value.name,
-        description: value.description || undefined,
+        description: value.description,
       };
 
-      const updatedCustomTags = [...(character.data?.customTags || []), newTag];
+      const updatedCustomOddements = [
+        ...(character.data.customOddements || []),
+        newOddement,
+      ];
+
+      const updatedBackpackArray = [
+        ...(character.data?.backpack.oddements || []),
+        { ref: newOddement.id, quantity: 1, tags: [] },
+      ];
 
       updateCharacter({
         data: {
           ...character.data,
-          customTags: updatedCustomTags,
+          customOddements: updatedCustomOddements,
+          backpack:        {
+            ...character.data?.backpack,
+            oddements: updatedBackpackArray,
+          },
         },
       });
 
-      toast.success(`Tag "${value.name}" created successfully`);
-      tagForm.reset();
+      toast.success(`Oddement "${value.name}" created successfully`);
+      oddementForm.reset();
       onOpenChange(false);
     },
   });
 
   useEffect(() => {
     if (!open) {
-      tagForm.reset();
+      oddementForm.reset();
     }
   }, [open]);
 
@@ -78,21 +92,21 @@ export function CreateTagDialog({ open, onOpenChange }: CreateTagDialogProps) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-125">
         <DialogHeader>
-          <DialogTitle>Create Custom Tag</DialogTitle>
+          <DialogTitle>Create Custom Item</DialogTitle>
           <DialogDescription>
-            Add a custom tag to your character's collection.
+            Add a custom item to your character's Backpack.
           </DialogDescription>
         </DialogHeader>
 
         <form
-          id="tag-form"
+          id="oddement-form"
           onSubmit={(e) => {
             e.preventDefault();
-            tagForm.handleSubmit();
+            oddementForm.handleSubmit();
           }}
         >
           <FieldGroup>
-            <tagForm.Field
+            <oddementForm.Field
               name="name"
               children={(field) => {
                 const isInvalid =
@@ -106,7 +120,7 @@ export function CreateTagDialog({ open, onOpenChange }: CreateTagDialogProps) {
                       value={field.state.value}
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
-                      placeholder="Enter tag name"
+                      placeholder="Enter item name"
                       aria-invalid={isInvalid}
                     />
                     {isInvalid && (
@@ -117,7 +131,7 @@ export function CreateTagDialog({ open, onOpenChange }: CreateTagDialogProps) {
               }}
             />
 
-            <tagForm.Field
+            <oddementForm.Field
               name="description"
               children={(field) => {
                 const isInvalid =
@@ -131,7 +145,7 @@ export function CreateTagDialog({ open, onOpenChange }: CreateTagDialogProps) {
                       value={field.state.value}
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
-                      placeholder="Enter tag description (optional)"
+                      placeholder="Enter item description (optional)"
                       rows={3}
                       aria-invalid={isInvalid}
                     />
@@ -150,13 +164,13 @@ export function CreateTagDialog({ open, onOpenChange }: CreateTagDialogProps) {
             type="button"
             variant="outline"
             onClick={() => {
-              tagForm.reset();
+              oddementForm.reset();
               onOpenChange(false);
             }}
           >
             Cancel
           </Button>
-          <Button type="submit" form="tag-form">
+          <Button type="submit" form="oddement-form">
             Create
           </Button>
         </DialogFooter>

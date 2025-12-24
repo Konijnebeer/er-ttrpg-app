@@ -21,8 +21,11 @@ import {
 } from "@dnd-kit/core";
 import { useState } from "react";
 import { useCharacterStore } from "@/store/characterStore";
-import type { Item, Aspect } from "@/types/source";
+import type { Oddement, Fragment, CampingGear, Aspect } from "@/types/source";
+
+type ItemUnion = Oddement | Fragment | CampingGear;
 import { haveSameTags, normalizeTagsForRef } from "@/lib/itemTagHelpers";
+import type { ItemReference, OddementReference } from "@/types/character";
 
 export function DragOverlay({
   children,
@@ -62,10 +65,10 @@ export function SheetDropComponent({
 }) {
   const { character, updateCharacter } = useCharacterStore();
 
-  const [activeContent, setActiveContent] = useState<Item | Aspect | null>(
+  const [activeContent, setActiveContent] = useState<ItemUnion | Aspect | null>(
     null,
   );
-  const [pendingContent, setPendingContent] = useState<Item | Aspect | null>(
+  const [pendingContent, setPendingContent] = useState<ItemUnion | Aspect | null>(
     null,
   );
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -90,7 +93,7 @@ export function SheetDropComponent({
 
     // Only add if dropped on sheet
     if (over.id === "sheet-drop-zone") {
-      const content = active.data.current?.content as Item | Aspect;
+      const content = active.data.current?.content as ItemUnion | Aspect;
 
       // Open dialog with the content
       setPendingContent(content);
@@ -122,19 +125,14 @@ export function SheetDropComponent({
     if (isItem(pendingContent)) {
       // Determine which backpack array to use
       let backpackKey: keyof typeof character.data.backpack;
-      switch (pendingContent.category) {
-        case "Oddement":
-          backpackKey = "oddements";
-          break;
-        case "Fragment":
-          backpackKey = "fragments";
-          break;
-        case "CampingGear":
-          backpackKey = "campingGear";
-          break;
-        default:
-          toast.error("Unknown item category");
-          return;
+      
+      // Determine type by checking properties
+    if ('type' in pendingContent) {
+        backpackKey = "fragments";
+      } else if ('stakes' in pendingContent) {
+        backpackKey = "campingGear";
+      } else {
+        backpackKey = "oddements";
       }
 
       // Limit to 1000
@@ -142,14 +140,19 @@ export function SheetDropComponent({
         setQuantity(1000);
       }
 
-      const normalizedPendingTags = normalizeTagsForRef(
-        pendingContent.id,
-        pendingContent.tags,
-      );
+      // Only normalize tags for oddements
+      const normalizedPendingTags = ('tags' in pendingContent && pendingContent.tags) 
+        ? normalizeTagsForRef(pendingContent.id, pendingContent.tags)
+        : undefined;
 
       const existingIndex = character.data.backpack[backpackKey].findIndex(
-        (ref) =>
-          ref.ref === pendingContent.id && haveSameTags(ref.tags, normalizedPendingTags),
+        (ref) => {
+          if (backpackKey === "oddements") {
+            return ref.ref === pendingContent.id && 
+                   haveSameTags((ref as any).tags, normalizedPendingTags);
+          }
+          return ref.ref === pendingContent.id;
+        },
       );
 
       const updatedBackpackArray = [...character.data.backpack[backpackKey]];
@@ -161,11 +164,17 @@ export function SheetDropComponent({
           quantity: existingItem.quantity + quantity,
         };
       } else {
-        updatedBackpackArray.push({
+        const newItem: OddementReference = {
           ref: pendingContent.id,
           quantity,
-          tags: normalizedPendingTags,
-        });
+        };
+        
+        // Only add tags for oddements
+        if (backpackKey === "oddements" && normalizedPendingTags) {
+          newItem.tags = normalizedPendingTags;
+        }
+        
+        updatedBackpackArray.push(newItem);
       }
 
       updateCharacter({
@@ -205,16 +214,18 @@ export function SheetDropComponent({
     setTrack(0);
   }
 
-  function isItem(content: Item | Aspect): content is Item {
+  function isItem(content: ItemUnion | Aspect): content is ItemUnion {
+    // Oddements have optional tags field
+    // Fragments have type field
+    // CampingGear has stakes and effect fields
     return (
-      "category" in content &&
-      (content.category === "Oddement" ||
-        content.category === "Fragment" ||
-        content.category === "CampingGear")
+      ('tags' in content || !('type' in content) && !('category' in content ) && !('stakes' in content)) ||
+      'type' in content ||
+      ('stakes' in content && 'effect' in content)
     );
   }
 
-  function isAspect(content: Item | Aspect): content is Aspect {
+  function isAspect(content: ItemUnion | Aspect): content is Aspect {
     return (
       "category" in content &&
       (content.category === "Trait" ||

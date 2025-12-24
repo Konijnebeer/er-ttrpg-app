@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-type DialogType = "item" | "aspect" | "tag" | null;
+export type DialogType = "oddement" | "fragment" | "camping-gear" | "aspect" | "tag" | null;
 
 interface DialogState {
   open: boolean;

@@ -11,13 +11,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   Field,
   FieldError,
   FieldGroup,
@@ -25,70 +18,81 @@ import {
 } from "@/components/ui/field";
 import { useForm } from "@tanstack/react-form";
 import { useCharacterStore } from "@/store/characterStore";
-import type { CustomAspect } from "@/types/character";
+import type { CustomCampingGear } from "@/types/character";
 import { toast } from "sonner";
-import { aspectSchema, type AspectCatagory } from "@/types/source";
+import { customCampingGearSchema } from "@/types/character";
+import type z from "zod";
 
-interface CreateAspectDialogProps {
+const customCampingGearFormSchema = customCampingGearSchema.pick({
+  name:        true,
+  description: true,
+  effect:      true,
+  stakes:      true,
+});
+
+const inputvalues: z.input<typeof customCampingGearFormSchema> = {
+  name:        "",
+  description: "",
+  effect:      "",
+  stakes:      0,
+};
+
+interface CreateItemDialogProps {
   open:         boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-export function CreateAspectDialog({
+export function CreateCampingGearDialog({
   open,
   onOpenChange,
-}: CreateAspectDialogProps) {
+}: CreateItemDialogProps) {
   const { character, updateCharacter } = useCharacterStore();
 
-  const aspectForm = useForm({
-    defaultValues: {
-      name:        "",
-      description: "",
-      category:    "Trait" as AspectCatagory,
-      effect:      "",
-      maxTrack:    1,
-    },
-    validators: {
-      onSubmit: aspectSchema,
+  const campingGearForm = useForm({
+    defaultValues: inputvalues,
+    validators:    {
+      onSubmit: customCampingGearFormSchema,
     },
     onSubmit: async ({ value }) => {
-      const newAspect: CustomAspect = {
-        // Filter out everyhting thats not an alpha numerical character, _ or - replace spaces with -
+      const newCampingGear: CustomCampingGear = {
+        // Filter out everything that's not an alphanumeric character, _ or - replace spaces with -
         id:          `${value.name.replace(/[^\w-]+/g, "").toLowerCase()}-${Date.now()}`,
         name:        value.name,
         description: value.description,
         effect:      value.effect,
-        category:    value.category,
-        maxTrack:    value.maxTrack,
+        stakes:      value.stakes,
       };
 
-      const updatedCustomAspects = [
-        ...(character.data?.customAspects || []),
-        newAspect,
+      const updatedCustomCampingGear = [
+        ...(character.data.customCampingGear || []),
+        newCampingGear,
       ];
 
-      const updatedAspects = [
-        ...(character.data?.aspects || []),
-        { ref: newAspect.id, track: 0 },
+      const updatedBackpackArray = [
+        ...(character.data?.backpack.campingGear || []),
+        { ref: newCampingGear.id, quantity: 1, tags: [] },
       ];
 
       updateCharacter({
         data: {
           ...character.data,
-          aspects:       updatedAspects,
-          customAspects: updatedCustomAspects,
+          customCampingGear: updatedCustomCampingGear,
+          backpack:          {
+            ...character.data?.backpack,
+            campingGear: updatedBackpackArray,
+          },
         },
       });
 
-      toast.success(`Aspect "${value.name}" created successfully`);
-      aspectForm.reset();
+      toast.success(`Camping Gear "${value.name}" created successfully`);
+      campingGearForm.reset();
       onOpenChange(false);
     },
   });
 
   useEffect(() => {
     if (!open) {
-      aspectForm.reset();
+      campingGearForm.reset();
     }
   }, [open]);
 
@@ -96,21 +100,21 @@ export function CreateAspectDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-125">
         <DialogHeader>
-          <DialogTitle>Create Custom Aspect</DialogTitle>
+          <DialogTitle>Create Custom Item</DialogTitle>
           <DialogDescription>
-            Add a custom aspect to your character.
+            Add a custom item to your character's Backpack.
           </DialogDescription>
         </DialogHeader>
 
         <form
-          id="aspect-form"
+          id="camping-gear-form"
           onSubmit={(e) => {
             e.preventDefault();
-            aspectForm.handleSubmit();
+            campingGearForm.handleSubmit();
           }}
         >
           <FieldGroup>
-            <aspectForm.Field
+            <campingGearForm.Field
               name="name"
               children={(field) => {
                 const isInvalid =
@@ -124,7 +128,7 @@ export function CreateAspectDialog({
                       value={field.state.value}
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
-                      placeholder="Enter aspect name"
+                      placeholder="Enter item name"
                       aria-invalid={isInvalid}
                     />
                     {isInvalid && (
@@ -135,71 +139,7 @@ export function CreateAspectDialog({
               }}
             />
 
-            <aspectForm.Field
-              name="category"
-              children={(field) => {
-                const isInvalid =
-                  field.state.meta.isTouched && !field.state.meta.isValid;
-                return (
-                  <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name}>Category</FieldLabel>
-                    <Select
-                      value={field.state.value}
-                      onValueChange={(value) =>
-                        field.handleChange(
-                          value as "Trait" | "Gear" | "Habit" | "Relic",
-                        )
-                      }
-                    >
-                      <SelectTrigger id={field.name}>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Trait">Trait</SelectItem>
-                        <SelectItem value="Gear">Gear</SelectItem>
-                        <SelectItem value="Habit">Habit</SelectItem>
-                        <SelectItem value="Relic">Relic</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    {isInvalid && (
-                      <FieldError errors={field.state.meta.errors} />
-                    )}
-                  </Field>
-                );
-              }}
-            />
-
-            <aspectForm.Field
-              name="maxTrack"
-              children={(field) => {
-                const isInvalid =
-                  field.state.meta.isTouched && !field.state.meta.isValid;
-                return (
-                  <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name}>Max Track</FieldLabel>
-                    <Input
-                      id={field.name}
-                      name={field.name}
-                      type="number"
-                      className="[appearance:textfield]"
-                      min={1}
-                      max={10}
-                      value={field.state.value || ""}
-                      onBlur={field.handleBlur}
-                      onChange={(e) =>
-                        field.handleChange(Number(e.target.value))
-                      }
-                      aria-invalid={isInvalid}
-                    />
-                    {isInvalid && (
-                      <FieldError errors={field.state.meta.errors} />
-                    )}
-                  </Field>
-                );
-              }}
-            />
-
-            <aspectForm.Field
+            <campingGearForm.Field
               name="description"
               children={(field) => {
                 const isInvalid =
@@ -213,7 +153,7 @@ export function CreateAspectDialog({
                       value={field.state.value}
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
-                      placeholder="Enter aspect description (min 2 characters)"
+                      placeholder="Enter item description (optional)"
                       rows={3}
                       aria-invalid={isInvalid}
                     />
@@ -225,7 +165,7 @@ export function CreateAspectDialog({
               }}
             />
 
-            <aspectForm.Field
+            <campingGearForm.Field
               name="effect"
               children={(field) => {
                 const isInvalid =
@@ -239,8 +179,39 @@ export function CreateAspectDialog({
                       value={field.state.value}
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
-                      placeholder="Enter aspect effect (min 2 characters)"
-                      rows={3}
+                      placeholder="Describe the effect of this camping gear"
+                      rows={4}
+                      aria-invalid={isInvalid}
+                    />
+                    {isInvalid && (
+                      <FieldError errors={field.state.meta.errors} />
+                    )}
+                  </Field>
+                );
+              }}
+            />
+
+            <campingGearForm.Field
+              name="stakes"
+              children={(field) => {
+                const isInvalid =
+                  field.state.meta.isTouched && !field.state.meta.isValid;
+                return (
+                  <Field data-invalid={isInvalid}>
+                    <FieldLabel htmlFor={field.name}>Stakes (0-5)</FieldLabel>
+                    <Input
+                      id={field.name}
+                      name={field.name}
+                      type="number"
+                      className="[appearance:textfield]"
+                      min={0}
+                      max={5}
+                      value={field.state.value || ""}
+                      onBlur={field.handleBlur}
+                      onChange={(e) =>
+                        field.handleChange(Number(e.target.value))
+                      }
+                      placeholder="0"
                       aria-invalid={isInvalid}
                     />
                     {isInvalid && (
@@ -258,13 +229,13 @@ export function CreateAspectDialog({
             type="button"
             variant="outline"
             onClick={() => {
-              aspectForm.reset();
+              campingGearForm.reset();
               onOpenChange(false);
             }}
           >
             Cancel
           </Button>
-          <Button type="submit" form="aspect-form">
+          <Button type="submit" form="camping-gear-form">
             Create
           </Button>
         </DialogFooter>

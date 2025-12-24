@@ -8,6 +8,7 @@ import {
   itemReferenceSchema,
   type AspectReference,
   type ItemReference,
+  type OddementReference,
 } from "@/types/character";
 import {
   referenceSchema,
@@ -27,7 +28,7 @@ import {
 } from "./-components/form/source";
 import { OriginPathSection } from "./-components/form/origin-path";
 import z from "zod";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useCreateCharacter } from "@/lib/createCharacter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -85,7 +86,7 @@ export const defaultCharacterFormValues = {
   name:         "",
   description:  "",
   author:       "",
-  sheetVersion: "0.0.0",
+  sheetVersion: "1.0.0",
   dateCreated:  Math.floor(Date.now() / 1000),
   dateModified: Math.floor(Date.now() / 1000),
   versionRef:   "",
@@ -100,12 +101,12 @@ export const defaultCharacterFormValues = {
   },
   selectedOriginEdges:      [] as Reference[],
   selectedOriginSkills:     [] as Reference[],
-  selectedOriginOddements:  [] as ItemReference[],
+  selectedOriginOddements:  [] as OddementReference[],
   selectedOriginFragements: [] as ItemReference[],
   selectedOriginAspects:    [] as AspectReference[],
   selectedPathEdges:        [] as Reference[],
   selectedPathSkills:       [] as Reference[],
-  selectedPathOddements:    [] as ItemReference[],
+  selectedPathOddements:    [] as OddementReference[],
   selectedPathFragements:   [] as ItemReference[],
   selectedPathAspects:      [] as AspectReference[],
 };
@@ -163,6 +164,16 @@ function RouteComponent() {
     }
   }, [versionRef, dependencies, loadSources]);
 
+  // Subscribe to origin and path state
+  const originRef = useStore(
+    form.store,
+    (state) => state.values.data.character.originRef
+  );
+  const pathRef = useStore(
+    form.store,
+    (state) => state.values.data.character.pathRef
+  );
+
   if (isLoading) {
     return <Border>Loading...</Border>;
   }
@@ -172,107 +183,117 @@ function RouteComponent() {
 
   return (
     <Border>
-      <form
-        id="create-character"
-        onSubmit={(e) => {
-          e.preventDefault();
-          form.handleSubmit();
-        }}
-        className="grid md:grid-cols-2 gap-4"
-      >
-        <FieldGroup>
-          <div className="grid md:grid-cols-2 gap-4">
+      <ScrollArea className="h-full w-full lg:h-auto lg:overflow-visible">
+        {/* Scroll bar element *NEEDED* to make sure it does scroll on smaller screens */}
+        <ScrollBar orientation="vertical" />
+        <form
+          id="create-character"
+          onSubmit={(e) => {
+            e.preventDefault();
+            form.handleSubmit();
+          }}
+          className="flex flex-col lg:flex-row gap-4"
+        >
+          <FieldGroup>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <form.AppField
+                name="name"
+                children={(field) => <field.NameField label="Name" />}
+              />
+              <form.AppField
+                name="author"
+                children={(field) => <field.AuthorField label="Author" />}
+              />
+            </div>
             <form.AppField
-              name="name"
-              children={(field) => <field.NameField label="Name" />}
+              name="description"
+              children={(field: any) => (
+                <field.DescriptionField
+                  label="Description"
+                  maxCharacters={200}
+                />
+              )}
             />
-            <form.AppField
-              name="author"
-              children={(field) => <field.AuthorField label="Author" />}
-            />
-          </div>
-          <form.AppField
-            name="description"
-            children={(field: any) => (
-              <field.DescriptionField label="Description" maxCharacters={200} />
-            )}
-          />
-          <form.Subscribe selector={(state) => state.values.versionRef}>
-            {(versionRef) =>
-              versionRef && (
-                <form.AppForm>
-                  <Tabs defaultValue="origin" className="mb-4">
-                    <TabsList>
-                      <TabsTrigger value="origin">Origin</TabsTrigger>
-                      <TabsTrigger value="path">Path</TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="origin">
-                      <ScrollArea className="h-[48vh]">
-                        <OriginPathSection
-                          form={form}
-                          sourceKeys={sourceKeys}
-                          type="origins"
-                          label="Origin"
-                        />
-                      </ScrollArea>
-                    </TabsContent>
-                    <TabsContent value="path">
-                      <ScrollArea className="h-[48vh]">
-                        <OriginPathSection
-                          form={form}
-                          sourceKeys={sourceKeys}
-                          type="paths"
-                          label="Path"
-                        />
-                      </ScrollArea>
-                    </TabsContent>
-                  </Tabs>
-                </form.AppForm>
-              )
-            }
-          </form.Subscribe>
-        </FieldGroup>
-        <FieldGroup>
-          <h1 className="text-2xl font-semibold text-center">Dependencies</h1>
-          <p className="text-center italic">
-            Select here what rules and versions you want your characters to
-            include. You can also select homebrew you have imported.
-          </p>
-          <form.AppForm>
-            <CoreSourceSection form={form} />
-            <ExtraSourceSection form={form} />
-          </form.AppForm>
-          <div className="flex gap-2 w-full self-end justify-end mt-4">
-            {/* button with a alert dialog for canceling */}
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button variant="destructive">Cancel</Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    This action cannot be undone. This will permanently delete
-                    your character creation progress and return you to the
-                    characters list.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction
-                    onClick={() => navigate({ to: "/characters" })}
-                  >
-                    Continue
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-            <Button type="submit" form="create-character">
-              Create
-            </Button>
-          </div>
-        </FieldGroup>
-      </form>
+            <form.Subscribe
+              selector={(state) => state.values.versionRef}>
+              {(versionRef) =>
+                versionRef && (
+                  <form.AppForm>
+                    <Tabs defaultValue="origin" className="mb-4">
+                      <TabsList>
+                        <TabsTrigger value="origin">Origin</TabsTrigger>
+                        <TabsTrigger value="path">Path</TabsTrigger>
+                      </TabsList>
+                      <TabsContent value="origin">
+                        <ScrollArea className={`${originRef ? "h-[75vh]" : "h-[22vh]"} lg:h-[48vh] overflow-hidden`}>
+                          <OriginPathSection
+                            form={form}
+                            sourceKeys={sourceKeys}
+                            type="origins"
+                            label="Origin"
+                          />
+                        </ScrollArea>
+                      </TabsContent>
+                      <TabsContent value="path">
+                        <ScrollArea className={`${pathRef ? "h-[75vh]" : "h-[22vh]"} lg:h-[48vh] overflow-hidden`}>
+                          <OriginPathSection
+                            form={form}
+                            sourceKeys={sourceKeys}
+                            type="paths"
+                            label="Path"
+                          />
+                        </ScrollArea>
+                      </TabsContent>
+                    </Tabs>
+                  </form.AppForm>
+                )
+              }
+            </form.Subscribe>
+          </FieldGroup>
+          <FieldGroup>
+            <h1 className="text-2xl font-semibold text-center">Dependencies</h1>
+            <p className="text-center italic">
+              Select here what rules and versions you want your character to
+              include. You can also select homebrew you have imported.
+            </p>
+            <form.AppForm>
+              <CoreSourceSection form={form} />
+              <ExtraSourceSection form={form} />
+            </form.AppForm>
+            <div className="flex gap-2 w-full self-end justify-end mt-4">
+              {/* button with a alert dialog for canceling */}
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive">Cancel</Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Are you absolutely sure?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone. This will permanently delete
+                      your character creation progress and return you to the
+                      characters list.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={() => navigate({ to: "/characters" })}
+                    >
+                      Continue
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+              <Button type="submit" form="create-character">
+                Create
+              </Button>
+            </div>
+          </FieldGroup>
+        </form>
+      </ScrollArea>
     </Border>
   );
 }

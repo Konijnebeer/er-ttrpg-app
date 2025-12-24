@@ -3,11 +3,12 @@ import { Border } from "@/components/border";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import type { EdgeSkill, Tag, Item } from "@/types/source";
 import { EdgeSection } from "./-components/edge";
 import { SkillSection } from "./-components/skill";
 import { TagSection } from "./-components/tag";
-import { ItemSection } from "./-components/item";
+import { OddementSection } from "./-components/oddement";
+import { FragmentSection } from "./-components/fragment";
+import { CampingGearSection } from "./-components/camping-gear";
 import { AspectSection } from "./-components/aspect";
 import { ConditionSection } from "./-components/condition";
 import { ArrowBigLeftIcon, BadgeCheckIcon } from "lucide-react";
@@ -85,7 +86,7 @@ function RouteComponent() {
             </Badge>
           </div>
           <div className=" flex items-center gap-2">
-            <div className="flex">
+            <div className="flex *:bg-muted-foreground -space-x-2">
               {source.contributors.map((contributor) => (
                 <AvatarInfo key={contributor.id} contributor={contributor} />
               ))}
@@ -98,19 +99,25 @@ function RouteComponent() {
       <ScrollArea className="h-[75vh] w-full">
         <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
           {source.data.edges && source.data.edges.length >= 0 && (
-            <EdgeSection edges={source.data.edges as EdgeSkill[]} />
+            <EdgeSection edges={source.data.edges} />
           )}
           {source.data.skills && source.data.skills.length >= 0 && (
-            <SkillSection skills={source.data.skills as EdgeSkill[]} />
+            <SkillSection skills={source.data.skills} />
           )}
           {source.data.tags && source.data.tags.length >= 0 && (
-            <TagSection tags={source.data.tags as Tag[]} />
+            <TagSection tags={source.data.tags} />
           )}
-          {source.data.items && source.data.items.length >= 0 && (
-            <ItemSection
-              items={source.data.items as Item[]}
+          {source.data.oddements && source.data.oddements.length >= 0 && (
+            <OddementSection
+              oddements={source.data.oddements}
               sourceKey={sourceKey}
             />
+          )}
+          {source.data.fragments && source.data.fragments.length >= 0 && (
+            <FragmentSection fragments={source.data.fragments} />
+          )}
+          {source.data.campingGear && source.data.campingGear.length >= 0 && (
+            <CampingGearSection campingGear={source.data.campingGear} />
           )}
           {source.data.aspects && source.data.aspects.length >= 0 && (
             <AspectSection aspects={source.data.aspects} />

@@ -90,7 +90,7 @@ function ImportSource() {
         <SectionHeader>
           <SectionTitle>Import A Source</SectionTitle>
         </SectionHeader>
-        <SectionContent className="grid grid-cols-1 md:grid-cols-2 gap-16">
+        <SectionContent className="flex flex-row md:flex-col gap-16">
           <div>
             <h2>
               <span>Download sources from </span>

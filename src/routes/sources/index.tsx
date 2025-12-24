@@ -51,7 +51,7 @@ export default function SourcesIndexPage() {
           <SectionTitle>Sources</SectionTitle>
           <SectionDescription>Manage your sources here.</SectionDescription>
           <SectionAction>
-            <Button variant="outline" className="cursor-not-allowed">
+            <Button variant="outline" className="cursor-not-allowed w-fit">
               Create Source
             </Button>
             <Link to="/sources/import">

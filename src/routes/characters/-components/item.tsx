@@ -4,7 +4,10 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { TagBadge } from "../../sources/-components/tag";
-import type { Backpack, ItemReference } from "@/types/character";
+import type {
+  ItemReference,
+  OddementReference,
+} from "@/types/character";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus, PlusIcon, Trash } from "lucide-react";
 import type { Reference } from "@/types/refrence";
@@ -26,47 +29,76 @@ import {
 } from "@/components/ui/dialog";
 import { useSourceStore } from "@/store/sourceStore";
 import { useDialogStore } from "@/store/dialogStore";
+import { haveSameTags } from "@/lib/itemTagHelpers";
 
-function ItemCard({
+// Shared quantity input component
+function QuantityControl({
+  quantity,
+  setQuantity,
+}: {
+  quantity:    number;
+  setQuantity: (q: number) => void;
+}) {
+  return (
+    <ButtonGroup>
+      <Button
+        size="icon-sm"
+        onClick={() => setQuantity(quantity - 1)}
+        disabled={quantity <= 1}
+      >
+        <Minus />
+      </Button>
+      <ButtonGroupText className="bg-primary border-none max-w-10 px-0 flex items-center justify-center">
+        <Input
+          className="h-auto text-primary-foreground max-w-10 text-center"
+          value={quantity}
+          onChange={(e) => {
+            const val = e.target.value;
+            if (val === "") {
+              setQuantity(0);
+              return;
+            }
+            const num = Number(val);
+            if (isNaN(num)) return;
+            setQuantity(Math.max(1, num));
+          }}
+        />
+      </ButtonGroupText>
+      <Button size="icon-sm" onClick={() => setQuantity(quantity + 1)}>
+        <Plus />
+      </Button>
+    </ButtonGroup>
+  );
+}
+
+// Oddement Card (with tags support)
+function OddementCard({
   reference,
-  type,
   index,
 }: {
-  reference: ItemReference;
-  type:      keyof Backpack;
+  reference: OddementReference;
   index:     number;
 }) {
   const { resolveReference } = useResolveReference();
   const { character, updateCharacter } = useCharacterStore();
-  const item = resolveReference(reference.ref, "items");
+  const oddement = resolveReference(reference.ref, "oddements");
 
-  if (!item) {
-    return <p>Item Not Found</p>;
+  if (!oddement) {
+    return <p>Oddement Not Found</p>;
   }
 
   const [quantity, setQuantity] = useState<number>(reference.quantity);
 
-  // Helper to compare tags
-  function haveSameTags(
-    tags1: Reference[] | undefined,
-    tags2: Reference[] | undefined,
-  ): boolean {
-    const arr1 = tags1 ?? [];
-    const arr2 = tags2 ?? [];
-    if (arr1.length !== arr2.length) return false;
-    const sorted1 = [...arr1].sort();
-    const sorted2 = [...arr2].sort();
-    return sorted1.every((tag, index) => tag === sorted2[index]);
-  }
+  function removeTag(oddementRef: Reference) {
+    const updatedBackpackArray = [...character.data.backpack.oddements];
+    const oddementEntry = updatedBackpackArray[index];
+    if (!oddementEntry) return;
 
-  function removeTag(tagRef: Reference) {
-    const updatedBackpackArray = [...character.data.backpack[type]];
-    const itemEntry = updatedBackpackArray[index];
-    if (!itemEntry) return;
-
-    const nextTags = (itemEntry.tags ?? []).filter((tag) => tag !== tagRef);
+    const nextTags = (oddementEntry.tags ?? []).filter(
+      (tag) => tag !== oddementRef,
+    );
     updatedBackpackArray[index] = {
-      ...itemEntry,
+      ...oddementEntry,
       tags: nextTags,
     };
 
@@ -75,7 +107,7 @@ function ItemCard({
         ...character.data,
         backpack: {
           ...character.data.backpack,
-          [type]: updatedBackpackArray,
+          oddements: updatedBackpackArray,
         },
       },
     });
@@ -83,13 +115,13 @@ function ItemCard({
 
   // Update item when quantity changes
   useEffect(() => {
-    const existingIndex = character.data.backpack[type].findIndex(
+    const existingIndex = character.data.backpack.oddements.findIndex(
       (ref) =>
         ref.ref === reference.ref && haveSameTags(ref.tags, reference.tags),
     );
     if (existingIndex === -1) return;
 
-    const updatedBackpackArray = [...character.data.backpack[type]];
+    const updatedBackpackArray = [...character.data.backpack.oddements];
     updatedBackpackArray[existingIndex] = {
       ...updatedBackpackArray[existingIndex],
       quantity: quantity,
@@ -100,14 +132,14 @@ function ItemCard({
         ...character.data,
         backpack: {
           ...character.data.backpack,
-          [type]: updatedBackpackArray,
+          oddements: updatedBackpackArray,
         },
       },
     });
   }, [quantity]);
 
   function onDelete() {
-    const updatedBackpackArray = character.data.backpack[type].filter(
+    const updatedBackpackArray = character.data.backpack.oddements.filter(
       (ref) =>
         !(ref.ref === reference.ref && haveSameTags(ref.tags, reference.tags)),
     );
@@ -117,7 +149,7 @@ function ItemCard({
         ...character.data,
         backpack: {
           ...character.data.backpack,
-          [type]: updatedBackpackArray,
+          oddements: updatedBackpackArray,
         },
       },
     });
@@ -127,11 +159,13 @@ function ItemCard({
     <Popover>
       <PopoverTrigger asChild>
         <div className="text-sm capitalize cursor-help">
-          <span className="font-semibold inline-block min-w-[3ch] text-right">
+          <span
+            className={`font-semibold inline-block text-right ${reference.quantity < 10 ? "min-w-[2ch]" : "min-w-[3ch]"}`}
+          >
             {reference.quantity}x
           </span>
           &nbsp;
-          <span className="italic">{item.name}</span>
+          <span className="italic">{oddement.name}</span>
         </div>
       </PopoverTrigger>
       <PopoverContent>
@@ -156,7 +190,7 @@ function ItemCard({
                 })}
               </>
             )}
-            <AddTagDialog itemIndex={index} type={type}>
+            <AddTagDialog itemIndex={index}>
               <Badge className="w-5.5 aspect-square p-0 cursor-pointer">
                 <PlusIcon />
               </Badge>
@@ -165,15 +199,13 @@ function ItemCard({
         </header>
         <div className="mt-2">
           <div className="flex gap-4">
-            <div className="flex-1">
-              <div className="text-md">{item.description}</div>
-            </div>
+            <div className="flex-1">{oddement.description}</div>
 
-            {item.image && (
+            {oddement.image && (
               <div className="shrink-0 flex items-end">
                 <img
-                  src={`data:image/png;base64,${item.image}`}
-                  alt={item.name}
+                  src={`data:image/png;base64,${oddement.image}`}
+                  alt={oddement.name}
                   className="h-16 w-auto object-contain rounded-md"
                 />
               </div>
@@ -181,42 +213,190 @@ function ItemCard({
           </div>
         </div>
         <footer className="flex justify-between items-center">
-          <ButtonGroup className="">
-            <Button
-              size="icon-sm"
-              onClick={() => {
-                setQuantity((quantity) => quantity - 1);
-              }}
-              disabled={quantity <= 1}
-            >
-              <Minus />
-            </Button>
-            <ButtonGroupText className="bg-primary border-none max-w-10 px-0 flex items-center justify-center">
-              <Input
-                className="h-auto text-primary-foreground max-w-10 text-center"
-                value={quantity}
-                onChange={(e) => {
-                  const val = e.target.value;
-                  if (val === "") {
-                    setQuantity(0);
-                    return;
-                  }
-                  const num = Number(val);
-                  if (isNaN(num)) return;
-                  setQuantity(Math.max(1, num));
-                }}
-              />
-            </ButtonGroupText>
-            <Button
-              size="icon-sm"
-              onClick={() => {
-                setQuantity((quantity) => quantity + 1);
-              }}
-            >
-              <Plus />
-            </Button>
-          </ButtonGroup>
+          <QuantityControl quantity={quantity} setQuantity={setQuantity} />
+          <Button size="icon-sm" onClick={onDelete}>
+            <Trash />
+          </Button>
+        </footer>
+      </PopoverContent>
+    </Popover>
+  );
+}
 
+// Fragment Card (no tags)
+function FragmentCard({ reference }: { reference: ItemReference }) {
+  const { resolveReference } = useResolveReference();
+  const { character, updateCharacter } = useCharacterStore();
+  const fragment = resolveReference(reference.ref, "fragments");
+
+  if (!fragment) {
+    return <p>Fragment Not Found</p>;
+  }
+
+  const [quantity, setQuantity] = useState<number>(reference.quantity);
+
+  // Update item when quantity changes
+  useEffect(() => {
+    const existingIndex = character.data.backpack.fragments.findIndex(
+      (ref) => ref.ref === reference.ref,
+    );
+    if (existingIndex === -1) return;
+
+    const updatedBackpackArray = [...character.data.backpack.fragments];
+    updatedBackpackArray[existingIndex] = {
+      ...updatedBackpackArray[existingIndex],
+      quantity: quantity,
+    };
+
+    updateCharacter({
+      data: {
+        ...character.data,
+        backpack: {
+          ...character.data.backpack,
+          fragments: updatedBackpackArray,
+        },
+      },
+    });
+  }, [quantity]);
+
+  function onDelete() {
+    const updatedBackpackArray = character.data.backpack.fragments.filter(
+      (ref) => ref.ref !== reference.ref,
+    );
+
+    updateCharacter({
+      data: {
+        ...character.data,
+        backpack: {
+          ...character.data.backpack,
+          fragments: updatedBackpackArray,
+        },
+      },
+    });
+  }
+
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <div className="text-sm capitalize cursor-help">
+          <span
+            className={`font-semibold inline-block text-right ${reference.quantity < 10 ? "min-w-[2ch]" : "min-w-[3ch]"}`}
+          >
+            {reference.quantity}x
+          </span>
+          &nbsp;
+          <span className="italic">{fragment.name}</span>
+        </div>
+      </PopoverTrigger>
+      <PopoverContent>
+        <header>
+          <Badge>{fragment.type}</Badge>
+        </header>
+        <div className="mt-2">{fragment.description}</div>
+        <footer className="flex justify-between items-center">
+          <QuantityControl quantity={quantity} setQuantity={setQuantity} />
+          <Button size="icon-sm" onClick={onDelete}>
+            <Trash />
+          </Button>
+        </footer>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+// Camping Gear Card (no tags, has stakes)
+function CampingGearCard({ reference }: { reference: ItemReference }) {
+  const { resolveReference } = useResolveReference();
+  const { character, updateCharacter } = useCharacterStore();
+  const campingGear = resolveReference(reference.ref, "campingGear") as any;
+
+  if (!campingGear) {
+    return <p>Camping Gear Not Found</p>;
+  }
+
+  const [quantity, setQuantity] = useState<number>(reference.quantity);
+
+  // Update item when quantity changes
+  useEffect(() => {
+    const existingIndex = character.data.backpack.campingGear.findIndex(
+      (ref) => ref.ref === reference.ref,
+    );
+    if (existingIndex === -1) return;
+
+    const updatedBackpackArray = [...character.data.backpack.campingGear];
+    updatedBackpackArray[existingIndex] = {
+      ...updatedBackpackArray[existingIndex],
+      quantity: quantity,
+    };
+
+    updateCharacter({
+      data: {
+        ...character.data,
+        backpack: {
+          ...character.data.backpack,
+          campingGear: updatedBackpackArray,
+        },
+      },
+    });
+  }, [quantity]);
+
+  function onDelete() {
+    const updatedBackpackArray = character.data.backpack.campingGear.filter(
+      (ref) => ref.ref !== reference.ref,
+    );
+
+    updateCharacter({
+      data: {
+        ...character.data,
+        backpack: {
+          ...character.data.backpack,
+          campingGear: updatedBackpackArray,
+        },
+      },
+    });
+  }
+
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <div className="text-sm capitalize cursor-help">
+          <span
+            className={`font-semibold inline-block text-right ${reference.quantity < 10 ? "min-w-[2ch]" : "min-w-[3ch]"}`}
+          >
+            {reference.quantity}x
+          </span>
+          &nbsp;
+          <span className="italic">{campingGear.name}</span>
+        </div>
+      </PopoverTrigger>
+      <PopoverContent>
+        <header>
+          <Badge>
+            {campingGear.stakes ? "Stakes: " + campingGear.stakes : "Free"}
+          </Badge>
+        </header>
+        <div className="mt-2">
+          <div className="flex gap-4">
+            <div className="flex-1">
+              <div className="text-md">{campingGear.description}</div>
+              <div className="mt-2 italic text-sm">
+                <strong>Effect:</strong> {campingGear.effect}
+              </div>
+            </div>
+
+            {campingGear.image && (
+              <div className="shrink-0 flex items-end">
+                <img
+                  src={`data:image/png;base64,${campingGear.image}`}
+                  alt={campingGear.name}
+                  className="h-16 w-auto object-contain rounded-md"
+                />
+              </div>
+            )}
+          </div>
+        </div>
+        <footer className="flex justify-between items-center">
+          <QuantityControl quantity={quantity} setQuantity={setQuantity} />
           <Button size="icon-sm" onClick={onDelete}>
             <Trash />
           </Button>
@@ -228,11 +408,9 @@ function ItemCard({
 
 function AddTagDialog({
   itemIndex,
-  type,
   children,
 }: {
   itemIndex: number;
-  type:      keyof Backpack;
   children:  React.ReactNode;
 }) {
   const { getAllSourcesDataArray } = useSourceStore();
@@ -245,7 +423,7 @@ function AddTagDialog({
   const { openDialog } = useDialogStore();
 
   const searchedTags = useMemo(() => {
-    const currentItem = character.data.backpack[type]?.[itemIndex];
+    const currentItem = character.data.backpack.oddements[itemIndex];
     const existingTagIds = new Set(currentItem?.tags ?? []);
 
     return allTags
@@ -258,23 +436,23 @@ function AddTagDialog({
           (tag.description ?? "").toLowerCase().includes(q)
         );
       });
-  }, [allTags, character.data.backpack, itemIndex, search, type]);
+  }, [allTags, character.data.backpack, itemIndex, search]);
 
   function addTag(tagRef: Reference) {
-    const item = character.data.backpack[type][itemIndex];
+    const item = character.data.backpack.oddements[itemIndex];
     if (!item) return;
     const updatedItem = {
       ...item,
       tags: [...(item.tags || []), tagRef],
     };
-    const updatedBackpackArray = [...character.data.backpack[type]];
+    const updatedBackpackArray = [...character.data.backpack.oddements];
     updatedBackpackArray[itemIndex] = updatedItem;
     updateCharacter({
       data: {
         ...character.data,
         backpack: {
           ...character.data.backpack,
-          [type]: updatedBackpackArray,
+          oddements: updatedBackpackArray,
         },
       },
     });
@@ -332,4 +510,4 @@ function AddTagDialog({
   );
 }
 
-export { ItemCard };
+export { OddementCard, FragmentCard, CampingGearCard };

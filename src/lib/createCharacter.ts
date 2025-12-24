@@ -5,6 +5,7 @@ import type {
   Character,
   EdgeSkillReference,
   ItemReference,
+  OddementReference,
 } from "@/types/character";
 import type { SourceKey } from "@/types/refrence";
 import { ensureRefrence } from "./versioningHelpers";
@@ -114,17 +115,16 @@ export function useCreateCharacter() {
         }
       });
 
-      const resolveItemTags = (ref: string) =>
-        resolveRefrence(ref, "items")?.tags;
+      const resolveOddementTags = (ref: string) =>
+        resolveRefrence(ref, "oddements")?.tags;
 
-      const allOddements: ItemReference[] = mergeItemRefs(
+      const allOddements: OddementReference[] = mergeItemRefs(
         [...value.selectedOriginOddements, ...value.selectedPathOddements],
-        resolveItemTags,
+        resolveOddementTags,
       );
 
       const allFragements: ItemReference[] = mergeItemRefs(
         [...value.selectedOriginFragements, ...value.selectedPathFragements],
-        resolveItemTags,
       );
 
       const allAspects: AspectReference[] = [
@@ -152,8 +152,8 @@ export function useCreateCharacter() {
             path:       pathObject.name,
             pathRef:    value.data.character.pathRef,
             milestones: 0,
-            dispair:    1,
-            hope:       1,
+            dispair:    0,
+            hope:       2,
             fallout:    {
               level:        0,
               condition:    "",

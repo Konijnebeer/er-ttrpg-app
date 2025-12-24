@@ -27,8 +27,8 @@ export function AspectsField({
   sourceKey,
   aspectRefs,
 }: {
-  originId: string;
-  sourceKey: SourceKey;
+  originId:   string;
+  sourceKey:  SourceKey;
   aspectRefs: Reference[];
 }) {
   const field = useFieldContext<AspectReference[]>();
@@ -50,7 +50,7 @@ export function AspectsField({
       try {
         const aspectObject = resolveRefrence(
           ensureRefrence(sourceKey, aspectRef),
-          "aspects"
+          "aspects",
         );
         if (aspectObject) {
           resolvedAspectsObjects.push(aspectObject);
@@ -88,7 +88,7 @@ export function AspectsField({
       <FieldLabel>
         Aspects ({selectedAspects.length} of {maxSelection} selected)
       </FieldLabel>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-2">
         {aspectObjects.map((aspectObject) => {
           const ref = ensureRefrence(sourceKey, aspectObject.id);
           const isChecked = selectedAspects.some((a) => a.ref === ref);
@@ -107,7 +107,7 @@ export function AspectsField({
                       onCheckedChange={(checked) =>
                         handleCheckboxChange(
                           aspectObject.id,
-                          checked as boolean
+                          checked as boolean,
                         )
                       }
                     />
@@ -121,7 +121,11 @@ export function AspectsField({
                   {aspectObject.description}
                 </TooltipContent>
               </Tooltip>
-              <FieldContent>Effect: effects and abilites go here</FieldContent>
+              <FieldContent>
+                <div>
+                  <strong>Effect:</strong> {aspectObject.effect}
+                </div>
+              </FieldContent>
             </Field>
           );
         })}

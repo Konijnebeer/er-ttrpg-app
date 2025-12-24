@@ -1,8 +1,9 @@
-import { CreateItemDialog } from "./create-item";
+import { CreateOddementDialog } from "./create-oddement";
 import { CreateAspectDialog } from "./create-aspect";
 import { CreateTagDialog } from "./create-tag";
-
-type DialogType = "item" | "aspect" | "tag" | null;
+import { CreateFragmentDialog } from "./create-fragment";
+import { CreateCampingGearDialog } from "./create-camping-gear";
+import type { DialogType } from "@/store/dialogStore";
 
 interface CreateDialogProps {
   open:         boolean;
@@ -11,8 +12,16 @@ interface CreateDialogProps {
 }
 
 export function CreateDialog({ open, onOpenChange, type }: CreateDialogProps) {
-  if (type === "item") {
-    return <CreateItemDialog open={open} onOpenChange={onOpenChange} />;
+  if (type === "oddement") {
+    return <CreateOddementDialog open={open} onOpenChange={onOpenChange} />;
+  }
+
+  if (type === "fragment") {
+    return <CreateFragmentDialog open={open} onOpenChange={onOpenChange} />;
+  }
+
+  if (type === "camping-gear") {
+    return <CreateCampingGearDialog open={open} onOpenChange={onOpenChange} />;
   }
 
   if (type === "aspect") {

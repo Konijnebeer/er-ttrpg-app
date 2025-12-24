@@ -24,16 +24,16 @@ export type ContactType = z.infer<typeof contactTypeSchema>;
 export const contactSchema = z.object({
   type: contactTypeSchema,
   name: z.string().min(2).max(30),
-  url: z.url().optional(),
+  url:  z.url().optional(),
 });
 
 export type Contact = z.infer<typeof contactSchema>;
 
 export const contributorSchema = z.object({
-  id: z.string(),
-  title: z.string().min(3).max(20),
-  name: z.string().min(2).max(100),
-  image: z.base64().optional(),
+  id:      z.string(),
+  title:   z.string().min(3).max(20),
+  name:    z.string().min(2).max(100),
+  image:   z.base64().optional(),
   contact: z.array(contactSchema).optional(),
 });
 
@@ -45,13 +45,13 @@ export const acknowledgementSchema = contributorSchema.extend({
 
 export type Acknowledgement = z.infer<typeof acknowledgementSchema>;
 
-// Items and Tags
+// Oddements, Tags, Fragments & Camping Gear
 
 export const tagSchema = z.object({
-  id: idSchema,
-  name: z.string(),
+  id:          idSchema,
+  name:        z.string(),
   description: z.string().min(3).max(50).optional(),
-  color: z
+  color:       z
     .string()
     .regex(/^#[0-9a-fA-F]{6}$/)
     .optional(),
@@ -60,38 +60,53 @@ export const tagSchema = z.object({
 
 export type Tag = z.infer<typeof tagSchema>;
 
-export const itemCategorySchema = z.enum([
-  "Oddement",
-  "Fragment",
-  "CampingGear",
-]);
-
-export type ItemCategory = z.infer<typeof itemCategorySchema>;
-
-export const itemSchema = z.object({
-  id: idSchema,
-  name: z.string().min(2).max(30),
-  image: z.string().optional(),
-  description: z.string().min(4).max(100).optional(),
-  tags: z.array(referenceSchema).optional(),
-  category: itemCategorySchema,
+export const oddementSchema = z.object({
+  id:          idSchema,
+  name:        z.string().min(2).max(40),
+  image:       z.string().optional(),
+  description: z.string().min(0).max(100).optional(),
+  tags:        z.array(referenceSchema).optional(),
 });
 
-export type Item = z.infer<typeof itemSchema>;
+export type Oddement = z.infer<typeof oddementSchema>;
+
+export const fragmentTypeSchema = z.enum(["Feature", "Detail"]);
+
+export type FragmentType = z.infer<typeof fragmentTypeSchema>;
+
+export const fragmentSchema = z.object({
+  id:          idSchema,
+  name:        z.string().min(2).max(40),
+  description: z.string().min(0).max(100).optional(),
+  type:        fragmentTypeSchema,
+});
+
+export type Fragment = z.infer<typeof fragmentSchema>;
+
+export const campingGearSchema = z.object({
+  id:          idSchema,
+  name:        z.string().min(2).max(40),
+  image:       z.string().optional(),
+  description: z.string().min(0).max(250).optional(),
+  effect:      z.string().min(5).max(500),
+  stakes:      z.int().min(0).max(5),
+});
+
+export type CampingGear = z.infer<typeof campingGearSchema>;
 
 // Data
 
 export const gaugeBonusesSchema = z.object({
   fallout: z.int(),
-  curse: z.int(),
+  curse:   z.int(),
 });
 
 export type GaugeBonuses = z.infer<typeof gaugeBonusesSchema>;
 
 export const edgeSkillSchema = z.object({
-  id: idSchema,
-  name: z.string().min(2).max(10),
-  maxTrack: z.int().min(1).max(5),
+  id:          idSchema,
+  name:        z.string().min(2).max(10),
+  maxTrack:    z.int().min(1).max(5),
   description: z.string().min(2).max(150),
 });
 
@@ -109,11 +124,12 @@ export const aspectCatagorySchema = z.enum(["Trait", "Gear", "Habit", "Relic"]);
 export type AspectCatagory = z.infer<typeof aspectCatagorySchema>;
 
 export const aspectSchema = z.object({
-  id: idSchema,
-  name: z.string().min(2).max(40),
-  image: z.base64().optional(),
+  id:          idSchema,
+  name:        z.string().min(2).max(40),
+  image:       z.base64().optional(),
   description: z.string().min(2).max(200),
-  maxTrack: z.int().min(1).max(10),
+  effect:      z.string().min(2).max(400),
+  maxTrack:    z.int().min(1).max(10),
   category: aspectCatagorySchema,
 
   // abiltiy for now nothing since this is for a way later stage of the road map
@@ -123,28 +139,28 @@ export const aspectSchema = z.object({
 export type Aspect = z.infer<typeof aspectSchema>;
 
 export const originPathSchema = z.object({
-  id: idSchema,
-  name: z.string(),
-  image: z.base64().optional(),
-  description: z.string().min(2).max(700),
-  edges: z.array(idSchema),
-  skills: z.array(idSchema),
-  oddements: z.array(idSchema),
-  fragments: z.array(idSchema),
+  id:           idSchema,
+  name:         z.string(),
+  image:        z.base64().optional(),
+  description:  z.string().min(2).max(700),
+  edges:        z.array(idSchema),
+  skills:       z.array(idSchema),
+  oddements:    z.array(idSchema),
+  fragments:    z.array(idSchema),
   gaugeBonuses: gaugeBonusesSchema,
-  aspects: z.array(idSchema),
+  aspects:      z.array(idSchema),
 });
 
 export type OriginPath = z.infer<typeof originPathSchema>;
 
 export const conditionSchema = z.object({
-  id: idSchema,
-  name: z.string(),
-  type: z.enum(["fallout", "curse"]),
+  id:          idSchema,
+  name:        z.string(),
+  type:        z.enum(["fallout", "curse"]),
   description: z.string().min(20).max(500),
-  levels: z
+  levels:      z
     .object({
-      level: z.int(),
+      level:       z.int(),
       description: z.string().min(20).max(500),
     })
     .array(),
@@ -156,13 +172,15 @@ export type Condition = z.infer<typeof conditionSchema>;
 // SourceData
 
 export const sourceDataSchema = z.object({
-  origins: z.array(originPathSchema).optional(),
-  paths: z.array(originPathSchema).optional(),
-  tags: z.array(tagSchema).optional(),
-  items: z.array(itemSchema).optional(),
-  aspects: z.array(aspectSchema).optional(),
-  skills: z.array(edgeSkillSchema).optional(),
-  edges: z.array(edgeSkillSchema).optional(),
+  origins:     z.array(originPathSchema).optional(),
+  paths:       z.array(originPathSchema).optional(),
+  tags:        z.array(tagSchema).optional(),
+  oddements:   z.array(oddementSchema).optional(),
+  fragments:   z.array(fragmentSchema).optional(),
+  campingGear: z.array(campingGearSchema).optional(),
+  aspects:     z.array(aspectSchema).optional(),
+  skills:      z.array(edgeSkillSchema).optional(),
+  edges:       z.array(edgeSkillSchema).optional(),
   conditions: z.array(conditionSchema).optional(),
   // abilities: z.array().optional(),
 });
@@ -177,17 +195,17 @@ export type SourceStatus = z.infer<typeof sourceStatusSchema>;
 
 // Core sourceInfo schema
 const coreSourceSchema = z.object({
-  homebrew: z.boolean().default(true),
-  isCore: z.literal(true),
-  dependencies: z.array(sourceKeySchema).max(0).optional(), // must be empty or undefined
+  homebrew:       z.boolean().default(true),
+  isCore:         z.literal(true),
+  dependencies:   z.array(sourceKeySchema).max(0).optional(), // must be empty or undefined
   coreDependency: z.never().optional(),
 });
 
 // Non-core sourceInfo schema
 const nonCoreSourceSchema = z.object({
-  homebrew: z.boolean().default(true),
-  isCore: z.literal(false),
-  dependencies: z.array(sourceKeySchema).optional(),
+  homebrew:       z.boolean().default(true),
+  isCore:         z.literal(false),
+  dependencies:   z.array(sourceKeySchema).optional(),
   coreDependency: sourceKeySchema, // must exist
 });
 
@@ -197,19 +215,19 @@ const sourceInfo = z.discriminatedUnion("isCore", [
 ]);
 
 export const sourceMetadataSchema = z.object({
-  id: idSchema,
-  version: versionSchema,
-  name: z.string().min(5).max(40),
-  description: z.string().min(20).max(200),
-  url: z.url().optional(),
-  license: z.string().default("None"),
-  status: sourceStatusSchema,
-  sourceInfo: sourceInfo,
-  language: bcp47Schema.default("en-GB"),
-  contributors: z.array(contributorSchema).min(1),
+  id:               idSchema,
+  version:          versionSchema,
+  name:             z.string().min(5).max(40),
+  description:      z.string().min(20).max(200),
+  url:              z.url().optional(),
+  license:          z.string().default("None"),
+  status:           sourceStatusSchema,
+  sourceInfo:       sourceInfo,
+  language:         bcp47Schema.default("en-GB"),
+  contributors:     z.array(contributorSchema).min(1),
   acknowledgements: z.array(acknowledgementSchema).optional(),
-  dateCreated: z.int().min(0),
-  dateModified: z.int().min(0),
+  dateCreated:      z.int().min(0),
+  dateModified:     z.int().min(0),
 });
 
 export type SourceMetadata = z.infer<typeof sourceMetadataSchema>;

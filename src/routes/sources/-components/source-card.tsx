@@ -12,11 +12,37 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import AvatarInfo from "./avatar-info";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { BadgeCheckIcon } from "lucide-react";
+import { BadgeCheckIcon, Trash } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+import { useSourceStore } from "@/store/sourceStore";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 function SourceCard({ source }: { source: SourceMetadata }) {
+  const { deleteSource, loadAllSourcesMetadata } = useSourceStore();
+
+  async function onDelete() {
+    toast.promise(
+      deleteSource(source.id, source.version).then(() => loadAllSourcesMetadata()),
+      {
+        loading: "Deleting source...",
+        success: "Source deleted successfully!",
+        error:   "Failed to delete source.",
+      }
+    );
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -39,12 +65,33 @@ function SourceCard({ source }: { source: SourceMetadata }) {
       </CardHeader>
       <CardContent>{source.description}</CardContent>
       <CardFooter className="flex flex-wrap space-y-4 md:space-y-0 space-x-4 justify-between  w-full mt-auto">
-        <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2">
+        <div className="flex -space-x-2 *:bg-muted-foreground">
           {source.contributors.map((contributor) => (
             <AvatarInfo key={contributor.id} contributor={contributor} />
           ))}
         </div>
         <div className="flex gap-2">
+          {source.sourceInfo.homebrew !== false && (
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="destructive" size="icon">
+                  <Trash />
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Delete Source?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Are you sure you want to delete "{source.name}"? This action cannot be undone.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={onDelete}>Delete</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          )}
           {/* <Link
             to="/sources/$sourceId/edit"
             params={{
@@ -65,6 +112,7 @@ function SourceCard({ source }: { source: SourceMetadata }) {
           >
             <Button variant="default">Open</Button>
           </Link>
+        
         </div>
       </CardFooter>
     </Card>

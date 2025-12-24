@@ -55,7 +55,7 @@ export default function SourcesIndexPage() {
   return (
     <Border>
       <About />
-      <Section>
+      <Section className="pb-2">
         <SectionHeader>
           <Link to="/characters">
             <SectionTitle>Characters</SectionTitle>
@@ -81,7 +81,7 @@ export default function SourcesIndexPage() {
           </Link>
           <SectionDescription>Manage your sources here.</SectionDescription>
           <SectionAction>
-            <Button variant="outline" className="cursor-not-allowed">
+            <Button variant="outline" className="cursor-not-allowed w-fit">
               Create Source
             </Button>
             <Link to="/sources/import">

@@ -14,7 +14,7 @@ import { useSourceStore } from "@/store/sourceStore";
 
 import type { Reference, SourceKey } from "@/types/refrence";
 import type { EdgeSkill } from "@/types/source";
-import type { ItemReference } from "@/types/character";
+import type { ItemReference, OddementReference } from "@/types/character";
 
 export function EdgesSkillsField({
   originId,
@@ -24,21 +24,21 @@ export function EdgesSkillsField({
   parentType,
   label,
 }: {
-  originId: string;
-  sourceKey: SourceKey;
+  originId:   string;
+  sourceKey:  SourceKey;
   entityRefs: Reference[];
-  type: "edges" | "skills" | "items";
+  type:       "edges" | "skills" | "oddements" | "fragments";
   parentType: "origins" | "paths";
-  label: string;
+  label:      string;
 }) {
-  const field = useFieldContext<Reference[] | ItemReference[]>();
+  const field = useFieldContext<Reference[] | OddementReference[]>();
   const { resolveRefrence } = useSourceStore();
   const [entityObjects, setEntityObjects] = useState<EdgeSkill[]>([]);
 
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
   const selectedEntities = (field.state.value || []) as
     | Reference[]
-    | ItemReference[];
+    | OddementReference[];
   // default max for edges/skills, items
   let maxSelection = 1;
   if (type === "edges") {
@@ -47,7 +47,7 @@ export function EdgesSkillsField({
   if (type === "skills") {
     maxSelection = 2;
   }
-  if (type === "items") {
+  if (type === "oddements" || type === "fragments") {
     maxSelection = 1;
   }
 
@@ -63,7 +63,7 @@ export function EdgesSkillsField({
         // TODO: check if its a self refrence or not
         const entityObject = resolveRefrence(
           ensureRefrence(sourceKey, entityRef),
-          type
+          type,
         );
         if (entityObject) {
           resolvedEntityObjects.push(entityObject as EdgeSkill);
@@ -79,9 +79,14 @@ export function EdgesSkillsField({
   const handleCheckboxChange = (entityId: string, checked: boolean) => {
     const ref = ensureRefrence(sourceKey, entityId); // Create a full reference for all types
 
-    if (type === "items") {
+    if (type === "oddements" || type === "fragments") {
       // Items are saved as ItemReference objects with default quantity 1
-      const items = selectedEntities as ItemReference[];
+      let items;
+      if (type === "oddements") {
+        items = selectedEntities as OddementReference[];
+      } else {
+        items = selectedEntities as ItemReference[];
+      }
 
       if (checked) {
         // Don't duplicate
@@ -115,8 +120,10 @@ export function EdgesSkillsField({
           const ref = ensureRefrence(sourceKey, entityObject.id);
           // Determine if the entity is checked and if it should be disabled
           const isChecked =
-            type === "items"
-              ? (selectedEntities as ItemReference[]).some((i) => i.ref === ref)
+            type === "oddements" || type === "fragments"
+              ? (selectedEntities as OddementReference[]).some(
+                  (i) => i.ref === ref,
+                )
               : (selectedEntities as Reference[]).includes(ref);
 
           const isDisabled =
@@ -124,31 +131,32 @@ export function EdgesSkillsField({
             selectedEntities.length >= maxSelection &&
             maxSelection !== Infinity;
 
+          const labelContent = (
+            <FieldLabel htmlFor={`${parentType}-${type}-${entityObject.id}`}>
+              <Checkbox
+                id={`${parentType}-${type}-${entityObject.id}`}
+                checked={isChecked}
+                disabled={isDisabled}
+                onCheckedChange={(checked) =>
+                  handleCheckboxChange(entityObject.id, checked as boolean)
+                }
+              />
+              {entityObject.name}
+            </FieldLabel>
+          );
+
           return (
             <Field key={`${parentType}-${type}-${entityObject.id}`}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <FieldLabel
-                    htmlFor={`${parentType}-${type}-${entityObject.id}`}
-                  >
-                    <Checkbox
-                      id={`${parentType}-${type}-${entityObject.id}`}
-                      checked={isChecked}
-                      disabled={isDisabled}
-                      onCheckedChange={(checked) =>
-                        handleCheckboxChange(
-                          entityObject.id,
-                          checked as boolean
-                        )
-                      }
-                    />
-                    {entityObject.name}
-                  </FieldLabel>
-                </TooltipTrigger>
-                <TooltipContent className="[&_svg]:hidden!" sideOffset={8}>
-                  {entityObject.description}
-                </TooltipContent>
-              </Tooltip>
+              {entityObject.description ? (
+                <Tooltip>
+                  <TooltipTrigger asChild>{labelContent}</TooltipTrigger>
+                  <TooltipContent className="[&_svg]:hidden!" sideOffset={8}>
+                    {entityObject.description}
+                  </TooltipContent>
+                </Tooltip>
+              ) : (
+                labelContent
+              )}
             </Field>
           );
         })}

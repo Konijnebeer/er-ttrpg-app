@@ -58,7 +58,7 @@ function SectionAction({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="card-action"
       className={cn(
-        "col-start-3 row-span-2 row-start-1 self-start justify-self-end space-y-2 space-x-2 flex flex-col md:flex-row",
+        "col-start-3 row-span-2 row-start-1 self-start justify-self-end space-y-2 space-x-2 flex flex-col md:flex-row pb-2 md:pb-0",
         className
       )}
       {...props}

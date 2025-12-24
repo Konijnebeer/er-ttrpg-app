@@ -58,7 +58,7 @@ export function CharacterSection({
       <SectionContent className="p-2 space-y-4">
         <CharacterFields characterSelf={character} />
         <HopeDespair dispair={character.dispair} hope={character.hope} />
-        <div className="grid md:grid-cols-[3fr_8fr] gap-2">
+        <div className="flex flex-col gap-4">
           <FalloutCurse entity={character.fallout} type="fallout" />
           <FalloutCurse entity={character.curse} type="curse" />
         </div>
@@ -389,18 +389,19 @@ function HopeDespair({ dispair, hope }: { dispair: number; hope: number }) {
   const remainingCheckboxes = MaxCheckboxes - (dispair + hope);
 
   return (
-    <div className="md:flex text-center space-y-2 md:space-y-0 items-center">
-      <div className="flex-1 flex items-center gap-2 flex-col md:flex-row md:justify-around">
+    // Todo: Make responsive
+    <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row text-center space-y-2 md:space-y-0 items-center">
+      <div className="flex-1 flex items-center gap-2 flex-col sm:flex-row md:flex-col lg:flex-row place-content-start">
         <Button size="icon" onClick={() => handleDespairChange(true)}>
           <Plus />
         </Button>
         <h3 className="capitalize">Despair</h3>
       </div>
-      <div className="flex-1 flex gap-2 border-2 rounded-xl p-4">
+      <div className=" flex gap-2 border-2 rounded-xl p-4 self-center">
         {/* Render Despair Checkboxes */}
         {Array.from({ length: dispair }).map((_, index) => (
           <DispairCheckbox
-            className="grow h-auto aspect-square"
+            className="aspect-square"
             key={`despair-${index}`}
             checked={true}
             onCheckedChange={() => handleDespairChange(false)}
@@ -411,7 +412,7 @@ function HopeDespair({ dispair, hope }: { dispair: number; hope: number }) {
         {Array.from({ length: remainingCheckboxes }).map((_, index) => (
           <Checkbox
             key={`placeholder-${index}`}
-            className="opacity-50 grow h-auto aspect-square"
+            className="opacity-50 aspect-square"
             disabled
           />
         ))}
@@ -419,14 +420,14 @@ function HopeDespair({ dispair, hope }: { dispair: number; hope: number }) {
         {/* Render Hope Checkboxes */}
         {Array.from({ length: hope }).map((_, index) => (
           <HopeCheckbox
-            className="grow h-auto aspect-square"
+            className=" aspect-square"
             key={`hope-${index}`}
             checked={true}
             onCheckedChange={() => handleHopeChange(false)}
           />
         ))}
       </div>
-      <div className="flex-1 flex items-center gap-4 flex-col md:flex-row md:justify-around">
+      <div className="flex-1 flex items-center gap-4 flex-col sm:flex-row md:flex-col lg:flex-row place-content-end">
         <h3 className="capitalize">Hope</h3>
         <Button size="icon" onClick={() => handleHopeChange(true)}>
           <Plus />
@@ -570,10 +571,10 @@ function FalloutCurse({
   }
 
   return (
-    <>
+    <div className="grid gap-2 grid-cols-1 sm:grid-cols-[3fr_8fr]">
       <h3 className="text-xl uppercase w-20 pt-1">{type}</h3>
       <div className="flex gap-4">
-        <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col justify-center gap-2">
           <Input
             type="number"
             className="w-10 h-10 text-center p-0 rounded-full border-2 [appearance:textfield]"
@@ -582,7 +583,7 @@ function FalloutCurse({
           />
         </div>
         <div className="space-y-2">
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center gap-2 flex-col lg:flex-row xl:flex-col 2xl:flex-row">
             <Popover>
               <PopoverTrigger asChild>
                 <p className="cursor-help underline decoration-dotted">
@@ -635,7 +636,7 @@ function FalloutCurse({
           />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
@@ -659,7 +660,7 @@ function Clock({ clock }: { clock: clock }) {
   };
 
   return (
-    <div className="md:grid grid-cols-2 gap-4 space-y-2">
+    <div className="flex flex-col sm:flex-row gap-2 justify-between">
       <div className="flex flex-col p-2 gap-2">
         <p className="text-xl uppercase">Ticking Clock</p>
         <div className="grid grid-cols-[2fr_3fr]">
@@ -683,7 +684,7 @@ function Clock({ clock }: { clock: clock }) {
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-center gap-4">
+      <div className="flex flex-1 flex-col items-center justify-center gap-4">
         <div className="relative w-32 h-32 shrink-0">
           {/* Circular container */}
           <div className="absolute inset-0 rounded-full border-2 border-primary" />
@@ -712,6 +713,7 @@ function Clock({ clock }: { clock: clock }) {
                 }}
               >
                 <Checkbox
+                  className="rounded-full"
                   checked={clock.dawnDusk > i}
                   onCheckedChange={() => {
                     handleTrackChange(
@@ -735,6 +737,7 @@ function Clock({ clock }: { clock: clock }) {
                 }}
               >
                 <Checkbox
+                  className="rounded-full"
                   checked={clock.dawnDusk > i}
                   onCheckedChange={() => {
                     handleTrackChange(

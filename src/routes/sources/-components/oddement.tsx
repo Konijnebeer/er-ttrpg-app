@@ -6,7 +6,7 @@ import {
   SectionContent,
 } from "@/components/section";
 import {
-  Item as ItemElement,
+  Item,
   ItemContent,
   ItemDescription,
   ItemHeader,
@@ -16,31 +16,33 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { TagBadge } from "./tag";
 
-import type { Item as ItemType } from "@/types/source";
+import type { Oddement } from "@/types/source";
 import { useSourceStore } from "@/store/sourceStore";
 import { ensureRefrence } from "@/lib/versioningHelpers";
 import type { SourceKey } from "@/types/refrence";
 
-import { Badge } from "@/components/ui/badge";
-
-function ItemSection({
-  items,
+function OddementSection({
+  oddements,
   sourceKey,
 }: {
-  items:     ItemType[];
+  oddements: Oddement[];
   sourceKey: SourceKey;
 }) {
   return (
     <Section>
       <SectionHeader>
-        <SectionTitle>Items</SectionTitle>
-        <SectionDescription>Items within the source</SectionDescription>
+        <SectionTitle>Oddements</SectionTitle>
+        <SectionDescription>Oddements within the source</SectionDescription>
       </SectionHeader>
       <SectionContent>
         <ScrollArea className="h-[30vh] h-max-[40vh]">
           <div className="space-y-2">
-            {items.map((item) => (
-              <ItemCard key={item.id} item={item} sourceKey={sourceKey} />
+            {oddements.map((oddements) => (
+              <OddementCard
+                key={oddements.id}
+                oddement={oddements}
+                sourceKey={sourceKey}
+              />
             ))}
           </div>
         </ScrollArea>
@@ -49,27 +51,24 @@ function ItemSection({
   );
 }
 
-function ItemCard({
-  item,
+function OddementCard({
+  oddement,
   sourceKey,
 }: {
-  item:      ItemType;
+  oddement:  Oddement;
   sourceKey: SourceKey;
 }) {
   const { resolveRefrence } = useSourceStore();
   return (
-    <ItemElement variant="outline">
+    <Item variant="outline">
       <ItemContent>
         <ItemHeader>
-          <ItemTitle>
-            <span>{item.name}</span>
-            <Badge variant="outline">{item.category}</Badge>
-          </ItemTitle>
+          <ItemTitle>{oddement.name}</ItemTitle>
         </ItemHeader>
-        <ItemDescription>{item.description}</ItemDescription>
+        <ItemDescription>{oddement.description}</ItemDescription>
         <ItemFooter>
-          {item.tags &&
-            item.tags.map((tag) => {
+          {oddement.tags &&
+            oddement.tags.map((tag) => {
               const tagObject = resolveRefrence(
                 ensureRefrence(sourceKey, tag),
                 "tags",
@@ -85,8 +84,8 @@ function ItemCard({
             })}
         </ItemFooter>
       </ItemContent>
-    </ItemElement>
+    </Item>
   );
 }
 
-export { ItemSection };
+export { OddementSection };

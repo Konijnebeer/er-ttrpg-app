@@ -47,7 +47,7 @@ export const CoreSourceSection = withCharacterForm({
             <FieldSet data-invalid={isInvalid}>
               <FieldLabel htmlFor="versionRef">Core Dependencies</FieldLabel>
               <FieldDescription>
-                Select the Core rules the character will use
+                Select the core content the character will use
               </FieldDescription>
               <RadioGroup
                 value={field.state.value}

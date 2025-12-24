@@ -140,9 +140,14 @@ export const OriginPathSection = withCharacterForm({
                   </CardAction>
                 </CardHeader>
                 <CardContent>
+                  {selectedOrigin && (
+                    <p className="pb-2 -mt-4 whitespace-pre-line">
+                      {selectedOrigin.data.description}
+                    </p>
+                  )}
                   {selectedOrigin ? (
                     <div className="space-y-4">
-                      <div className="md:grid md:grid-cols-2 md:gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
                         <form.AppField
                           name={selectedEdges}
                           children={(field) => (
@@ -176,7 +181,7 @@ export const OriginPathSection = withCharacterForm({
                               originId={selectedOrigin.data.id}
                               sourceKey={selectedOrigin.sourceKey}
                               entityRefs={selectedOrigin.data.oddements}
-                              type="items"
+                              type="oddements"
                               parentType={type}
                               label="Oddements"
                             />
@@ -189,7 +194,7 @@ export const OriginPathSection = withCharacterForm({
                               originId={selectedOrigin.data.id}
                               sourceKey={selectedOrigin.sourceKey}
                               entityRefs={selectedOrigin.data.fragments}
-                              type="items"
+                              type="fragments"
                               parentType={type}
                               label="Fragements"
                             />

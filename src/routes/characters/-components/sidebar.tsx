@@ -22,7 +22,7 @@ import { useSourceStore } from "@/store/sourceStore";
 import { useDialogStore } from "@/store/dialogStore";
 import { SquareChevronLeft } from "lucide-react";
 import { useState, type Dispatch, type SetStateAction } from "react";
-import type { Aspect, Item } from "@/types/source";
+import type { Aspect, Oddement, Fragment, CampingGear } from "@/types/source";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import {
@@ -101,19 +101,35 @@ export function CharacterSidebar({
   );
 }
 
-function ContentSection({
-  type,
-}: {
-  type: "all" | "core" | "extra" | "self";
-}) {
+function ContentSection({ type }: { type: "all" | "core" | "extra" | "self" }) {
   const { getSourceDataArray } = useSourceStore();
   const { character, getCharacterDataArray } = useCharacterStore();
-  const itemsCore = getSourceDataArray(character.versionRef, "items") ?? [];
-  const itemsExtra = (character.dependencies ?? []).flatMap(
-    (dep) => getSourceDataArray(dep, "items") ?? [],
-  );
-  const itemsCharacter = getCharacterDataArray("customItems") ?? [];
 
+  // Oddements
+  const oddementsCore =
+    getSourceDataArray(character.versionRef, "oddements") ?? [];
+  const oddementsExtra = (character.dependencies ?? []).flatMap(
+    (dep) => getSourceDataArray(dep, "oddements") ?? [],
+  );
+  const oddementsCharacter = getCharacterDataArray("customOddements") ?? [];
+
+  // Fragments
+  const fragmentsCore =
+    getSourceDataArray(character.versionRef, "fragments") ?? [];
+  const fragmentsExtra = (character.dependencies ?? []).flatMap(
+    (dep) => getSourceDataArray(dep, "fragments") ?? [],
+  );
+  const fragmentsCharacter = getCharacterDataArray("customFragments") ?? [];
+
+  // Camping Gear
+  const campingGearCore =
+    getSourceDataArray(character.versionRef, "campingGear") ?? [];
+  const campingGearExtra = (character.dependencies ?? []).flatMap(
+    (dep) => getSourceDataArray(dep, "campingGear") ?? [],
+  );
+  const campingGearCharacter = getCharacterDataArray("customCampingGear") ?? [];
+
+  // Aspects
   const aspectsCore = getSourceDataArray(character.versionRef, "aspects") ?? [];
   const aspectsExtra = (character.dependencies ?? []).flatMap(
     (dep) => getSourceDataArray(dep, "aspects") ?? [],
@@ -123,28 +139,70 @@ function ContentSection({
   const [filter, setFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  let content = [] as (Item | Aspect)[];
+  let content: (Oddement | Fragment | CampingGear | Aspect)[] = [];
 
   if (type === "all" || type === "core") {
-    content = [...itemsCore, ...aspectsCore];
+    content = [
+      ...oddementsCore,
+      ...fragmentsCore,
+      ...aspectsCore,
+      ...campingGearCore,
+    ] as (Oddement | Fragment | CampingGear | Aspect)[];
   }
   if (type === "all" || type === "extra") {
-    content = [...content, ...itemsExtra, ...aspectsExtra];
+    content = [
+      ...content,
+      ...oddementsExtra,
+      ...fragmentsExtra,
+      ...aspectsExtra,
+      ...campingGearExtra,
+    ] as (Oddement | Fragment | CampingGear | Aspect)[];
   }
   if (type === "all" || type === "self") {
-    content = [...content, ...itemsCharacter, ...aspectsCharacter];
+    content = [
+      ...content,
+      ...oddementsCharacter,
+      ...fragmentsCharacter,
+      ...aspectsCharacter,
+      ...campingGearCharacter,
+    ] as (Oddement | Fragment | CampingGear | Aspect)[];
   }
 
   // Filter by category
   const filteredByCategory = content.filter((item) => {
     if (filter === "all") return true;
-    return item.category.toLowerCase() === filter.toLowerCase();
+
+    // Handle Oddements (have optional 'tags'), or no 'type', 'stakes', or 'category'
+    if (
+      "tags" in item ||
+      (!("type" in item) &&
+        !("stakes" in item) &&
+        !("category" in item) &&
+        filter === "Oddement")
+    )
+      return true;
+
+    // Handle Fragments (have 'type' instead of 'category')
+    if ("type" in item && filter === "Fragment") return true;
+
+    // Handle CampingGear (has 'stakes')
+    if ("stakes" in item && filter === "CampingGear") return true;
+
+    // Handle Aspects (have 'category')
+    if ("category" in item) {
+      return item.category.toLowerCase() === filter.toLowerCase();
+    }
+
+    return false;
   });
 
   // Filter by search query
   const filteredItems = filteredByCategory.filter((item) => {
     if (!searchQuery) return true;
-    return item.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const query = searchQuery.toLowerCase();
+    const nameMatch = item.name.toLowerCase().includes(query);
+    const descriptionMatch = item.description?.toLowerCase().includes(query);
+    return nameMatch || descriptionMatch;
   });
 
   return (
@@ -202,12 +260,18 @@ function ContentSection({
 
 function CreateButtons() {
   const { openDialog } = useDialogStore();
-  
+
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-wrap items-center gap-2">
       <p>Create: </p>
-      <Button size="sm" onClick={() => openDialog("item")}>
-        Item
+      <Button size="sm" onClick={() => openDialog("oddement")}>
+        Oddement
+      </Button>
+      <Button size="sm" onClick={() => openDialog("fragment")}>
+        Fragment
+      </Button>
+      <Button size="sm" onClick={() => openDialog("camping-gear")}>
+        Camping Gear
       </Button>
       <Button size="sm" onClick={() => openDialog("tag")}>
         Tag
@@ -219,7 +283,11 @@ function CreateButtons() {
   );
 }
 
-function ContentCard({ content }: { content: Item | Aspect }) {
+function ContentCard({
+  content,
+}: {
+  content: Oddement | Fragment | CampingGear | Aspect;
+}) {
   const { attributes, listeners, setNodeRef } = useDraggable({
     id:   `content-${content.id}`,
     data: {
@@ -237,31 +305,55 @@ function ContentCard({ content }: { content: Item | Aspect }) {
     >
       <CardHeader className="flex flex-col md:grid">
         <CardTitle>{content.name}</CardTitle>
-        <CardAction>{content.category}</CardAction>
+        <CardAction>
+          {"category" in content
+            ? content.category
+            : "type" in content
+              ? `Fragment (${content.type})`
+              : "stakes" in content
+                ? "Camping Gear"
+                : "Oddement"}
+        </CardAction>
       </CardHeader>
       <CardContent>
-        {content.image && (
+        {"image" in content && content.image && (
           <img
             src={`data:image/png;base64,${content.image}`}
             alt={content.name}
             className="h-32 aspect-square object-cover rounded-md mb-2"
           />
         )}
-        <p className="text-sm text-zinc-600">{content.description}</p>
+        <p className="text-sm text-zinc-600">
+          {"effect" in content && content.effect
+            ? content.effect
+            : content.description}
+        </p>
       </CardContent>
     </Card>
   );
 }
 
-export function ContentCardOverlay({ content }: { content: Item | Aspect }) {
+export function ContentCardOverlay({
+  content,
+}: {
+  content: Oddement | Fragment | CampingGear | Aspect;
+}) {
   return (
     <Card className="cursor-grabbing shadow-2xl rotate-3 scale-105 animate-in zoom-in-95 duration-200">
       <CardHeader>
         <CardTitle>{content.name}</CardTitle>
-        <CardAction>{content.category}</CardAction>
+        <CardAction>
+          {"category" in content
+            ? content.category
+            : "type" in content
+              ? `Fragment (${content.type})`
+              : "stakes" in content
+                ? "Camping Gear"
+                : "Oddement"}
+        </CardAction>
       </CardHeader>
       <CardContent>
-        {content.image && (
+        {"image" in content && content.image && (
           <img
             src={`data:image/png;base64,${content.image}`}
             alt={content.name}

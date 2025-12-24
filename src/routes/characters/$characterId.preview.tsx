@@ -113,15 +113,8 @@ function CharacterPreview() {
           </Button>
         </Link>
         <AutoSaveIndicator />
-        <CharacterSidebar
-          open={sidebarOpen}
-          onOpenChange={setSidebarOpen}
-        />
-        <CreateDialog
-          open={open}
-          onOpenChange={closeDialog}
-          type={type}
-        />
+        <CharacterSidebar open={sidebarOpen} onOpenChange={setSidebarOpen} />
+        <CreateDialog open={open} onOpenChange={closeDialog} type={type} />
         <ScrollArea
           className={`h-[85vh] max-h-[90vh] w-full ${sidebarOpen ? "cursor-not-allowed" : ""}`}
         >
@@ -141,14 +134,16 @@ function CharacterPreview() {
                   />
                 </h1>
               </div>
-              <EdgeSkillSection
-                edgesSkills={character.data.edges}
-                type="edges"
-              />
-              <EdgeSkillSection
-                edgesSkills={character.data.skills}
-                type="skills"
-              />
+              <div className="flex flex-col sm:flex-row sm:justify-around md:flex-col">
+                <EdgeSkillSection
+                  edgesSkills={character.data.edges}
+                  type="edges"
+                />
+                <EdgeSkillSection
+                  edgesSkills={character.data.skills}
+                  type="skills"
+                />
+              </div>
             </div>
             <CharacterSection
               character={character.data.character}
@@ -160,7 +155,11 @@ function CharacterPreview() {
             />
             <AspectSection
               aspects={character.data.aspects}
-              className={sidebarOpen ? "col-span-2 grid-cols-1 xl:grid-cols-2" : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3 md:col-span-2 xl:col-span-3"}
+              className={
+                sidebarOpen
+                  ? "col-span-2 grid-cols-1 xl:grid-cols-2"
+                  : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3 md:col-span-2 xl:col-span-3"
+              }
             />
           </div>
         </ScrollArea>

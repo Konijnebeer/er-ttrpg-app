@@ -1,0 +1,178 @@
+{
+  "id": "gigi",
+  "name": "Gigi",
+  "description": "This A character port",
+  "author": "Pregen",
+  "sheetVersion": "1.0.0",
+  "dateCreated": 1765923971,
+  "dateModified": 1765924428,
+  "versionRef": "beta-playtest@1.0.0",
+  "dependencies": [],
+  "data": {
+    "character": {
+      "name": "Gigi",
+      "player": "Pregen",
+      "pronouns": "",
+      "origin": "Mass-Broken",
+      "originRef": "beta-playtest@1.0.0:mass-broken",
+      "path": "Chronicler",
+      "pathRef": "beta-playtest@1.0.0:chronicler",
+      "milestones": 0,
+      "dispair": 0,
+      "hope": 2,
+      "fallout": {
+        "level": 0,
+        "condition": "",
+        "maxTrack": 3,
+        "currentTrack": 0
+      },
+      "curse": {
+        "level": 0,
+        "condition": "",
+        "maxTrack": 6,
+        "currentTrack": 0
+      },
+      "clock": {
+        "food": 0,
+        "sleep": 0,
+        "dawnDusk": 0
+      }
+    },
+    "edges": [
+      {
+        "ref": "beta-playtest@1.0.0:stone",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:wind",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:lore",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:instinct",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:light",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:shadow",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:smoke",
+        "level": 0
+      }
+    ],
+    "skills": [
+      {
+        "ref": "beta-playtest@1.0.0:scramble",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:delve",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:muse",
+        "level": 2
+      },
+      {
+        "ref": "beta-playtest@1.0.0:puzzle",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:wreck",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:hunt",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:blend",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.0:tinker",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.0:soothe",
+        "level": 2
+      },
+      {
+        "ref": "beta-playtest@1.0.0:bargain",
+        "level": 1
+      }
+    ],
+    "backpack": {
+      "oddements": [
+        {
+          "ref": "beta-playtest@1.0.0:invigorating-incense",
+          "quantity": 1,
+          "tags": ["beta-playtest@1.0.0:invigorating"]
+        },
+        {
+          "ref": "beta-playtest@1.0.0:refreshing-mint-leaves",
+          "quantity": 1,
+          "tags": ["beta-playtest@1.0.0:refreshing"]
+        },
+        {
+          "ref": "beta-playtest@1.0.0:jar-of-ink",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.0:fresh-honeycomb",
+          "quantity": 1,
+          "tags": ["beta-playtest@1.0.0:fresh"]
+        }
+      ],
+      "fragments": [
+        {
+          "ref": "beta-playtest@1.0.0:staircase",
+          "quantity": 1,
+          "tags": ["beta-playtest@1.0.0:feature"]
+        },
+        {
+          "ref": "beta-playtest@1.0.0:fountain",
+          "quantity": 1,
+          "tags": ["beta-playtest@1.0.0:feature"]
+        },
+        {
+          "ref": "beta-playtest@1.0.0:library",
+          "quantity": 1,
+          "tags": ["beta-playtest@1.0.0:feature"]
+        },
+        {
+          "ref": "beta-playtest@1.0.0:tower",
+          "quantity": 1,
+          "tags": ["beta-playtest@1.0.0:feature"]
+        }
+      ],
+      "campingGear": []
+    },
+    "aspects": [
+      {
+        "ref": "beta-playtest@1.0.0:brightspark",
+        "track": 5
+      },
+      {
+        "ref": "beta-playtest@1.0.0:lantern-staff",
+        "track": 5
+      },
+      {
+        "ref": "beta-playtest@1.0.0:embroidered-cloak",
+        "track": 3
+      },
+      {
+        "ref": "beta-playtest@1.0.0:wanderer-s-journal",
+        "track": 4
+      }
+    ]
+  }
+}

@@ -17,7 +17,7 @@ import {
 import { useCharacterStore } from "@/store/characterStore";
 import { Track } from "./track";
 import { Button } from "@/components/ui/button";
-import { PlusIcon } from "lucide-react";
+import { PlusIcon, Trash } from "lucide-react";
 import { useResolveReference } from "@/hooks/use-resolve-reference";
 import { useDialogStore } from "@/store/dialogStore";
 
@@ -37,7 +37,11 @@ export function AspectSection({
         </SectionTitle>
         <SectionDescription>(Add 1d6 if appropriate)</SectionDescription>
         <SectionAction>
-          <Button size="icon-sm" className="mr-4" onClick={() => openDialog("aspect")}>
+          <Button
+            size="icon-sm"
+            className="mr-4"
+            onClick={() => openDialog("aspect")}
+          >
             <PlusIcon />
           </Button>
         </SectionAction>
@@ -62,7 +66,7 @@ function AspectCard({
   const { updateCharacter, character } = useCharacterStore();
   const aspectObject = resolveReference(aspect.ref, "aspects");
 
-  const handleLevelChange = (newLevel: number) => {
+  function handleLevelChange(newLevel: number) {
     if (!character?.data?.aspects) return;
 
     const updatedAspects = [...character.data.aspects];
@@ -77,7 +81,22 @@ function AspectCard({
         aspects: updatedAspects,
       },
     });
-  };
+  }
+
+  function onDelete() {
+    // Remove aspect at aspectIndex
+    const updatedAspects = character.data.aspects.filter(
+      (_, i) => i !== aspectIndex,
+    );
+    if (!updatedAspects) return;
+
+    updateCharacter({
+      data: {
+        ...character.data,
+        aspects: updatedAspects,
+      },
+    });
+  }
 
   if (!aspectObject) {
     return (
@@ -88,7 +107,7 @@ function AspectCard({
   }
   return (
     <Card
-      className="sprite-border"
+      className="sprite-border gap-2 pb-2"
       //   style={{
       //     borderStyle:       "solid",
       //     borderWidth:       10, // match the 150px border thickness
@@ -100,16 +119,21 @@ function AspectCard({
     >
       <CardHeader>
         <CardTitle>{aspectObject.name}</CardTitle>
-        <CardAction> {aspectObject.category}</CardAction>
-        <CardContent>
-          <Track
-            maxTrack={aspectObject.maxTrack}
-            track={aspect.track}
-            onChange={handleLevelChange}
-          />
-          Details: {aspectObject.description}
-        </CardContent>
+        <CardAction className="flex items-center gap-2">
+          <span>{aspectObject.category}</span>
+          <Button variant="destructive" size="icon-sm" onClick={onDelete}>
+            <Trash />
+          </Button>
+        </CardAction>
       </CardHeader>
+      <CardContent className="flex flex-col gap-2">
+        <Track
+          maxTrack={aspectObject.maxTrack}
+          track={aspect.track}
+          onChange={handleLevelChange}
+        />
+        <span>Effect: {aspectObject.effect}</span>
+      </CardContent>
     </Card>
   );
 }
