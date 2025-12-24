@@ -88,13 +88,6 @@ public/
 
 ---
 
-
-
 ## Code Architecture
 
 ## Roadmap
-- Finalize Types and Json Schemas (Create Zod schemas for Source and Character data)
-- Create Source IdB Module (Implement CRUD operations for Sources)
-- Create Source Store (Implement Zustand store for managing Source state)
-  - Save multiple Sources to the store
-- Create Reference Helper Utilities (Utilities for handling references between Sources and Characters)
