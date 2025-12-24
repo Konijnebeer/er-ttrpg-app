@@ -11,7 +11,18 @@
     />
     <link rel="apple-touch-icon" href="/logo192.png" />
     <link rel="manifest" href="/manifest.json" />
-<link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Figtree:ital,wght@0,300..900;1,300..900&family=IM+Fell+Great+Primer:ital@0;1&display=swap" rel="stylesheet">  </head>
+<link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Figtree:ital,wght@0,300..900;1,300..900&family=IM+Fell+Great+Primer:ital@0;1&display=swap" rel="stylesheet">
+    <script>
+      // Handle GitHub Pages SPA routing
+      (function() {
+        var redirect = sessionStorage.getItem('redirect');
+        if (redirect) {
+          sessionStorage.removeItem('redirect');
+          history.replaceState(null, '', redirect);
+        }
+      })();
+    </script>
+  </head>
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.tsx"></script>
