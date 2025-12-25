@@ -19,15 +19,16 @@ import {
   deleteSource,
 } from "@/database/sourceDB";
 import { sourceSchema } from "@/types/source";
+import { BASE_PATH } from "@/lib/constants";
 
 interface SourceGroup {
-  id: Id;
+  id:       Id;
   versions: Version[];
   metadata: SourceMetadata[];
 }
 
 interface GroupedSources {
-  Core: SourceGroup[];
+  Core:  SourceGroup[];
   Extra: SourceGroup[];
 }
 
@@ -58,28 +59,28 @@ interface SourceStoreState {
     sourceKey: SourceKey,
     dataType: T,
     entityId: Id,
-    updates: Partial<NonNullable<SourceData[T]>[number]>
+    updates: Partial<NonNullable<SourceData[T]>[number]>,
   ) => void;
 
   /** Generic add function for any array in source data */
   addSourceEntity: <T extends keyof SourceData>(
     sourceKey: SourceKey,
     dataType: T,
-    item: NonNullable<SourceData[T]>[number]
+    item: NonNullable<SourceData[T]>[number],
   ) => void;
 
   /** Generic remove function for any array in source data */
   removeSourceEntity: <T extends keyof SourceData>(
     sourceKey: SourceKey,
     dataType: T,
-    entityId: Id
+    entityId: Id,
   ) => void;
 
   /** Update a contributor in a source */
   updateContributor: (
     sourceKey: SourceKey,
     contributorId: Id,
-    updates: Partial<Contributor>
+    updates: Partial<Contributor>,
   ) => void;
 
   /** Add a new contributor to a source */
@@ -114,26 +115,26 @@ interface SourceStoreState {
 
   getSourceDataArray: <T extends SourceDataKey>(
     sourceKey: SourceKey,
-    dataType: T
+    dataType: T,
   ) => NonNullable<SourceData[T]> | null;
 
   getAllSourcesDataArray: <T extends SourceDataKey>(
-    dataType: T
+    dataType: T,
   ) => NonNullable<SourceData[T]> | null;
 
   /** Get the object related to a Reference */
   resolveRefrence: <T extends SourceDataKey>(
     refrence: Reference,
-    dataType: T
+    dataType: T,
   ) => NonNullable<SourceData[T]>[number] | null;
 }
 
 export const useSourceStore = create<SourceStoreState>((set, get) => ({
-  sources: new Map<SourceKey, Source>(),
-  isLoading: false,
-  error: null,
+  sources:         new Map<SourceKey, Source>(),
+  isLoading:       false,
+  error:           null,
   activeSourceKey: null,
-  groupedSources: { Core: [], Extra: [] },
+  groupedSources:  { Core: [], Extra: [] },
 
   importSource: async (file: File) => {
     set({ isLoading: true, error: null });
@@ -154,7 +155,7 @@ export const useSourceStore = create<SourceStoreState>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       // Fetch the source from the public folder
-      const response = await fetch(`/sources/${id}/${filename}`);
+      const response = await fetch(`${BASE_PATH}/sources/${id}/${filename}`);
 
       if (!response.ok) {
         throw new Error(`Failed to fetch source: ${response.statusText}`);
@@ -180,7 +181,7 @@ export const useSourceStore = create<SourceStoreState>((set, get) => ({
 
       // Save to database
       await importSource(
-        new File([text], filename, { type: "application/json" })
+        new File([text], filename, { type: "application/json" }),
       );
 
       set({ isLoading: false });
@@ -245,7 +246,7 @@ export const useSourceStore = create<SourceStoreState>((set, get) => ({
         sources.set(key, source);
         set({
           sources,
-          isLoading: false,
+          isLoading:       false,
           activeSourceKey: key,
         });
         return source;
@@ -319,7 +320,7 @@ export const useSourceStore = create<SourceStoreState>((set, get) => ({
           existing.metadata.push(source);
         } else {
           sourceMap.set(source.id, {
-            isCore: source.sourceInfo.isCore,
+            isCore:   source.sourceInfo.isCore,
             versions: [source.version],
             metadata: [source],
           });
@@ -332,7 +333,7 @@ export const useSourceStore = create<SourceStoreState>((set, get) => ({
           id,
           versions: data.versions.sort().reverse(), // Sort versions descending
           metadata: data.metadata.sort(
-            (a, b) => b.version.localeCompare(a.version) // Sort metadata by version descending
+            (a, b) => b.version.localeCompare(a.version), // Sort metadata by version descending
           ),
         };
 
@@ -345,7 +346,7 @@ export const useSourceStore = create<SourceStoreState>((set, get) => ({
 
       set({
         groupedSources: grouped,
-        isLoading: false,
+        isLoading:      false,
       });
     } catch (error) {
       const errorMessage =
@@ -375,7 +376,7 @@ export const useSourceStore = create<SourceStoreState>((set, get) => ({
     if (source?.data?.[dataType]) {
       const items = source.data[dataType] as any[];
       const updatedItems = items.map((item) =>
-        item.id === itemId ? { ...item, ...updates } : item
+        item.id === itemId ? { ...item, ...updates } : item,
       );
 
       sources.set(sourceKey, {
@@ -434,7 +435,7 @@ export const useSourceStore = create<SourceStoreState>((set, get) => ({
 
     if (source && source.contributors) {
       const updatedContributors = source.contributors.map((c) =>
-        c.name === contributorId ? { ...c, ...updates } : c
+        c.name === contributorId ? { ...c, ...updates } : c,
       );
 
       sources.set(sourceKey, {
@@ -468,7 +469,7 @@ export const useSourceStore = create<SourceStoreState>((set, get) => ({
       sources.set(sourceKey, {
         ...source,
         contributors: source.contributors.filter(
-          (c) => c.name !== contributorId
+          (c) => c.name !== contributorId,
         ),
       });
 
@@ -478,7 +479,7 @@ export const useSourceStore = create<SourceStoreState>((set, get) => ({
 
   getSourceDataArray: <T extends SourceDataKey>(
     sourceKey: SourceKey,
-    dataType: T
+    dataType: T,
   ): NonNullable<SourceData[T]> | null => {
     try {
       const source = get().sources.get(sourceKey);
@@ -492,7 +493,7 @@ export const useSourceStore = create<SourceStoreState>((set, get) => ({
 
       if (!dataArray) {
         console.error(
-          `Data type "${dataType}" not found in source: ${sourceKey}`
+          `Data type "${dataType}" not found in source: ${sourceKey}`,
         );
         return null;
       }
@@ -501,7 +502,7 @@ export const useSourceStore = create<SourceStoreState>((set, get) => ({
       const fullRefrenceResponse = (dataArray as any[]).map((entity) =>
         Object.assign({}, entity, {
           id: ensureRefrence(sourceKey, entity.id),
-        })
+        }),
       ) as NonNullable<SourceData[T]>;
 
       return fullRefrenceResponse;
@@ -512,7 +513,7 @@ export const useSourceStore = create<SourceStoreState>((set, get) => ({
   },
 
   getAllSourcesDataArray: <T extends SourceDataKey>(
-    dataType: T
+    dataType: T,
   ): NonNullable<SourceData[T]> | null => {
     // use getSourceDataArray for all loaded sources and combine results
     const sources = get().sources;
@@ -520,16 +521,17 @@ export const useSourceStore = create<SourceStoreState>((set, get) => ({
     sources.forEach((_source, sourceKey) => {
       const dataArray = get().getSourceDataArray(sourceKey, dataType);
       if (dataArray) {
-        combinedArray = [...combinedArray, ...dataArray] as NonNullable<SourceData[T]>;
+        combinedArray = [...combinedArray, ...dataArray] as NonNullable<
+          SourceData[T]
+        >;
       }
     });
     return combinedArray.length > 0 ? combinedArray : null;
   },
 
-  
   resolveRefrence: <T extends SourceDataKey>(
     refrence: Reference,
-    dataType: T
+    dataType: T,
   ): NonNullable<SourceData[T]>[number] | null => {
     try {
       const { sourceKey, id } = parseRefrence(refrence);
@@ -539,7 +541,7 @@ export const useSourceStore = create<SourceStoreState>((set, get) => ({
 
       if (!dataArray) {
         console.error(
-          `Data type "${dataType}" not found in source: ${sourceKey}`
+          `Data type "${dataType}" not found in source: ${sourceKey}`,
         );
         return null;
       }
@@ -549,7 +551,7 @@ export const useSourceStore = create<SourceStoreState>((set, get) => ({
 
       if (!entity) {
         console.error(
-          `Item "${id}" not found in ${dataType} of source: ${sourceKey}`
+          `Item "${id}" not found in ${dataType} of source: ${sourceKey}`,
         );
         return null;
       }

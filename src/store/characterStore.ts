@@ -15,7 +15,7 @@ import {
   saveCharacter,
   deleteCharacter,
 } from "@/database/characterDB";
-import { SAVE_DEBOUNCE_MS } from "@/lib/constants";
+import { SAVE_DEBOUNCE_MS, BASE_PATH } from "@/lib/constants";
 
 // Omitting keys, for character & backpack  since they are not arrays
 export type CharacterDataArrays = Omit<CharacterData, "character" | "backpack">;
@@ -157,7 +157,7 @@ export const useCharacterStore = create<CharacterStoreState>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       // Fetch the character from the public folder
-      const response = await fetch(`/characters/${id}/${filename}`);
+      const response = await fetch(`${BASE_PATH}/characters/${id}/${filename}`);
 
       if (!response.ok) {
         throw new Error(`Failed to fetch character: ${response.statusText}`);
@@ -170,7 +170,9 @@ export const useCharacterStore = create<CharacterStoreState>((set, get) => ({
         text.trim().startsWith("<!DOCTYPE") ||
         text.trim().startsWith("<html")
       ) {
-        throw new Error(`Character file not found at /characters/${id}/${filename}`);
+        throw new Error(
+          `Character file not found at /characters/${id}/${filename}`,
+        );
       }
 
       const jsonData = JSON.parse(text);
@@ -185,7 +187,7 @@ export const useCharacterStore = create<CharacterStoreState>((set, get) => ({
       result.data.id = `${result.data.id}-${Date.now()}`;
 
       const resultJson = JSON.stringify(result.data, null, 2);
-      
+
       // Save to database
       await importCharacter(
         new File([resultJson], filename, { type: "application/json" }),
