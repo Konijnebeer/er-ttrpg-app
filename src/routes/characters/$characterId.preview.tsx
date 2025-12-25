@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import { useCharacterStore } from "@/store/characterStore";
 import { useSourceStore } from "@/store/sourceStore";
 import { useDialogStore } from "@/store/dialogStore";
+import { BASE_PATH } from "@/lib/constants";
 
 export const Route = createFileRoute("/characters/$characterId/preview")({
   component: CharacterPreview,
@@ -128,7 +129,7 @@ function CharacterPreview() {
                 </p>
                 <h1>
                   <img
-                    src="/sheet-logo.png"
+                    src={`${BASE_PATH}/sheet-logo.png`}
                     className="p-2"
                     alt="Eternal Ruins TTRPG logo"
                   />

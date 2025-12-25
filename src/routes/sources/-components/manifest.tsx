@@ -28,6 +28,7 @@ import { toast } from "sonner";
 import { useSourceStore } from "@/store/sourceStore";
 // Helpers
 import { useEffect, useState } from "react";
+import { BASE_PATH } from "@/lib/constants";
 
 export interface ManifestSource {
   id: string;
@@ -49,7 +50,7 @@ export default function ManifestTree() {
     loadAllSourcesMetadata();
 
     // Fetch manifest from public folder
-    fetch("/sources/manifest.json")
+    fetch(`${BASE_PATH}/sources/manifest.json`)
       .then((res) => res.json())
       .then((data) => setManifest(data))
       .catch((err) => console.error("Failed to load manifest:", err));

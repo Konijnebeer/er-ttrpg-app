@@ -29,6 +29,7 @@ import { toast } from "sonner";
 import { useCharacterStore } from "@/store/characterStore";
 // Helpers
 import { useEffect, useState } from "react";
+import { BASE_PATH } from "@/lib/constants";
 
 export interface ManifestCharacter {
   id:       string;
@@ -52,7 +53,7 @@ export default function CharacterManifestTree() {
     loadAllCharactersMetadata();
 
     // Fetch manifest from public folder
-    fetch("/characters/manifest.json")
+    fetch(`${BASE_PATH}/characters/manifest.json`)
       .then((res) => res.json())
       .then((data) => setManifest(data))
       .catch((err) => console.error("Failed to load manifest:", err));
