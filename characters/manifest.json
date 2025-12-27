@@ -4,6 +4,12 @@
       "id": "impetuous-caro",
       "versions": [
         {
+          "versionNumber": "1.0.1",
+          "versionRef": "beta-playtest@1.0.1",
+          "dependencies": [],
+          "filename": "impetuous-caro-1.0.1.json"
+        },
+        {
           "versionNumber": "1.0.0",
           "versionRef": "beta-playtest@1.0.0",
           "dependencies": [],
@@ -14,6 +20,12 @@
     {
       "id": "bracken-of-low-walls",
       "versions": [
+        {
+          "versionNumber": "1.0.1",
+          "versionRef": "beta-playtest@1.0.1",
+          "dependencies": [],
+          "filename": "bracken-of-low-walls-1.0.1.json"
+        },
         {
           "versionNumber": "1.0.0",
           "versionRef": "beta-playtest@1.0.0",
@@ -26,6 +38,12 @@
       "id": "gigi",
       "versions": [
         {
+          "versionNumber": "1.0.1",
+          "versionRef": "beta-playtest@1.0.1",
+          "dependencies": [],
+          "filename": "gigi-1.0.1.json"
+        },
+        {
           "versionNumber": "1.0.0",
           "versionRef": "beta-playtest@1.0.0",
           "dependencies": [],
@@ -36,6 +54,12 @@
     {
       "id": "tali-red-hand",
       "versions": [
+        {
+          "versionNumber": "1.0.1",
+          "versionRef": "beta-playtest@1.0.1",
+          "dependencies": [],
+          "filename": "tali-red-hand-1.0.1.json"
+        },
         {
           "versionNumber": "1.0.0",
           "versionRef": "beta-playtest@1.0.0",
@@ -48,6 +72,12 @@
       "id": "quick-caeri",
       "versions": [
         {
+          "versionNumber": "1.0.1",
+          "versionRef": "beta-playtest@1.0.1",
+          "dependencies": [],
+          "filename": "quick-caeri-1.0.1.json"
+        },
+        {
           "versionNumber": "1.0.0",
           "versionRef": "beta-playtest@1.0.0",
           "dependencies": [],
@@ -58,6 +88,12 @@
     {
       "id": "kal",
       "versions": [
+        {
+          "versionNumber": "1.0.1",
+          "versionRef": "beta-playtest@1.0.1",
+          "dependencies": [],
+          "filename": "kal-1.0.1.json"
+        },
         {
           "versionNumber": "1.0.0",
           "versionRef": "beta-playtest@1.0.0",
@@ -70,6 +106,12 @@
       "id": "friendful-ulli",
       "versions": [
         {
+          "versionNumber": "1.0.1",
+          "versionRef": "beta-playtest@1.0.1",
+          "dependencies": [],
+          "filename": "friendful-ulli-1.0.1.json"
+        },
+        {
           "versionNumber": "1.0.0",
           "versionRef": "beta-playtest@1.0.0",
           "dependencies": [],
@@ -80,6 +122,12 @@
     {
       "id": "elias-twistfinger",
       "versions": [
+        {
+          "versionNumber": "1.0.1",
+          "versionRef": "beta-playtest@1.0.1",
+          "dependencies": [],
+          "filename": "elias-twistfinger-1.0.1.json"
+        },
         {
           "versionNumber": "1.0.0",
           "versionRef": "beta-playtest@1.0.0",

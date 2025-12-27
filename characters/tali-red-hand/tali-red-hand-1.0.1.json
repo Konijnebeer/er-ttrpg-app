@@ -1,0 +1,177 @@
+{
+  "id": "tali-red-hand",
+  "name": "Tali Red-Hand",
+  "description": "This A character port",
+  "author": "Pregen",
+  "sheetVersion": "1.0.0",
+  "dateCreated": 1765923971,
+  "dateModified": 1766844027,
+  "versionRef": "beta-playtest@1.0.1",
+  "dependencies": [],
+  "data": {
+    "character": {
+      "name": "Tali Red-Hand",
+      "player": "Pregen",
+      "pronouns": "",
+      "origin": "Root-Broken",
+      "originRef": "beta-playtest@1.0.1:root-broken",
+      "path": "Scrounger",
+      "pathRef": "beta-playtest@1.0.1:scrounger",
+      "milestones": 0,
+      "dispair": 0,
+      "hope": 2,
+      "fallout": {
+        "level": 0,
+        "condition": "",
+        "maxTrack": 7,
+        "currentTrack": 0
+      },
+      "curse": {
+        "level": 0,
+        "condition": "",
+        "maxTrack": 2,
+        "currentTrack": 0
+      },
+      "clock": {
+        "food": 0,
+        "sleep": 0,
+        "dawnDusk": 0
+      }
+    },
+    "edges": [
+      {
+        "ref": "beta-playtest@1.0.1:stone",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.1:wind",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.1:lore",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.1:instinct",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.1:light",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.1:shadow",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.1:smoke",
+        "level": 1
+      }
+    ],
+    "skills": [
+      {
+        "ref": "beta-playtest@1.0.1:scramble",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.1:delve",
+        "level": 2
+      },
+      {
+        "ref": "beta-playtest@1.0.1:muse",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.1:puzzle",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.1:wreck",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.1:hunt",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.1:blend",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.1:tinker",
+        "level": 1
+      },
+      {
+        "ref": "beta-playtest@1.0.1:soothe",
+        "level": 0
+      },
+      {
+        "ref": "beta-playtest@1.0.1:bargain",
+        "level": 0
+      }
+    ],
+    "backpack": {
+      "oddements": [
+        {
+          "ref": "beta-playtest@1.0.1:vine-rope",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.1:hearty-mushroom",
+          "quantity": 1,
+          "tags": ["beta-playtest@1.0.1:hearty"]
+        },
+        {
+          "ref": "beta-playtest@1.0.1:stone-ring",
+          "quantity": 1
+        },
+        {
+          "ref": "beta-playtest@1.0.1:sticky-sap",
+          "quantity": 1,
+          "tags": ["beta-playtest@1.0.1:sticky"]
+        }
+      ],
+      "fragments": [
+        {
+          "ref": "beta-playtest@1.0.1:flowering",
+          "quantity": 1,
+          "tags": []
+        },
+        {
+          "ref": "beta-playtest@1.0.1:thorny",
+          "quantity": 1,
+          "tags": ["beta-playtest@1.0.1:detail"]
+        },
+        {
+          "ref": "beta-playtest@1.0.1:tower",
+          "quantity": 1,
+          "tags": ["beta-playtest@1.0.1:feature"]
+        },
+        {
+          "ref": "beta-playtest@1.0.1:collapsed",
+          "quantity": 1,
+          "tags": ["beta-playtest@1.0.1:detail"]
+        }
+      ],
+      "campingGear": []
+    },
+    "aspects": [
+      {
+        "ref": "beta-playtest@1.0.1:pack-rat",
+        "track": 4
+      },
+      {
+        "ref": "beta-playtest@1.0.1:repair-kit",
+        "track": 5
+      },
+      {
+        "ref": "beta-playtest@1.0.1:ruinstone-axe",
+        "track": 5
+      },
+      {
+        "ref": "beta-playtest@1.0.1:tough",
+        "track": 3
+      }
+    ]
+  }
+}
