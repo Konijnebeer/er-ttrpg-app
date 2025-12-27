@@ -26,10 +26,12 @@ import { useSourceStore } from "@/store/sourceStore";
 import type { SourceKey } from "@/types/refrence";
 import { useState } from "react";
 import { defaultCharacterFormValues } from "../../create";
+import { Button } from "@/components/ui/button";
+import { Link } from "@tanstack/react-router";
 
 export const CoreSourceSection = withCharacterForm({
   defaultValues: defaultCharacterFormValues,
-  render: function Render({ form }) {
+  render:        function Render({ form }) {
     const { groupedSources } = useSourceStore();
     return (
       <form.AppField
@@ -54,14 +56,26 @@ export const CoreSourceSection = withCharacterForm({
                 onValueChange={(value) => field.handleChange(value)}
                 aria-invalid={isInvalid}
               >
-                {groupedSources.Core.map((source) => (
-                  <CoreSourceCard
-                    key={source.id}
-                    sourceId={source.id}
-                    versions={source.versions}
-                    onSelect={(sourceKey) => field.handleChange(sourceKey)}
-                  />
-                ))}
+                {groupedSources.Core.length <= 0 ? (
+                  <div className="flex flex-col gap-2 items-center justify-center p-4">
+                    <p className="text-sm text-center">
+                      No core sources available. Please add a core source to
+                      create a new character.
+                    </p>
+                    <Button asChild className="w-fit">
+                      <Link to="/sources/import">Add Core Source</Link>
+                    </Button>
+                  </div>
+                ) : (
+                  groupedSources.Core.map((source) => (
+                    <CoreSourceCard
+                      key={source.id}
+                      sourceId={source.id}
+                      versions={source.versions}
+                      onSelect={(sourceKey) => field.handleChange(sourceKey)}
+                    />
+                  ))
+                )}
               </RadioGroup>
               {isInvalid && <FieldError errors={field.state.meta.errors} />}
             </FieldSet>
@@ -120,7 +134,7 @@ function CoreSourceCard({
 
 export const ExtraSourceSection = withCharacterForm({
   defaultValues: defaultCharacterFormValues,
-  render: function Render({ form }) {
+  render:        function Render({ form }) {
     const { groupedSources } = useSourceStore();
     return (
       <form.Subscribe selector={(state: any) => state.values.versionRef}>
@@ -147,8 +161,8 @@ export const ExtraSourceSection = withCharacterForm({
                         } else {
                           field.handleChange(
                             currentDeps.filter(
-                              (key: SourceKey) => key !== sourceKey
-                            )
+                              (key: SourceKey) => key !== sourceKey,
+                            ),
                           );
                         }
                       }}
@@ -170,10 +184,10 @@ function ExtraSourceCard({
   selectedKeys,
   onToggle,
 }: {
-  sourceId: string;
-  versions: string[];
+  sourceId:     string;
+  versions:     string[];
   selectedKeys: SourceKey[];
-  onToggle: (sourceKey: SourceKey, checked: boolean) => void;
+  onToggle:     (sourceKey: SourceKey, checked: boolean) => void;
 }) {
   const [selectedVersion, setSelectedVersion] = useState(versions[0]);
   const currentSourceKey = makeSourceKey(sourceId, selectedVersion);
