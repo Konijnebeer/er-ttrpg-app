@@ -188,7 +188,7 @@ function RouteComponent() {
   }
 
   return (
-    <Border className="p-4">
+    <Border className="p-0 sm:p-4">
       <ScrollArea className="h-full w-full lg:h-auto lg:overflow-visible">
         {/* Scroll bar element *NEEDED* to make sure it does scroll on smaller screens */}
         <ScrollBar orientation="vertical" />

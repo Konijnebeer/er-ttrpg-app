@@ -10,7 +10,7 @@ export function Border({
     <main className="flex min-h-screen items-center justify-center p-8 overflow-hidden">
       <div
         className={cn(
-          "h-[90vh] w-full max-w-[90vw] rounded-4xl border-4 p-6 flex flex-col overflow-hidden",
+          "h-[90vh] max-w-[90vw] xl:max-w-8xl w-full sm:rounded-4xl sm:border-4 pt-4 sm:p-6 flex flex-col overflow-hidden",
           className,
         )}
       >

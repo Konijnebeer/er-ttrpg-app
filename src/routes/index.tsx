@@ -71,7 +71,7 @@ export default function SourcesIndexPage() {
           </SectionAction>
         </SectionHeader>
         <SectionContent>
-          <CharacterCardGrid characters={characters} className="h-[40vh]" />
+          <CharacterCardGrid characters={characters} className="h-[25vh] md:h-[40vh]" />
         </SectionContent>
       </Section>
       <Section>
@@ -90,7 +90,7 @@ export default function SourcesIndexPage() {
           </SectionAction>
         </SectionHeader>
         <SectionContent>
-          <SourceCardGrid sources={latestSources} className="h-[40vh]" />
+          <SourceCardGrid sources={latestSources} className="h-[25vh] md:h-[40vh]" />
         </SectionContent>
       </Section>
     </Border>

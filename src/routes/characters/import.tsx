@@ -37,6 +37,7 @@ import { useForm } from "@tanstack/react-form";
 import z from "zod";
 // Stores
 import { useCharacterStore } from "@/store/characterStore";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export const Route = createFileRoute("/characters/import")({
   component: ImportCharacter,
@@ -62,7 +63,7 @@ function ImportCharacter() {
         loading: "Importing character...",
         success: (character) => {
           navigate({
-            to: "/characters/$characterId/preview",
+            to:     "/characters/$characterId/preview",
             params: {
               characterId: character.id,
             },
@@ -104,7 +105,9 @@ function ImportCharacter() {
                 </HoverCardContent>
               </HoverCard>
             </h2>
-            <CharacterManifestTree />
+            <ScrollArea className="h-[35vh] md:h-[60vh]">
+              <CharacterManifestTree />
+            </ScrollArea>
           </div>
           <form
             id="import-character"

@@ -1,5 +1,5 @@
 {
-  "latest": "beta-playtest@1.0.0",
+  "latest": "beta-playtest@1.0.1",
   "sources": [
     {
       "id": "beta-playtest",
@@ -7,6 +7,10 @@
         {
           "versionNumber": "1.0.0",
           "filename": "playtest-1.0.0.json"
+        },
+        {
+          "versionNumber": "1.0.1",
+          "filename": "playtest-1.0.1.json"
         }
       ]
     }

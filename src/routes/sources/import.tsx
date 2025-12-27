@@ -37,6 +37,7 @@ import { useForm } from "@tanstack/react-form";
 import z from "zod";
 // Stores
 import { useSourceStore } from "@/store/sourceStore";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export const Route = createFileRoute("/sources/import")({
   component: ImportSource,
@@ -104,7 +105,9 @@ function ImportSource() {
                 </HoverCardContent>
               </HoverCard>
             </h2>
-            <ManifestTree />
+            <ScrollArea className="h-[35vh] md:h-[60vh]">
+              <ManifestTree />
+            </ScrollArea>
           </div>
           <form
             id="import-source"

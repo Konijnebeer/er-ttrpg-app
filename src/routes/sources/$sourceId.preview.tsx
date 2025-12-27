@@ -70,9 +70,9 @@ function RouteComponent() {
           <ArrowBigLeftIcon />
         </Button>
       </Link>
-      <header className="p-5 flex flex-col gap-2">
-        <div className="flex gap-4 justify-between -mt-6">
-          <div className="flex gap-2 items-end">
+      <header className=" flex flex-col gap-2">
+        <div className="flex flex-col xl:flex-row gap-4 justify-between">
+          <div className="flex flex-col md:flex-row gap-2 flex-start md:items-center">
             <h1 className="text-2xl">Preview for {source.name}</h1>
             <Badge variant="outline">
               {source.sourceInfo.homebrew ? (
