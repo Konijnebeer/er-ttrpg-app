@@ -25,9 +25,29 @@ import {
 } from "@/components/ui/field";
 import { useForm } from "@tanstack/react-form";
 import { useCharacterStore } from "@/store/characterStore";
-import type { CustomAspect } from "@/types/character";
+import { customAspectSchema, type CustomAspect } from "@/types/character";
 import { toast } from "sonner";
-import { aspectSchema, type AspectCatagory } from "@/types/source";
+import {
+  aspectCatagorySchema,
+  type AspectCatagory,
+} from "@/types/source";
+import type z from "zod";
+
+const customAspectFormSchema = customAspectSchema.pick({
+  name:        true,
+  description: true,
+  effect:      true,
+  maxTrack:    true,
+  category:    true,
+});
+
+const inputValues: z.input<typeof customAspectFormSchema> = {
+  name:        "",
+  description: "",
+  effect:      "",
+  maxTrack:    1,
+  category:    "Trait",
+};
 
 interface CreateAspectDialogProps {
   open:         boolean;
@@ -41,15 +61,9 @@ export function CreateAspectDialog({
   const { character, updateCharacter } = useCharacterStore();
 
   const aspectForm = useForm({
-    defaultValues: {
-      name:        "",
-      description: "",
-      category:    "Trait" as AspectCatagory,
-      effect:      "",
-      maxTrack:    1,
-    },
-    validators: {
-      onSubmit: aspectSchema,
+    defaultValues: inputValues,
+    validators:    {
+      onSubmit: customAspectFormSchema,
     },
     onSubmit: async ({ value }) => {
       const newAspect: CustomAspect = {
@@ -146,19 +160,18 @@ export function CreateAspectDialog({
                     <Select
                       value={field.state.value}
                       onValueChange={(value) =>
-                        field.handleChange(
-                          value as "Trait" | "Gear" | "Habit" | "Relic",
-                        )
+                        field.handleChange(value as AspectCatagory)
                       }
                     >
                       <SelectTrigger id={field.name}>
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Trait">Trait</SelectItem>
-                        <SelectItem value="Gear">Gear</SelectItem>
-                        <SelectItem value="Habit">Habit</SelectItem>
-                        <SelectItem value="Relic">Relic</SelectItem>
+                        {aspectCatagorySchema.options.map((option) => (
+                          <SelectItem key={option} value={option}>
+                            {option}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                     {isInvalid && (

@@ -30,7 +30,7 @@ const customCampingGearFormSchema = customCampingGearSchema.pick({
   stakes:      true,
 });
 
-const inputvalues: z.input<typeof customCampingGearFormSchema> = {
+const inputValues: z.input<typeof customCampingGearFormSchema> = {
   name:        "",
   description: "",
   effect:      "",
@@ -49,7 +49,7 @@ export function CreateCampingGearDialog({
   const { character, updateCharacter } = useCharacterStore();
 
   const campingGearForm = useForm({
-    defaultValues: inputvalues,
+    defaultValues: inputValues,
     validators:    {
       onSubmit: customCampingGearFormSchema,
     },

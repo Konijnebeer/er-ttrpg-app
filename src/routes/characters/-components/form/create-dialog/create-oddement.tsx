@@ -26,7 +26,7 @@ import z from "zod";
 
 const customOddementFormSchema = customOddementSchema.pick({ name: true, description: true });
 
-const inputvalues: z.input<typeof customOddementFormSchema> = {
+const inputValues: z.input<typeof customOddementFormSchema> = {
   name:        "",
   description: "",
 };
@@ -43,7 +43,7 @@ export function CreateOddementDialog({
   const { character, updateCharacter } = useCharacterStore();
 
   const oddementForm = useForm({
-    defaultValues: inputvalues,
+    defaultValues: inputValues,
     validators:    {
       onSubmit: customOddementFormSchema,
     },

@@ -27,7 +27,7 @@ const customTagFormSchema = customTagSchema.pick({ name: true }).extend({
   description: z.string(),
 });
 
-const inputvalues: z.input<typeof customTagFormSchema> = {
+const inputValues: z.input<typeof customTagFormSchema> = {
   name:        "",
   description: "",
 };
@@ -41,7 +41,7 @@ export function CreateTagDialog({ open, onOpenChange }: CreateTagDialogProps) {
   const { character, updateCharacter } = useCharacterStore();
 
   const tagForm = useForm({
-    defaultValues: inputvalues,
+    defaultValues: inputValues,
     validators:    {
       onSubmit: customTagFormSchema,
     },

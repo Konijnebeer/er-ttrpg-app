@@ -37,7 +37,7 @@ const customFragmentFormSchema = customFragmentSchema.pick({
   type:        true,
 });
 
-const inputvalues: z.input<typeof customFragmentFormSchema> = {
+const inputValues: z.input<typeof customFragmentFormSchema> = {
   name:        "",
   description: "",
   type:        "Feature"
@@ -55,7 +55,7 @@ export function CreateFragmentDialog({
   const { character, updateCharacter } = useCharacterStore();
 
   const fragmentForm = useForm({
-    defaultValues: inputvalues,
+    defaultValues: inputValues,
     validators:    {
       onSubmit: customFragmentFormSchema,
     },

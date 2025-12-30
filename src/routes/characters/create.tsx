@@ -256,7 +256,7 @@ function RouteComponent() {
                       </TabsList>
                       <TabsContent value="origin">
                         <ScrollArea
-                          className={`${originRef ? "h-[75vh]" : "h-[22vh]"} lg:h-[48vh] overflow-hidden`}
+                          className={`${originRef ? "h-[75vh]" : "h-[22vh]"} lg:h-[37vh] overflow-hidden`}
                         >
                           <OriginPathSection
                             form={form}
@@ -268,7 +268,7 @@ function RouteComponent() {
                       </TabsContent>
                       <TabsContent value="path">
                         <ScrollArea
-                          className={`${pathRef ? "h-[75vh]" : "h-[22vh]"} lg:h-[48vh] overflow-hidden`}
+                          className={`${pathRef ? "h-[75vh]" : "h-[22vh]"} lg:h-[37vh] overflow-hidden`}
                         >
                           <OriginPathSection
                             form={form}
