@@ -8,4 +8,4 @@ export const CHARACTER_DB_VERSION = 1;
 
 export const SAVE_DEBOUNCE_MS = 2000; // 2 seconds
 
-export const BASE_PATH = "/er-ttrpg-app"
+export const BASE_PATH = ""
