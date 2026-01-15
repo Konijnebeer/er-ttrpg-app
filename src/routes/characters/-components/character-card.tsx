@@ -33,7 +33,7 @@ function CharacterCard({
   character: CharacterMetadata & { character: CharacterSelf };
 }) {
   const date = new Date(character.dateModified * 1000);
-  const formatedDate = `${date.getFullYear()}/${date.getMonth()}/${date.getDay()}`;
+  const formatedDate = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
   const { exportCharacter, deleteCharacter, loadAllCharactersMetadata } = useCharacterStore();
 
   function onExport() {
