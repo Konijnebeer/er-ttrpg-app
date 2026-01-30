@@ -42,6 +42,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Scroll } from "lucide-react";
 
 export const Route = createFileRoute("/characters/create")({
   component: RouteComponent,
@@ -201,6 +202,7 @@ function RouteComponent() {
           className="flex flex-col lg:flex-row gap-4 p-2"
         >
           <FieldGroup>
+            <ScrollArea className="max-h-fit overflow-visible lg:max-h-[85vh] lg:overflow-hidden">
             <div className="flex flex-col sm:flex-row gap-4">
               <form.AppField
                 name="name"
@@ -249,14 +251,14 @@ function RouteComponent() {
               {(versionRef) =>
                 versionRef && (
                   <form.AppForm>
-                    <Tabs defaultValue="origin" className="mb-4">
+                    <Tabs defaultValue="origin" className="my-4">
                       <TabsList>
                         <TabsTrigger value="origin">Origin</TabsTrigger>
                         <TabsTrigger value="path">Path</TabsTrigger>
                       </TabsList>
                       <TabsContent value="origin">
                         <ScrollArea
-                          className={`${originRef ? "h-[75vh]" : "h-[22vh]"} lg:h-[37vh] overflow-hidden`}
+                          className={`${originRef ? "h-[75vh]" : "h-[22vh]"} overflow-auto lg:overflow-visible lg:h-auto`}
                         >
                           <OriginPathSection
                             form={form}
@@ -268,7 +270,7 @@ function RouteComponent() {
                       </TabsContent>
                       <TabsContent value="path">
                         <ScrollArea
-                          className={`${pathRef ? "h-[75vh]" : "h-[22vh]"} lg:h-[37vh] overflow-hidden`}
+                          className={`${pathRef ? "h-[75vh]" : "h-[22vh]"} overflow-auto lg:overflow-visible lg:h-auto`}
                         >
                           <OriginPathSection
                             form={form}
@@ -282,7 +284,8 @@ function RouteComponent() {
                   </form.AppForm>
                 )
               }
-            </form.Subscribe>
+              </form.Subscribe>
+            </ScrollArea>
           </FieldGroup>
           <FieldGroup>
             <h1 className="text-2xl font-semibold text-center">Dependencies</h1>

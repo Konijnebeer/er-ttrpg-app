@@ -20,7 +20,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCharacterStore } from "@/store/characterStore";
 import { useSourceStore } from "@/store/sourceStore";
 import { useDialogStore } from "@/store/dialogStore";
-import { SquareChevronLeft } from "lucide-react";
+import { SquareChevronLeft, SquareChevronUp } from "lucide-react";
 import { useState, type Dispatch, type SetStateAction } from "react";
 import type { Aspect, Oddement, Fragment, CampingGear } from "@/types/source";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -55,15 +55,17 @@ export function CharacterSidebar({
           className="fixed right-5 top-5 z-50"
           aria-label="Open Sidebar"
         >
-          <SquareChevronLeft />
+          <SquareChevronLeft className="hidden md:block" />
+          <SquareChevronUp className="md:hidden block" />
         </Button>
       </SheetTrigger>
       <SheetContent
         ref={setNodeRef}
-        className="max-w-[70vw] md:min-w-[35vw] gap-0"
+        className="max-w-full max-h-[70vh] md:max-h-full md:min-w-[35vw] gap-0"
         onInteractOutside={(e) => {
           e.preventDefault();
         }}
+        side={window.innerWidth < 768 ? "bottom" : "right"}
       >
         <SheetHeader>
           <SheetTitle>Add Oddements, Relics, etc.</SheetTitle>
@@ -91,7 +93,7 @@ export function CharacterSidebar({
             <ContentSection type="self" />
           </TabsContent>
         </Tabs>
-        <SheetFooter className="shrink-0">
+        <SheetFooter className="shrink-0 hidden md:flex">
           <SheetClose asChild>
             <Button variant="outline">Close</Button>
           </SheetClose>
@@ -174,7 +176,7 @@ function ContentSection({ type }: { type: "all" | "core" | "extra" | "self" }) {
 
     // Handle Oddements (have optional 'tags'), or no 'type', 'stakes', or 'category'
     if (
-      "tags" in item ||
+      ("tags" in item && filter === "Oddement") ||
       (!("type" in item) &&
         !("stakes" in item) &&
         !("category" in item) &&
@@ -206,9 +208,9 @@ function ContentSection({ type }: { type: "all" | "core" | "extra" | "self" }) {
   });
 
   return (
-    <Card className="h-full">
+    <Card className="flex flex-col h-full min-h-0">
       <CardHeader className="shrink-0">
-        <div className="md:flex gap-2">
+        <div className="flex gap-2">
           <Input
             placeholder="Search by name..."
             value={searchQuery}
@@ -216,7 +218,7 @@ function ContentSection({ type }: { type: "all" | "core" | "extra" | "self" }) {
           />
 
           <Select value={filter} onValueChange={setFilter}>
-            <SelectTrigger className="w-[200px]">
+            <SelectTrigger className="w-[170px]">
               <SelectValue placeholder="Filter" />
             </SelectTrigger>
             <SelectContent>
@@ -240,7 +242,7 @@ function ContentSection({ type }: { type: "all" | "core" | "extra" | "self" }) {
         {type === "self" && <CreateButtons />}
       </CardHeader>
       <CardContent className="flex-1 min-h-0 p-0">
-        <ScrollArea className="h-full px-4">
+        <ScrollArea className="h-[70vh] md:h-full px-4">
           {filteredItems.length === 0 ? (
             <div className="p-4 text-center text-sm text-zinc-500">
               No content found
