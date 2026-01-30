@@ -42,7 +42,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Scroll } from "lucide-react";
 
 export const Route = createFileRoute("/characters/create")({
   component: RouteComponent,
