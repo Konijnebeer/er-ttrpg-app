@@ -727,7 +727,7 @@ function Clock({ clock }: { clock: clock }) {
           </div>
 
           {/* Bottom curved tracks (3 boxes) */}
-          <div className="absolute left-1/2 -translate-x-1/2 bottom-2 flex gap-3">
+          <div className="absolute left-1/2 -translate-x-1/2 bottom-2 flex gap-3 flex-row-reverse">
             {[3, 4, 5].map((i) => (
               <div
                 key={`bottom-${i}`}
