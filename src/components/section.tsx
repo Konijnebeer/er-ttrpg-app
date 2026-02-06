@@ -20,7 +20,7 @@ function SectionHeader({ className, ...props }: React.ComponentProps<"div">) {
       className={cn(
         " -mb-3 @container/card-header items-start md:space-y-0 space-y-2 md:grid auto-rows-min grid-rows-[auto_auto] gap-2 has-data-[slot=card-description]:grid-cols-[auto_1fr] has-data-[slot=card-action]:grid-cols-[auto_1fr_auto] border-b-primary border-b-2",
 
-        className
+        className,
       )}
       {...props}
     />
@@ -46,7 +46,7 @@ function SectionDescription({
       data-slot="card-description"
       className={cn(
         "text-muted-foreground text-sm col-start-2 self-end justify-self-start mb-0.5",
-        className
+        className,
       )}
       {...props}
     />
@@ -58,8 +58,8 @@ function SectionAction({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="card-action"
       className={cn(
-        "col-start-3 row-span-2 row-start-1 self-start justify-self-end space-y-2 space-x-2 flex flex-col md:flex-row pb-2 md:pb-0",
-        className
+        "col-start-3 row-span-2 row-start-1 self-start justify-self-end gap-2 flex flex-col md:flex-row pb-2",
+        className,
       )}
       {...props}
     />

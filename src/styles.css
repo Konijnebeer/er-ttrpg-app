@@ -147,3 +147,9 @@ code {
     scrollbar-width: none; 
   }
 }
+
+@layer utilities {
+  .pointer-events-all {
+    pointer-events: all !important;
+  }
+}

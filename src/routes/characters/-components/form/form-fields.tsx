@@ -15,7 +15,7 @@ export function NameField({ label }: { label: string }) {
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
   return (
-    <Field data-invalid={isInvalid}>
+    <Field data-invalid={isInvalid} className="p-1">
       <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
       <Input
         id={field.name}
@@ -37,7 +37,7 @@ export function AuthorField({ label }: { label: string }) {
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
   return (
-    <Field data-invalid={isInvalid}>
+    <Field data-invalid={isInvalid} className="p-1">
       <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
       <Input
         id={field.name}
@@ -65,7 +65,7 @@ export function DescriptionField({
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
   return (
-    <Field data-invalid={isInvalid}>
+    <Field data-invalid={isInvalid} className="p-1">
       <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
       <InputGroup>
         <InputGroupTextarea
@@ -94,7 +94,7 @@ export function WandererExperienceField({ label }: { label: string }) {
   const field = useFieldContext<string>();
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
   return (
-    <Field data-invalid={isInvalid}>
+    <Field data-invalid={isInvalid} className="p-1">
       <FieldLabel>{label}</FieldLabel>
       <RadioGroup
         name={field.name}
