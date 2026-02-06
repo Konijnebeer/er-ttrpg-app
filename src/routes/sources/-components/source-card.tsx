@@ -34,12 +34,14 @@ function SourceCard({ source }: { source: SourceMetadata }) {
 
   async function onDelete() {
     toast.promise(
-      deleteSource(source.id, source.version).then(() => loadAllSourcesMetadata()),
+      deleteSource(source.id, source.version).then(() =>
+        loadAllSourcesMetadata(),
+      ),
       {
         loading: "Deleting source...",
         success: "Source deleted successfully!",
         error:   "Failed to delete source.",
-      }
+      },
     );
   }
 
@@ -74,7 +76,11 @@ function SourceCard({ source }: { source: SourceMetadata }) {
           {source.sourceInfo.homebrew !== false && (
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="destructive" size="icon">
+                <Button
+                  variant="destructive"
+                  size="icon"
+                  aria-label={`Delete ${source.name}`}
+                >
                   <Trash />
                 </Button>
               </AlertDialogTrigger>
@@ -82,12 +88,15 @@ function SourceCard({ source }: { source: SourceMetadata }) {
                 <AlertDialogHeader>
                   <AlertDialogTitle>Delete Source?</AlertDialogTitle>
                   <AlertDialogDescription>
-                    Are you sure you want to delete "{source.name}"? This action cannot be undone.
+                    Are you sure you want to delete "{source.name}"? This action
+                    cannot be undone.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={onDelete}>Delete</AlertDialogAction>
+                  <AlertDialogAction onClick={onDelete}>
+                    Delete
+                  </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
@@ -99,7 +108,11 @@ function SourceCard({ source }: { source: SourceMetadata }) {
             }}
           > */}
           {source.status !== "nonEditable" && (
-            <Button variant="outline" className="cursor-not-allowed">
+            <Button
+              variant="outline"
+              className="cursor-not-allowed pointer-events-all"
+              disabled
+            >
               Edit
             </Button>
           )}
@@ -112,7 +125,6 @@ function SourceCard({ source }: { source: SourceMetadata }) {
           >
             <Button variant="default">Open</Button>
           </Link>
-        
         </div>
       </CardFooter>
     </Card>
@@ -123,7 +135,7 @@ function SourceCardGrid({
   sources,
   className,
 }: {
-  sources: SourceMetadata[];
+  sources:    SourceMetadata[];
   className?: string;
 }) {
   return (

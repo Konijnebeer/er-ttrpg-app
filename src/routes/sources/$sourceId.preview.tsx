@@ -61,15 +61,16 @@ function RouteComponent() {
 
   return (
     <Border>
-      <Link to="/sources">
-        <Button
-          size="icon"
-          className="fixed left-5 top-5 z-50"
-          aria-label="Back to previous page"
-        >
+      <Button
+        asChild
+        size="icon"
+        className="fixed left-5 top-5 z-50"
+        aria-label="Back to previous page"
+      >
+        <Link to="/sources">
           <ArrowBigLeftIcon />
-        </Button>
-      </Link>
+        </Link>
+      </Button>
       <header className=" flex flex-col gap-2">
         <div className="flex flex-col xl:flex-row gap-4 justify-between">
           <div className="flex flex-col md:flex-row gap-2 flex-start md:items-center">

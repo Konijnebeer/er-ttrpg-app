@@ -1,35 +1,35 @@
 {
-  "id": "tali-red-hand",
-  "name": "Tali Red-Hand",
+  "id": "elias-twistfinger",
+  "name": "Elias Twistfinger",
   "description": "This is a character port",
   "author": "Pregen",
   "sheetVersion": "1.0.0",
-  "dateCreated": 1765923971,
+  "dateCreated": 1766614229,
   "dateModified": 1766844027,
   "versionRef": "beta-playtest@1.0.1",
   "dependencies": [],
   "data": {
     "character": {
-      "name": "Tali Red-Hand",
+      "name": "Elias Twistfinger",
       "player": "Pregen",
       "pronouns": "",
       "origin": "Root-Broken",
       "originRef": "beta-playtest@1.0.1:root-broken",
-      "path": "Scrounger",
-      "pathRef": "beta-playtest@1.0.1:scrounger",
+      "path": "Pioneer",
+      "pathRef": "beta-playtest@1.0.1:pioneer",
       "milestones": 0,
-      "dispair": 0,
-      "hope": 2,
+      "dispair": 1,
+      "hope": 1,
       "fallout": {
         "level": 0,
         "condition": "",
-        "maxTrack": 7,
+        "maxTrack": 6,
         "currentTrack": 0
       },
       "curse": {
         "level": 0,
         "condition": "",
-        "maxTrack": 2,
+        "maxTrack": 3,
         "currentTrack": 0
       },
       "clock": {
@@ -41,7 +41,7 @@
     "edges": [
       {
         "ref": "beta-playtest@1.0.1:stone",
-        "level": 0
+        "level": 1
       },
       {
         "ref": "beta-playtest@1.0.1:wind",
@@ -65,17 +65,17 @@
       },
       {
         "ref": "beta-playtest@1.0.1:smoke",
-        "level": 1
+        "level": 0
       }
     ],
     "skills": [
       {
         "ref": "beta-playtest@1.0.1:scramble",
-        "level": 1
+        "level": 2
       },
       {
         "ref": "beta-playtest@1.0.1:delve",
-        "level": 2
+        "level": 1
       },
       {
         "ref": "beta-playtest@1.0.1:muse",
@@ -83,7 +83,7 @@
       },
       {
         "ref": "beta-playtest@1.0.1:puzzle",
-        "level": 1
+        "level": 0
       },
       {
         "ref": "beta-playtest@1.0.1:wreck",
@@ -99,11 +99,11 @@
       },
       {
         "ref": "beta-playtest@1.0.1:tinker",
-        "level": 1
+        "level": 0
       },
       {
         "ref": "beta-playtest@1.0.1:soothe",
-        "level": 0
+        "level": 2
       },
       {
         "ref": "beta-playtest@1.0.1:bargain",
@@ -120,56 +120,52 @@
           "ref": "beta-playtest@1.0.1:hearty-mushroom",
           "quantity": 1,
           "tags": ["beta-playtest@1.0.1:hearty"]
+
         },
         {
-          "ref": "beta-playtest@1.0.1:stone-ring",
+          "ref": "beta-playtest@1.0.1:metal-pitons",
           "quantity": 1
         },
         {
-          "ref": "beta-playtest@1.0.1:sticky-sap",
-          "quantity": 1,
-          "tags": ["beta-playtest@1.0.1:sticky"]
+          "ref": "beta-playtest@1.0.1:bronze-bell",
+          "quantity": 1
         }
       ],
       "fragments": [
         {
-          "ref": "beta-playtest@1.0.1:flowering",
-          "quantity": 1,
-          "tags": []
+          "ref": "beta-playtest@1.0.1:garden",
+          "quantity": 1
         },
         {
           "ref": "beta-playtest@1.0.1:thorny",
-          "quantity": 1,
-          "tags": ["beta-playtest@1.0.1:detail"]
+          "quantity": 1
         },
         {
-          "ref": "beta-playtest@1.0.1:tower",
-          "quantity": 1,
-          "tags": ["beta-playtest@1.0.1:feature"]
+          "ref": "beta-playtest@1.0.1:flowering",
+          "quantity": 1
         },
         {
           "ref": "beta-playtest@1.0.1:collapsed",
-          "quantity": 1,
-          "tags": ["beta-playtest@1.0.1:detail"]
+          "quantity": 1
         }
       ],
       "campingGear": []
     },
     "aspects": [
       {
-        "ref": "beta-playtest@1.0.1:pack-rat",
+        "ref": "beta-playtest@1.0.1:broadleaf-mantle",
         "track": 4
       },
       {
-        "ref": "beta-playtest@1.0.1:repair-kit",
-        "track": 5
+        "ref": "beta-playtest@1.0.1:sharp-senses",
+        "track": 4
       },
       {
-        "ref": "beta-playtest@1.0.1:ruinstone-axe",
-        "track": 5
+        "ref": "beta-playtest@1.0.1:ornery-blade",
+        "track": 4
       },
       {
-        "ref": "beta-playtest@1.0.1:tough",
+        "ref": "beta-playtest@1.0.1:no-time-to-waste",
         "track": 3
       }
     ]

@@ -3,7 +3,7 @@ import {
   NameField,
   AuthorField,
   DescriptionField,
-  WandererExperienceField
+  WandererExperienceField,
 } from "@/routes/characters/-components/form/form-fields";
 import { EdgesSkillsField } from "@/routes/characters/-components/form/edges-skills-field";
 import { AspectsField } from "@/routes/characters/-components/form/aspects-field";

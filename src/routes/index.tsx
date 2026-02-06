@@ -62,16 +62,19 @@ export default function SourcesIndexPage() {
           </Link>
           <SectionDescription>Manage your Characters here.</SectionDescription>
           <SectionAction>
-            <Link to="/characters/create">
-              <Button variant="outline">Create Character</Button>
-            </Link>
-            <Link to="/characters/import">
-              <Button variant="default">Import Character</Button>
-            </Link>
+            <Button variant="outline" asChild>
+              <Link to="/characters/create">Create Character</Link>
+            </Button>
+            <Button variant="default" asChild>
+              <Link to="/characters/import">Import Character</Link>
+            </Button>
           </SectionAction>
         </SectionHeader>
         <SectionContent>
-          <CharacterCardGrid characters={characters} className="h-[25vh] md:h-[40vh]" />
+          <CharacterCardGrid
+            characters={characters}
+            className="h-[25vh] md:h-[40vh]"
+          />
         </SectionContent>
       </Section>
       <Section>
@@ -81,16 +84,23 @@ export default function SourcesIndexPage() {
           </Link>
           <SectionDescription>Manage your sources here.</SectionDescription>
           <SectionAction>
-            <Button variant="outline" className="cursor-not-allowed w-fit">
+            <Button
+              variant="outline"
+              className="cursor-not-allowed pointer-events-all"
+              disabled
+            >
               Create Source
             </Button>
-            <Link to="/sources/import">
-              <Button variant="default">Import Source</Button>
-            </Link>
+            <Button variant="default" asChild>
+              <Link to="/sources/import">Import Source</Link>
+            </Button>
           </SectionAction>
         </SectionHeader>
         <SectionContent>
-          <SourceCardGrid sources={latestSources} className="h-[25vh] md:h-[40vh]" />
+          <SourceCardGrid
+            sources={latestSources}
+            className="h-[25vh] md:h-[40vh]"
+          />
         </SectionContent>
       </Section>
     </Border>

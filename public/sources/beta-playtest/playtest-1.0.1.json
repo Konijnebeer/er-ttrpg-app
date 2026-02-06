@@ -211,7 +211,7 @@
     "tags": [
       {
         "id": "watterlogged",
-        "name": "Watterlogged"
+        "name": "Waterlogged"
       },
       {
         "id": "leaky",
@@ -406,7 +406,7 @@
       {
         "id": "waterlogged-journal",
         "name": "Waterlogged Journal",
-        "tags": ["watterlogged"]
+        "tags": ["waterlogged"]
       },
       {
         "id": "woven-kelp-rope",
