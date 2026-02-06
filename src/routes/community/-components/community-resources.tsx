@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, FileDown, ImageDown, Key } from "lucide-react";
+import { ExternalLink, FileDown, ImageDown } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { Contributor } from "@/types/source";
 import { BASE_PATH } from "@/lib/constants";
