@@ -4,6 +4,7 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
+import { Route as notFoundRoute } from "./routes/-not-found";
 
 import "./styles.css";
 import reportWebVitals from "./reportWebVitals.ts";
@@ -18,6 +19,7 @@ const router = createRouter({
   scrollRestoration:        true,
   defaultStructuralSharing: true,
   defaultPreloadStaleTime:  0,
+  notFoundRoute,
 });
 
 // Register the router instance for type safety
