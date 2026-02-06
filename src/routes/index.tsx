@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import { useSourceStore } from "@/store/sourceStore";
 import { useCharacterStore } from "@/store/characterStore";
 import About from "@/components/about";
+import { HeartHandshake } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: SourcesIndexPage,
@@ -54,6 +55,16 @@ export default function SourcesIndexPage() {
 
   return (
     <Border>
+      <Button
+        asChild
+        size="icon"
+        className="fixed left-5 top-5 z-50"
+        aria-label="To community page"
+      >
+        <Link to="/community">
+          <HeartHandshake />
+        </Link>
+      </Button>
       <About />
       <Section className="pb-2">
         <SectionHeader>
@@ -71,7 +82,10 @@ export default function SourcesIndexPage() {
           </SectionAction>
         </SectionHeader>
         <SectionContent>
-          <CharacterCardGrid characters={characters} className="h-[25vh] md:h-[40vh]" />
+          <CharacterCardGrid
+            characters={characters}
+            className="h-[25vh] md:h-[40vh]"
+          />
         </SectionContent>
       </Section>
       <Section>
@@ -90,7 +104,10 @@ export default function SourcesIndexPage() {
           </SectionAction>
         </SectionHeader>
         <SectionContent>
-          <SourceCardGrid sources={latestSources} className="h-[25vh] md:h-[40vh]" />
+          <SourceCardGrid
+            sources={latestSources}
+            className="h-[25vh] md:h-[40vh]"
+          />
         </SectionContent>
       </Section>
     </Border>
