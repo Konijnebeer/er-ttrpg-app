@@ -1,4 +1,4 @@
-import { Border } from "@/components/border";
+// Components
 import {
   Section,
   SectionAction,
@@ -18,25 +18,30 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { CampingGearCard } from "../sources/-components/camping-gear";
+import { TagCard } from "../sources/-components/tag";
+import { OddementCard } from "../sources/-components/oddement";
+import { FragmentCard } from "../sources/-components/fragment";
+import { AspectCard } from "../sources/-components/aspect";
+import { ScrollSection } from "../sources/-components/scroll-section";
+import { Border } from "@/components/border";
 import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useCharacterStore } from "@/store/characterStore";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { ArrowBigLeftIcon, Trash } from "lucide-react";
-import { useEffect } from "react";
 import { toast } from "sonner";
-import { CampingGearSection } from "../sources/-components/camping-gear";
-import { useCharacterForm } from "@/hooks/character.form";
+// Types
 import { characterMetadataSchema } from "@/types/character";
+// Stores
+import { useCharacterStore } from "@/store/characterStore";
 import { useSourceStore } from "@/store/sourceStore";
-import { TagSection } from "../sources/-components/tag";
-import type { Oddement } from "@/types/source";
-import { OddementSection } from "../sources/-components/oddement";
-import { FragmentSection } from "../sources/-components/fragment";
-import { AspectSection } from "../sources/-components/aspect";
+// Hooks
+import { useCharacterForm } from "@/hooks/character.form";
 import { useVersionCheck } from "@/hooks/use-version-check";
 import { useUpdateCharacterSource } from "@/hooks/use-update-character-source";
+// Helpers
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
 
 export const Route = createFileRoute("/characters/$characterId/edit")({
   component: RouteComponent,
@@ -320,30 +325,68 @@ function RouteComponent() {
           <SectionContent>
             <ScrollArea className="h-[70vh] lg:h-[35vh] w-full">
               <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
-                {character.data?.customTags && (
-                  <TagSection tags={character.data.customTags}></TagSection>
-                )}
-                {character.data?.customOddements && (
-                  <OddementSection
-                    sourceKey="self@self"
-                    oddements={character.data.customOddements as Oddement[]}
-                  ></OddementSection>
-                )}
-                {character.data?.customFragments && (
-                  <FragmentSection
-                    fragments={character.data.customFragments}
-                  ></FragmentSection>
-                )}
-                {character.data?.customAspects && (
-                  <AspectSection
-                    aspects={character.data.customAspects}
-                  ></AspectSection>
-                )}
-                {character.data?.customCampingGear && (
-                  <CampingGearSection
-                    campingGear={character.data.customCampingGear}
-                  ></CampingGearSection>
-                )}
+                {character.data?.customTags &&
+                  character.data.customTags.length > 0 && (
+                    <ScrollSection
+                      title="Tags"
+                      description="Tags within the character"
+                    >
+                      {character.data.customTags.map((tag) => (
+                        <TagCard key={tag.id} tag={tag} />
+                      ))}
+                    </ScrollSection>
+                  )}
+                {character.data?.customOddements &&
+                  character.data.customOddements.length > 0 && (
+                    <ScrollSection
+                      title="Oddements"
+                      description="Oddements within the character"
+                    >
+                      {character.data.customOddements.map((oddement) => (
+                        <OddementCard
+                          key={oddement.id}
+                          oddement={oddement}
+                          sourceKey="self@self"
+                        />
+                      ))}
+                    </ScrollSection>
+                  )}
+                {character.data?.customFragments &&
+                  character.data.customFragments.length > 0 && (
+                    <ScrollSection
+                      title="Fragments"
+                      description="Fragments within the character"
+                    >
+                      {character.data.customFragments.map((fragment) => (
+                        <FragmentCard key={fragment.id} fragment={fragment} />
+                      ))}
+                    </ScrollSection>
+                  )}
+                {character.data?.customAspects &&
+                  character.data.customAspects.length > 0 && (
+                    <ScrollSection
+                      title="Aspects"
+                      description="Aspects within the character"
+                    >
+                      {character.data.customAspects.map((aspect) => (
+                        <AspectCard key={aspect.id} aspect={aspect} />
+                      ))}
+                    </ScrollSection>
+                  )}
+                {character.data?.customCampingGear &&
+                  character.data.customCampingGear.length > 0 && (
+                    <ScrollSection
+                      title="Camping Gear"
+                      description="Camping Gear within the character"
+                    >
+                      {character.data.customCampingGear.map((campingGear) => (
+                        <CampingGearCard
+                          key={campingGear.id}
+                          campingGear={campingGear}
+                        />
+                      ))}
+                    </ScrollSection>
+                  )}
               </div>
             </ScrollArea>
           </SectionContent>

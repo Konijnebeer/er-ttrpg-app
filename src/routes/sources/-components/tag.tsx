@@ -1,10 +1,3 @@
-import {
-  Section,
-  SectionHeader,
-  SectionTitle,
-  SectionDescription,
-  SectionContent,
-} from "@/components/section";
 import { Badge } from "@/components/ui/badge";
 import {
   Item,
@@ -14,7 +7,6 @@ import {
   ItemMedia,
   ItemTitle,
 } from "@/components/ui/item";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import type { Tag } from "@/types/source";
 import * as LucideIcons from "lucide-react";
 import { X } from "lucide-react";
@@ -59,28 +51,6 @@ function TagCard({ tag }: { tag: Tag }) {
   );
 }
 
-function TagSection({ tags }: { tags: Tag[] }) {
-  return (
-    <Section>
-      <SectionHeader>
-        <SectionTitle>Tags</SectionTitle>
-        <SectionDescription>
-          Tags within the source for Oddements
-        </SectionDescription>
-      </SectionHeader>
-      <SectionContent>
-        <ScrollArea className="h-[30vh] h-max-[40vh]">
-          <div className="space-y-2">
-            {tags.map((tag) => (
-              <TagCard key={tag.id} tag={tag} />
-            ))}
-          </div>
-        </ScrollArea>
-      </SectionContent>
-    </Section>
-  );
-}
-
 function TagBadge({
   tag,
   onRemove,
@@ -94,9 +64,7 @@ function TagBadge({
     .join(" ");
   return (
     <Badge variant="outline" className={classes} {...props}>
-      {Icon && (
-        <Icon style={iconStyle} className="w-4 h-4" />
-      )}
+      {Icon && <Icon style={iconStyle} className="w-4 h-4" />}
       {tag.name}
       {onRemove && (
         <button
@@ -115,4 +83,4 @@ function TagBadge({
   );
 }
 
-export { TagCard, TagSection, TagBadge };
+export { TagCard, TagBadge };

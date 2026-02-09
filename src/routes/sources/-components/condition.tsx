@@ -1,10 +1,3 @@
-import {
-  Section,
-  SectionContent,
-  SectionDescription,
-  SectionHeader,
-  SectionTitle,
-} from "@/components/section";
 import { Badge } from "@/components/ui/badge";
 import {
   Item,
@@ -20,28 +13,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import type { Condition } from "@/types/source";
-
-function ConditionSection({ conditions }: { conditions: Condition[] }) {
-  return (
-    <Section>
-      <SectionHeader>
-        <SectionTitle>Conditions</SectionTitle>
-        <SectionDescription>Conditions within the source</SectionDescription>
-      </SectionHeader>
-      <SectionContent>
-        <ScrollArea className="h-[30vh] h-max-[40vh]">
-          <div className="space-y-2">
-            {conditions.map((condition) => (
-              <ConditionCard key={condition.id} condition={condition} />
-            ))}
-          </div>
-        </ScrollArea>
-      </SectionContent>
-    </Section>
-  );
-}
 
 function ConditionCard({ condition }: { condition: Condition }) {
   return (
@@ -80,4 +52,4 @@ function ConditionCard({ condition }: { condition: Condition }) {
   );
 }
 
-export { ConditionSection };
+export { ConditionCard };
