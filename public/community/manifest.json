@@ -29,6 +29,31 @@
           "source": "guide-reference-sheet-1.0.pdf"
         }
       ]
+    },
+    {
+      "id": "the-bells-tide",
+      "title": "The Bell's Tide",
+      "preview": "the-bells-tide-preview.webp",
+      "contributors": [
+        {
+          "title": "Creator",
+          "name": "TrijaCZ",
+          "contact": [
+            {
+              "type": "Discord",
+              "name": "TrijaCZ",
+              "url": ""
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "name": "Download PDF",
+          "type": "Download-pdf",
+          "source": "the-bells-tide.pdf"
+        }
+      ]
     }
   ]
 }
