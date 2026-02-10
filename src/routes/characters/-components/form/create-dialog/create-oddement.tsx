@@ -22,6 +22,7 @@ import type { CustomOddement } from "@/types/character";
 import { toast } from "sonner";
 import { customOddementSchema } from "@/types/character";
 import z from "zod";
+import sanitizeId from "@/lib/sanitizeId";
 
 
 const customOddementFormSchema = customOddementSchema.pick({ name: true, description: true });
@@ -49,8 +50,7 @@ export function CreateOddementDialog({
     },
     onSubmit: async ({ value }) => {
       const newOddement: CustomOddement = {
-        // Filter out everything that's not an alphanumeric character, _ or - replace spaces with -
-        id:          `${value.name.replace(/[^\w-]+/g, "").toLowerCase()}-${Date.now()}`,
+        id:          sanitizeId(value.name),
         name:        value.name,
         description: value.description,
       };
@@ -90,7 +90,7 @@ export function CreateOddementDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-125">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>Create Custom Item</DialogTitle>
           <DialogDescription>

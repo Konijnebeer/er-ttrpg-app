@@ -30,6 +30,7 @@ import { toast } from "sonner";
 import { customFragmentSchema } from "@/types/character";
 import { fragmentTypeSchema, type FragmentType } from "@/types/source";
 import type z from "zod";
+import sanitizeId from "@/lib/sanitizeId";
 
 const customFragmentFormSchema = customFragmentSchema.pick({
   name:        true,
@@ -61,8 +62,7 @@ export function CreateFragmentDialog({
     },
     onSubmit: async ({ value }) => {
       const newFragment: CustomFragment = {
-        // Filter out everything that's not an alphanumeric character, _ or - replace spaces with -
-        id:          `${value.name.replace(/[^\w-]+/g, "").toLowerCase()}-${Date.now()}`,
+        id:          sanitizeId(value.name),
         name:        value.name,
         description: value.description,
         type:        value.type,
@@ -103,7 +103,7 @@ export function CreateFragmentDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-125">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>Create Custom Item</DialogTitle>
           <DialogDescription>

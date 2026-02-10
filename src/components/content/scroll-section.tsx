@@ -20,7 +20,7 @@ function ScrollSection({
   title,
   description,
   children,
-  className = "h-[30vh] h-max-[40vh]",
+  className = "h-[30vh] max-h-[40vh]",
 }: ScrollSectionProps) {
   return (
     <Section>

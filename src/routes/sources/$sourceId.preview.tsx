@@ -1,24 +1,24 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
 import { Border } from "@/components/border";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { EdgeCard } from "./-components/edge";
-import { SkillCard } from "./-components/skill";
-import { TagCard } from "./-components/tag";
-import { OddementCard } from "./-components/oddement";
-import { FragmentCard } from "./-components/fragment";
-import { CampingGearCard } from "./-components/camping-gear";
-import { AspectCard } from "./-components/aspect";
-import { ConditionCard } from "./-components/condition";
-import { ScrollSection } from "./-components/scroll-section";
+import { EdgeCard } from "@/components/content/edge";
+import { SkillCard } from "@/components/content/skill";
+import { TagCard } from "@/components/content/tag";
+import { OddementCard } from "@/components/content/oddement";
+import { FragmentCard } from "@/components/content/fragment";
+import { CampingGearCard } from "@/components/content/camping-gear";
+import { AspectCard } from "@/components/content/aspect";
+import { ConditionCard } from "@/components/content/condition";
+import { ScrollSection } from "@/components/content/scroll-section";
 import { ArrowBigLeftIcon, BadgeCheckIcon } from "lucide-react";
+import AvatarInfo from "@/components/avatar-info";
 
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { getLatestSourceVersion } from "@/database/sourceDB";
 import { useSourceStore } from "@/store/sourceStore";
 import { useEffect } from "react";
 import { makeSourceKey } from "@/lib/versioningHelpers";
-import AvatarInfo from "./-components/avatar-info";
 
 export const Route = createFileRoute("/sources/$sourceId/preview")({
   component: RouteComponent,
@@ -108,7 +108,10 @@ function RouteComponent() {
             </ScrollSection>
           )}
           {source.data.skills && source.data.skills.length > 0 && (
-            <ScrollSection title="Skills" description="Skills within the source">
+            <ScrollSection
+              title="Skills"
+              description="Skills within the source"
+            >
               {source.data.skills.map((skill) => (
                 <SkillCard key={skill.id} skill={skill} />
               ))}
@@ -154,12 +157,18 @@ function RouteComponent() {
               description="Camping Gear within the source"
             >
               {source.data.campingGear.map((campingGear) => (
-                <CampingGearCard key={campingGear.id} campingGear={campingGear} />
+                <CampingGearCard
+                  key={campingGear.id}
+                  campingGear={campingGear}
+                />
               ))}
             </ScrollSection>
           )}
           {source.data.aspects && source.data.aspects.length > 0 && (
-            <ScrollSection title="Aspects" description="Aspects within the source">
+            <ScrollSection
+              title="Aspects"
+              description="Aspects within the source"
+            >
               {source.data.aspects.map((aspect) => (
                 <AspectCard key={aspect.id} aspect={aspect} />
               ))}

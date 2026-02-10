@@ -18,16 +18,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { CampingGearCard } from "../sources/-components/camping-gear";
-import { TagCard } from "../sources/-components/tag";
-import { OddementCard } from "../sources/-components/oddement";
-import { FragmentCard } from "../sources/-components/fragment";
-import { AspectCard } from "../sources/-components/aspect";
-import { ScrollSection } from "../sources/-components/scroll-section";
 import { Border } from "@/components/border";
 import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { OwnContentSection } from "./-components/own-content-section";
 import { ArrowBigLeftIcon, Trash } from "lucide-react";
 import { toast } from "sonner";
 // Types
@@ -318,76 +313,15 @@ function RouteComponent() {
           <SectionHeader>
             <SectionTitle>Own Content</SectionTitle>
             <SectionDescription>
-              See, Edit* and Delete* the in character content{" "}
-              <span className="text-xs">*In the near future</span>
+              See, Create, Edit and Delete the in character content
             </SectionDescription>
           </SectionHeader>
           <SectionContent>
             <ScrollArea className="h-[70vh] lg:h-[35vh] w-full">
-              <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
-                {character.data?.customTags &&
-                  character.data.customTags.length > 0 && (
-                    <ScrollSection
-                      title="Tags"
-                      description="Tags within the character"
-                    >
-                      {character.data.customTags.map((tag) => (
-                        <TagCard key={tag.id} tag={tag} />
-                      ))}
-                    </ScrollSection>
-                  )}
-                {character.data?.customOddements &&
-                  character.data.customOddements.length > 0 && (
-                    <ScrollSection
-                      title="Oddements"
-                      description="Oddements within the character"
-                    >
-                      {character.data.customOddements.map((oddement) => (
-                        <OddementCard
-                          key={oddement.id}
-                          oddement={oddement}
-                          sourceKey="self@self"
-                        />
-                      ))}
-                    </ScrollSection>
-                  )}
-                {character.data?.customFragments &&
-                  character.data.customFragments.length > 0 && (
-                    <ScrollSection
-                      title="Fragments"
-                      description="Fragments within the character"
-                    >
-                      {character.data.customFragments.map((fragment) => (
-                        <FragmentCard key={fragment.id} fragment={fragment} />
-                      ))}
-                    </ScrollSection>
-                  )}
-                {character.data?.customAspects &&
-                  character.data.customAspects.length > 0 && (
-                    <ScrollSection
-                      title="Aspects"
-                      description="Aspects within the character"
-                    >
-                      {character.data.customAspects.map((aspect) => (
-                        <AspectCard key={aspect.id} aspect={aspect} />
-                      ))}
-                    </ScrollSection>
-                  )}
-                {character.data?.customCampingGear &&
-                  character.data.customCampingGear.length > 0 && (
-                    <ScrollSection
-                      title="Camping Gear"
-                      description="Camping Gear within the character"
-                    >
-                      {character.data.customCampingGear.map((campingGear) => (
-                        <CampingGearCard
-                          key={campingGear.id}
-                          campingGear={campingGear}
-                        />
-                      ))}
-                    </ScrollSection>
-                  )}
-              </div>
+              <OwnContentSection
+                character={character}
+                updateCharacter={updateCharacter}
+              />
             </ScrollArea>
           </SectionContent>
         </Section>

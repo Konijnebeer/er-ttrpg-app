@@ -22,6 +22,7 @@ import type { CustomCampingGear } from "@/types/character";
 import { toast } from "sonner";
 import { customCampingGearSchema } from "@/types/character";
 import type z from "zod";
+import sanitizeId from "@/lib/sanitizeId";
 
 const customCampingGearFormSchema = customCampingGearSchema.pick({
   name:        true,
@@ -55,8 +56,7 @@ export function CreateCampingGearDialog({
     },
     onSubmit: async ({ value }) => {
       const newCampingGear: CustomCampingGear = {
-        // Filter out everything that's not an alphanumeric character, _ or - replace spaces with -
-        id:          `${value.name.replace(/[^\w-]+/g, "").toLowerCase()}-${Date.now()}`,
+        id:          sanitizeId(value.name),
         name:        value.name,
         description: value.description,
         effect:      value.effect,
@@ -98,7 +98,7 @@ export function CreateCampingGearDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-125">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>Create Custom Item</DialogTitle>
           <DialogDescription>

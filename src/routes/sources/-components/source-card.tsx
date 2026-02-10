@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import AvatarInfo from "./avatar-info";
+import AvatarInfo from "@/components/avatar-info";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { BadgeCheckIcon, Trash } from "lucide-react";
 import { Link } from "@tanstack/react-router";
