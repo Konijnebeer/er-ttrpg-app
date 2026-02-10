@@ -14,29 +14,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { FieldGroup } from "@/components/ui/field";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Trash } from "lucide-react";
+import { DeleteButton } from "@/components/content/delete-button";
+import { toast } from "sonner";
 
-import type { Fragment, FragmentType } from "@/types/source";
-import type { CustomFragment } from "@/types/character";
-import { customFragmentSchema } from "@/types/character";
-import { fragmentTypeSchema } from "@/types/source";
+import { fragmentTypeSchema, type Fragment, type FragmentType } from "@/types/source";
+import  {customFragmentSchema, type CustomFragment } from "@/types/character";
 import { useState, useEffect } from "react";
 import { useContentForm } from "@/hooks/content.form";
-import { toast } from "sonner";
 import sanitizeId from "@/lib/sanitizeId";
 import { z } from "zod";
 
@@ -80,37 +67,11 @@ function FragmentEditCard({
           <ItemDescription>{fragment.description}</ItemDescription>
         </ItemContent>
         <ItemActions>
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button
-                variant="destructive"
-                size="icon"
-                aria-label={`Delete ${fragment.name}`}
-              >
-                <Trash className="h-4 w-4" />
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Delete Fragment?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  Are you sure you want to delete "{fragment.name}"? This action
-                  cannot be undone after saving.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction
-                  onClick={() => {
-                    onDelete(fragment);
-                    toast.success(`Fragment "${fragment.name}" deleted`);
-                  }}
-                >
-                  Delete
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+          <DeleteButton
+            title="Fragment"
+            name={fragment.name}
+            onDelete={() => onDelete(fragment)}
+          />
           <Button onClick={() => setDialogOpen(true)}>Edit</Button>
         </ItemActions>
       </Item>

@@ -15,33 +15,22 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { FieldGroup } from "@/components/ui/field";
-
+import { Button } from "@/components/ui/button";
+import { DeleteButton } from "@/components/content/delete-button";
 import { TagBadge } from "@/components/content/tag";
+import { toast } from "sonner";
 
 import type { Oddement } from "@/types/source";
-import { useSourceStore } from "@/store/sourceStore";
-import { ensureRefrence } from "@/lib/versioningHelpers";
-import type { SourceKey } from "@/types/refrence";
 import { customOddementSchema, type CustomOddement } from "@/types/character";
+import type { SourceKey } from "@/types/refrence";
+import { useSourceStore } from "@/store/sourceStore";
+
+import { useContentForm } from "@/hooks/content.form";
+import { ensureRefrence } from "@/lib/versioningHelpers";
+import sanitizeId from "@/lib/sanitizeId";
 import z from "zod";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import { Trash } from "lucide-react";
-import { useContentForm } from "@/hooks/content.form";
-import sanitizeId from "@/lib/sanitizeId";
 
 function OddementCard({
   oddement,
@@ -101,36 +90,11 @@ function OddementEditCard({
           <ItemDescription>{oddement.description}</ItemDescription>
         </ItemContent>
         <ItemActions>
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button
-                variant="destructive"
-                size="icon"
-                aria-label={`Delete ${oddement.name}`}
-              >
-                <Trash />
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Delete Oddement?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  Are you sure you want to delete "{oddement.name}"? This action
-                  cannot be undone after saving.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction
-                  onClick={() => {
-                    onDelete(oddement);
-                  }}
-                >
-                  Delete
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+          <DeleteButton
+            title="Oddement"
+            name={oddement.name}
+            onDelete={() => onDelete(oddement)}
+          />
           <Button onClick={() => setDialogOpen(true)}>Edit</Button>
         </ItemActions>
       </Item>

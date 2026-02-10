@@ -15,27 +15,17 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { FieldGroup } from "@/components/ui/field";
-import type { Tag } from "@/types/source";
+import { DeleteButton } from "@/components/content/delete-button";
+import { X } from "lucide-react";
 // As it is not used currently, all logic related to the icons are commented out.
 // This reduces bundle size.
 // import * as LucideIcons from "lucide-react";
-import { X, Trash } from "lucide-react";
-import { useState, useEffect } from "react";
+import type { Tag } from "@/types/source";
 import { customTagSchema, type CustomTag } from "@/types/character";
+import { useState, useEffect } from "react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { useContentForm } from "@/hooks/content.form";
@@ -102,36 +92,11 @@ function TagEditCard({
           <ItemDescription>{tag.description}</ItemDescription>
         </ItemContent>
         <ItemActions>
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button
-                variant="destructive"
-                size="icon"
-                aria-label={`Delete ${tag.name}`}
-              >
-                <Trash />
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Delete Tag?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  Are you sure you want to delete "{tag.name}"? This action
-                  cannot be undone after saving.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction
-                  onClick={() => {
-                    onDelete(tag);
-                  }}
-                >
-                  Delete
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+          <DeleteButton
+            title="Tag"
+            name={tag.name}
+            onDelete={() => onDelete(tag)}
+          />
           <Button onClick={() => setDialogOpen(true)}>Edit</Button>
         </ItemActions>
       </Item>

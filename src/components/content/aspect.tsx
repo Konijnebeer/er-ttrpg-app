@@ -1,11 +1,10 @@
-import { Badge } from "@/components/ui/badge";
 import {
   Item,
-  ItemActions,
   ItemContent,
   ItemDescription,
   ItemHeader,
   ItemTitle,
+  ItemActions,
 } from "@/components/ui/item";
 import {
   Dialog,
@@ -15,28 +14,20 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { FieldGroup } from "@/components/ui/field";
 import { Button } from "@/components/ui/button";
-import { Trash } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { DeleteButton } from "@/components/content/delete-button";
+import { toast } from "sonner";
 
-import type { Aspect, AspectCatagory } from "@/types/source";
-import type { CustomAspect } from "@/types/character";
-import { customAspectSchema } from "@/types/character";
-import { aspectCatagorySchema } from "@/types/source";
+import {
+  aspectCatagorySchema,
+  type Aspect,
+  type AspectCatagory,
+} from "@/types/source";
+import { customAspectSchema, type CustomAspect } from "@/types/character";
 import { useState, useEffect } from "react";
 import { useContentForm } from "@/hooks/content.form";
-import { toast } from "sonner";
 import sanitizeId from "@/lib/sanitizeId";
 import { z } from "zod";
 
@@ -93,37 +84,11 @@ function AspectEditCard({
           <ItemDescription>{aspect.description}</ItemDescription>
         </ItemContent>
         <ItemActions>
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button
-                variant="destructive"
-                size="icon"
-                aria-label={`Delete ${aspect.name}`}
-              >
-                <Trash className="h-4 w-4" />
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Delete Aspect?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  Are you sure you want to delete "{aspect.name}"? This action
-                  cannot be undone after saving.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction
-                  onClick={() => {
-                    onDelete(aspect);
-                    toast.success(`Aspect "${aspect.name}" deleted`);
-                  }}
-                >
-                  Delete
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+          <DeleteButton
+            title="Aspect"
+            name={aspect.name}
+            onDelete={() => onDelete(aspect)}
+          />
           <Button onClick={() => setDialogOpen(true)}>Edit</Button>
         </ItemActions>
       </Item>

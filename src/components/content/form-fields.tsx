@@ -30,7 +30,7 @@ export function NameField({ label }: { label: string }) {
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
         aria-invalid={isInvalid}
-        placeholder={`${label} name`}
+        placeholder="name"
         autoComplete="off"
       />
       {isInvalid && <FieldError errors={field.state.meta.errors} />}

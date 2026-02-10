@@ -1,10 +1,10 @@
 import {
   Item,
-  ItemActions,
   ItemContent,
   ItemDescription,
   ItemHeader,
   ItemTitle,
+  ItemActions,
 } from "@/components/ui/item";
 import {
   Dialog,
@@ -14,20 +14,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { FieldGroup } from "@/components/ui/field";
 import { Button } from "@/components/ui/button";
-import { Trash } from "lucide-react";
+import { DeleteButton } from "@/components/content/delete-button";
+import { toast } from "sonner";
 import {
   Popover,
   PopoverContent,
@@ -35,11 +25,12 @@ import {
 } from "@/components/ui/popover";
 
 import type { CampingGear } from "@/types/source";
-import type { CustomCampingGear } from "@/types/character";
-import { customCampingGearSchema } from "@/types/character";
+import {
+  customCampingGearSchema,
+  type CustomCampingGear,
+} from "@/types/character";
 import { useState, useEffect } from "react";
 import { useContentForm } from "@/hooks/content.form";
-import { toast } from "sonner";
 import sanitizeId from "@/lib/sanitizeId";
 import { z } from "zod";
 
@@ -96,37 +87,11 @@ function CampingGearEditCard({
           <ItemDescription>{campingGear.effect}</ItemDescription>
         </ItemContent>
         <ItemActions>
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button
-                variant="destructive"
-                size="icon"
-                aria-label={`Delete ${campingGear.name}`}
-              >
-                <Trash className="h-4 w-4" />
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Delete Camping Gear?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  Are you sure you want to delete "{campingGear.name}"? This
-                  action cannot be undone after saving.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction
-                  onClick={() => {
-                    onDelete(campingGear);
-                    toast.success(`Camping Gear "${campingGear.name}" deleted`);
-                  }}
-                >
-                  Delete
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+          <DeleteButton
+            title="Camping Gear"
+            name={campingGear.name}
+            onDelete={() => onDelete(campingGear)}
+          />
           <Button onClick={() => setDialogOpen(true)}>Edit</Button>
         </ItemActions>
       </Item>
