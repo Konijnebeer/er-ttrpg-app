@@ -1,23 +1,24 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
 import { Border } from "@/components/border";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { EdgeSection } from "./-components/edge";
-import { SkillSection } from "./-components/skill";
-import { TagSection } from "./-components/tag";
-import { OddementSection } from "./-components/oddement";
-import { FragmentSection } from "./-components/fragment";
-import { CampingGearSection } from "./-components/camping-gear";
-import { AspectSection } from "./-components/aspect";
-import { ConditionSection } from "./-components/condition";
+import { EdgeCard } from "@/components/content/edge";
+import { SkillCard } from "@/components/content/skill";
+import { TagCard } from "@/components/content/tag";
+import { OddementCard } from "@/components/content/oddement";
+import { FragmentCard } from "@/components/content/fragment";
+import { CampingGearCard } from "@/components/content/camping-gear";
+import { AspectCard } from "@/components/content/aspect";
+import { ConditionCard } from "@/components/content/condition";
+import { ScrollSection } from "@/components/content/scroll-section";
 import { ArrowBigLeftIcon, BadgeCheckIcon } from "lucide-react";
+import AvatarInfo from "@/components/avatar-info";
 
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { getLatestSourceVersion } from "@/database/sourceDB";
 import { useSourceStore } from "@/store/sourceStore";
 import { useEffect } from "react";
 import { makeSourceKey } from "@/lib/versioningHelpers";
-import AvatarInfo from "./-components/avatar-info";
 
 export const Route = createFileRoute("/sources/$sourceId/preview")({
   component: RouteComponent,
@@ -61,15 +62,16 @@ function RouteComponent() {
 
   return (
     <Border>
-      <Link to="/sources">
-        <Button
-          size="icon"
-          className="fixed left-5 top-5 z-50"
-          aria-label="Back to previous page"
-        >
+      <Button
+        asChild
+        size="icon"
+        className="fixed left-5 top-5 z-50"
+        aria-label="Back to previous page"
+      >
+        <Link to="/sources">
           <ArrowBigLeftIcon />
-        </Button>
-      </Link>
+        </Link>
+      </Button>
       <header className=" flex flex-col gap-2">
         <div className="flex flex-col xl:flex-row gap-4 justify-between">
           <div className="flex flex-col md:flex-row gap-2 flex-start md:items-center">
@@ -98,32 +100,89 @@ function RouteComponent() {
       </header>
       <ScrollArea className="h-[75vh] w-full">
         <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
-          {source.data.edges && source.data.edges.length >= 0 && (
-            <EdgeSection edges={source.data.edges} />
+          {source.data.edges && source.data.edges.length > 0 && (
+            <ScrollSection title="Edges" description="Edges within the source">
+              {source.data.edges.map((edge) => (
+                <EdgeCard key={edge.id} edge={edge} />
+              ))}
+            </ScrollSection>
           )}
-          {source.data.skills && source.data.skills.length >= 0 && (
-            <SkillSection skills={source.data.skills} />
+          {source.data.skills && source.data.skills.length > 0 && (
+            <ScrollSection
+              title="Skills"
+              description="Skills within the source"
+            >
+              {source.data.skills.map((skill) => (
+                <SkillCard key={skill.id} skill={skill} />
+              ))}
+            </ScrollSection>
           )}
-          {source.data.tags && source.data.tags.length >= 0 && (
-            <TagSection tags={source.data.tags} />
+          {source.data.tags && source.data.tags.length > 0 && (
+            <ScrollSection
+              title="Tags"
+              description="Tags within the source for Oddements"
+            >
+              {source.data.tags.map((tag) => (
+                <TagCard key={tag.id} tag={tag} />
+              ))}
+            </ScrollSection>
           )}
-          {source.data.oddements && source.data.oddements.length >= 0 && (
-            <OddementSection
-              oddements={source.data.oddements}
-              sourceKey={sourceKey}
-            />
+          {source.data.oddements && source.data.oddements.length > 0 && (
+            <ScrollSection
+              title="Oddements"
+              description="Oddements within the source"
+            >
+              {source.data.oddements.map((oddement) => (
+                <OddementCard
+                  key={oddement.id}
+                  oddement={oddement}
+                  sourceKey={sourceKey}
+                />
+              ))}
+            </ScrollSection>
           )}
-          {source.data.fragments && source.data.fragments.length >= 0 && (
-            <FragmentSection fragments={source.data.fragments} />
+          {source.data.fragments && source.data.fragments.length > 0 && (
+            <ScrollSection
+              title="Fragments"
+              description="Fragments within the source"
+            >
+              {source.data.fragments.map((fragment) => (
+                <FragmentCard key={fragment.id} fragment={fragment} />
+              ))}
+            </ScrollSection>
           )}
-          {source.data.campingGear && source.data.campingGear.length >= 0 && (
-            <CampingGearSection campingGear={source.data.campingGear} />
+          {source.data.campingGear && source.data.campingGear.length > 0 && (
+            <ScrollSection
+              title="Camping Gear"
+              description="Camping Gear within the source"
+            >
+              {source.data.campingGear.map((campingGear) => (
+                <CampingGearCard
+                  key={campingGear.id}
+                  campingGear={campingGear}
+                />
+              ))}
+            </ScrollSection>
           )}
-          {source.data.aspects && source.data.aspects.length >= 0 && (
-            <AspectSection aspects={source.data.aspects} />
+          {source.data.aspects && source.data.aspects.length > 0 && (
+            <ScrollSection
+              title="Aspects"
+              description="Aspects within the source"
+            >
+              {source.data.aspects.map((aspect) => (
+                <AspectCard key={aspect.id} aspect={aspect} />
+              ))}
+            </ScrollSection>
           )}
-          {source.data.conditions && source.data.conditions.length >= 0 && (
-            <ConditionSection conditions={source.data.conditions} />
+          {source.data.conditions && source.data.conditions.length > 0 && (
+            <ScrollSection
+              title="Conditions"
+              description="Conditions within the source"
+            >
+              {source.data.conditions.map((condition) => (
+                <ConditionCard key={condition.id} condition={condition} />
+              ))}
+            </ScrollSection>
           )}
         </div>
       </ScrollArea>

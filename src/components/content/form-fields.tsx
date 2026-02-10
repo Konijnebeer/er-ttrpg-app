@@ -6,9 +6,15 @@ import {
   InputGroupText,
   InputGroupTextarea,
 } from "@/components/ui/input-group";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useFieldContext } from "@/hooks/character.form";
-import { wandererExperienceEnum } from "../../create";
+import { useFieldContext } from "@/hooks/content.form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import type { ZodEnum } from "zod";
 
 export function NameField({ label }: { label: string }) {
   const field = useFieldContext<string>();
@@ -24,29 +30,7 @@ export function NameField({ label }: { label: string }) {
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
         aria-invalid={isInvalid}
-        placeholder="Character name"
-        autoComplete="off"
-      />
-      {isInvalid && <FieldError errors={field.state.meta.errors} />}
-    </Field>
-  );
-}
-
-export function AuthorField({ label }: { label: string }) {
-  const field = useFieldContext<string>();
-  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
-
-  return (
-    <Field data-invalid={isInvalid} className="p-1">
-      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
-      <Input
-        id={field.name}
-        name={field.name}
-        value={field.state.value}
-        onBlur={field.handleBlur}
-        onChange={(e) => field.handleChange(e.target.value)}
-        aria-invalid={isInvalid}
-        placeholder="Username"
+        placeholder="name"
         autoComplete="off"
       />
       {isInvalid && <FieldError errors={field.state.meta.errors} />}
@@ -74,7 +58,7 @@ export function DescriptionField({
           value={field.state.value}
           onBlur={field.handleBlur}
           onChange={(e) => field.handleChange(e.target.value)}
-          placeholder="Place to add any information about the character or build"
+          placeholder="Enter description (optional)"
           rows={5}
           className="min-h-12 resize-none"
           aria-invalid={isInvalid}
@@ -90,33 +74,68 @@ export function DescriptionField({
   );
 }
 
-export function WandererExperienceField({ label }: { label: string }) {
-  const field = useFieldContext<string>();
+export function OptionsField<T extends string>({
+  label,
+  options,
+  placeholder,
+}: {
+  label:        string;
+  options:      ZodEnum; // TODO: This type is a bit to generic but ZodEnum<[string, ...string[]]> gives other errors.
+  placeholder?: string;
+}) {
+  const field = useFieldContext<T>();
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
   return (
     <Field data-invalid={isInvalid} className="p-1">
-      <FieldLabel>{label}</FieldLabel>
-      <RadioGroup
-        name={field.name}
+      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
+      <Select
         value={field.state.value}
-        onValueChange={(value) => field.handleChange(value)}
-        className="flex gap-4 flex-wrap"
+        onValueChange={(value) => field.handleChange(value as T)}
       >
-        <FieldLabel
-          htmlFor="newly-awakened"
-          className="flex items-center gap-2 cursor-pointer p-2 rounded-md border"
-        >
-          <RadioGroupItem value={wandererExperienceEnum.enum.newly} id="newly-awakened" />
-          <span>Newly-Awakened</span>
-        </FieldLabel>
-        <FieldLabel
-          htmlFor="capable-explorer"
-          className="flex items-center gap-2 cursor-pointer p-2 rounded-md border"
-        >
-          <RadioGroupItem value={wandererExperienceEnum.enum.capable} id="capable-explorer" />
-          <span>Capable Explorer</span>
-        </FieldLabel>
-      </RadioGroup>
+        <SelectTrigger aria-invalid={isInvalid}>
+          <SelectValue placeholder={placeholder} />
+        </SelectTrigger>
+        <SelectContent>
+          {options.options.map((option) => (
+            <SelectItem key={option} value={option.toString()}>
+              {option}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      {isInvalid && <FieldError errors={field.state.meta.errors} />}
+    </Field>
+  );
+}
+
+export function NumberField({
+  label,
+  min,
+  max,
+}: {
+  label: string;
+  min:   number;
+  max:   number;
+}) {
+  const field = useFieldContext<number>();
+  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+
+  return (
+    <Field data-invalid={isInvalid}>
+      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
+      <Input
+        id={field.name}
+        name={field.name}
+        type="number"
+        className="[appearance:textfield]"
+        min={min}
+        max={max}
+        value={field.state.value || ""}
+        onBlur={field.handleBlur}
+        onChange={(e) => field.handleChange(Number(e.target.value))}
+        placeholder={min.toString()}
+        aria-invalid={isInvalid}
+      />
       {isInvalid && <FieldError errors={field.state.meta.errors} />}
     </Field>
   );

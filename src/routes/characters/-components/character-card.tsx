@@ -12,20 +12,6 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
-import { toast } from "sonner";
-import { useCharacterStore } from "@/store/characterStore";
-import { Trash } from "lucide-react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 
 function CharacterCard({
   character,
@@ -33,27 +19,7 @@ function CharacterCard({
   character: CharacterMetadata & { character: CharacterSelf };
 }) {
   const date = new Date(character.dateModified * 1000);
-  const formatedDate = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
-  const { exportCharacter, deleteCharacter, loadAllCharactersMetadata } = useCharacterStore();
-
-  function onExport() {
-    toast.promise(exportCharacter(character.id), {
-      loading: "Exporting character...",
-      success: "Character exported successfully!",
-      error:   "Failed to export character.",
-    });
-  }
-
-  async function onDelete() { 
-    toast.promise(
-      deleteCharacter(character.id).then(() => loadAllCharactersMetadata()),
-      {
-        loading: "Deleting character...",
-        success: "Character deleted successfully!",
-        error:   "Failed to delete character.",
-      }
-    );
-  }
+  const formattedDate = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
 
   return (
     <Card>
@@ -61,7 +27,7 @@ function CharacterCard({
         <CardTitle>{character.name}</CardTitle>
         <CardDescription></CardDescription>
         <CardAction>
-          <span className="text-sm italic">{formatedDate}</span>
+          <span className="text-sm italic">{formattedDate}</span>
         </CardAction>
       </CardHeader>
       <CardContent>{character.description}</CardContent>
@@ -77,47 +43,26 @@ function CharacterCard({
           </p>
         </div>
         <div className="flex gap-2 self-end">
-          {/* <Link
-            to="/characters/$characterId/edit"
-            params={{
-              characterId: character.id,
-            }}
-          >
-          <Button variant="outline" className="cursor-not-allowed">
-            Edit
+          <Button variant="outline" asChild>
+            <Link
+              to="/characters/$characterId/edit"
+              params={{
+                characterId: character.id,
+              }}
+            >
+              Edit
+            </Link>
           </Button>
-          </Link> */}
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button variant="destructive" size="icon">
-                <Trash />
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Delete Character?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  Are you sure you want to delete "{character.name}"? This action cannot be undone.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={onDelete}>Delete</AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-          <Button variant="outline" onClick={onExport}>
-            Export
+          <Button variant="default" asChild>
+            <Link
+              to="/characters/$characterId/preview"
+              params={{
+                characterId: character.id,
+              }}
+            >
+              Open
+            </Link>
           </Button>
-          <Link
-            to="/characters/$characterId/preview"
-            params={{
-              characterId: character.id,
-            }}
-          >
-            <Button variant="default">Open</Button>
-          </Link>
-        
         </div>
       </CardFooter>
     </Card>

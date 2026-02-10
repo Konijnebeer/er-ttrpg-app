@@ -22,6 +22,7 @@ import type { CustomTag } from "@/types/character";
 import { toast } from "sonner";
 import { customTagSchema } from "@/types/character";
 import { z } from "zod";
+import sanitizeId from "@/lib/sanitizeId";
 
 const customTagFormSchema = customTagSchema.pick({ name: true }).extend({
   description: z.string(),
@@ -47,8 +48,7 @@ export function CreateTagDialog({ open, onOpenChange }: CreateTagDialogProps) {
     },
     onSubmit: async ({ value }) => {
       const newTag: CustomTag = {
-        // Filter out everyhting thats not an alpha numerical character, _ or - replace spaces with -
-        id:          `${value.name.replace(/[^\w-]+/g, "").toLowerCase()}-${Date.now()}`,
+        id:          sanitizeId(value.name),
         name:        value.name,
         description: value.description || undefined,
       };
@@ -76,7 +76,7 @@ export function CreateTagDialog({ open, onOpenChange }: CreateTagDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-125">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>Create Custom Tag</DialogTitle>
           <DialogDescription>

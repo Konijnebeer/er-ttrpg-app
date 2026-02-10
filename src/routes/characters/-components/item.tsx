@@ -3,11 +3,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { TagBadge } from "../../sources/-components/tag";
-import type {
-  ItemReference,
-  OddementReference,
-} from "@/types/character";
+import { TagBadge } from "@/components/content/tag";
+import type { ItemReference, OddementReference } from "@/types/character";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus, PlusIcon, Trash } from "lucide-react";
 import type { Reference } from "@/types/refrence";

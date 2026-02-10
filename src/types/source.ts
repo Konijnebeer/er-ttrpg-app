@@ -7,7 +7,7 @@ import {
 } from "./refrence";
 import { bcp47Schema } from "./bcp47";
 
-// Contrubitors and Acknowledgements
+// Contributors and Acknowledgements
 
 export const contactTypeSchema = z.enum([
   "Website",
@@ -49,7 +49,7 @@ export type Acknowledgement = z.infer<typeof acknowledgementSchema>;
 
 export const tagSchema = z.object({
   id:          idSchema,
-  name:        z.string(),
+  name:        z.string().min(2).max(20),
   description: z.string().min(3).max(50).optional(),
   color:       z
     .string()

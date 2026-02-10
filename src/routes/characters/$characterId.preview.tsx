@@ -104,15 +104,16 @@ function CharacterPreview() {
   return (
     <SheetDropComponent>
       <Border>
-        <Link to="/characters">
-          <Button
-            size="icon"
-            className="fixed left-5 top-5 z-50"
-            aria-label="Back to previous page"
-          >
+        <Button
+          asChild
+          size="icon"
+          className="fixed left-5 top-5 z-50"
+          aria-label="Back to previous page"
+        >
+          <Link to="/characters">
             <ArrowBigLeftIcon />
-          </Button>
-        </Link>
+          </Link>
+        </Button>
         <AutoSaveIndicator />
         <CharacterSidebar open={sidebarOpen} onOpenChange={setSidebarOpen} />
         <CreateDialog open={open} onOpenChange={closeDialog} type={type} />

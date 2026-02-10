@@ -31,26 +31,29 @@ export default function CharactersIndexPage() {
   }
   return (
     <Border>
-      <Link to="/">
-        <Button
-          size="icon"
-          className="fixed left-5 top-5 z-50"
-          aria-label="Back to previous page"
-        >
+      <Button
+        asChild
+        size="icon"
+        className="fixed left-5 top-5 z-50"
+        aria-label="Back to previous page"
+      >
+        <Link to="/">
           <ArrowBigLeftIcon />
-        </Button>
-      </Link>
+        </Link>
+      </Button>
       <Section>
         <SectionHeader>
           <SectionTitle>Characters</SectionTitle>
           <SectionDescription>Manage your Characters here.</SectionDescription>
           <SectionAction>
-            <Link to="/characters/create">
-              <Button variant="outline">Create Character</Button>
-            </Link>
+            <Button variant="outline" asChild>
+              <Link to="/characters/create">Create Character</Link>
+            </Button>
+              <Button variant="default" asChild>
             <Link to="/characters/import">
-              <Button variant="default">Import Character</Button>
+                Import Character
             </Link>
+              </Button>
           </SectionAction>
         </SectionHeader>
         <SectionContent>

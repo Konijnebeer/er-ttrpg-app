@@ -37,26 +37,31 @@ export default function SourcesIndexPage() {
 
   return (
     <Border>
-      <Link to="/">
-        <Button
-          size="icon"
-          className="fixed left-5 top-5 z-50"
-          aria-label="Back to previous page"
-        >
+      <Button
+        asChild
+        size="icon"
+        className="fixed left-5 top-5 z-50"
+        aria-label="Back to previous page"
+      >
+        <Link to="/">
           <ArrowBigLeftIcon />
-        </Button>
-      </Link>
+        </Link>
+      </Button>
       <Section>
         <SectionHeader>
           <SectionTitle>Sources</SectionTitle>
           <SectionDescription>Manage your sources here.</SectionDescription>
           <SectionAction>
-            <Button variant="outline" className="cursor-not-allowed w-fit">
+            <Button
+              variant="outline"
+              className="cursor-not-allowed pointer-events-all"
+              disabled
+            >
               Create Source
             </Button>
-            <Link to="/sources/import">
-              <Button variant="default">Import Source</Button>
-            </Link>
+            <Button variant="default" asChild>
+              <Link to="/sources/import">Import Source</Link>
+            </Button>
           </SectionAction>
         </SectionHeader>
         <SectionContent>
