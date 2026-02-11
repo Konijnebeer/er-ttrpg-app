@@ -15,10 +15,10 @@
       "id": "bracken-of-low-walls",
       "versions": [
         {
-          "versionNumber": "1.1.1",
+          "versionNumber": "1.1.0",
           "versionRef": "beta-playtest@1.0.1",
           "dependencies": [],
-          "filename": "bracken-of-low-walls-1.1.1.json"
+          "filename": "bracken-of-low-walls-1.1.0.json"
         }
       ]
     },
@@ -81,10 +81,10 @@
       "id": "elias-twistfinger",
       "versions": [
         {
-          "versionNumber": "1.1.1",
+          "versionNumber": "1.1.0",
           "versionRef": "beta-playtest@1.0.1",
           "dependencies": [],
-          "filename": "elias-twistfinger-1.1.1.json"
+          "filename": "elias-twistfinger-1.1.0.json"
         }
       ]
     }
