@@ -34,7 +34,7 @@ export function BackpackSection({
             <Button
               onClick={() => openDialog("oddement")}
               size="icon-sm"
-              className="h-6 w-6"
+              className="h-6 w-6 print:hidden"
             >
               <PlusIcon />
             </Button>
@@ -60,7 +60,7 @@ export function BackpackSection({
             <Button
               onClick={() => openDialog("fragment")}
               size="icon-sm"
-              className="h-6 w-6"
+              className="h-6 w-6 print:hidden"
             >
               <PlusIcon />
             </Button>
@@ -82,7 +82,7 @@ export function BackpackSection({
             <Button
               onClick={() => openDialog("camping-gear")}
               size="icon-sm"
-              className="h-6 w-6"
+              className="h-6 w-6 print:hidden"
             >
               <PlusIcon />
             </Button>

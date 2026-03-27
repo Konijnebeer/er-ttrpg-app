@@ -103,11 +103,11 @@ function CharacterPreview() {
 
   return (
     <SheetDropComponent>
-      <Border>
+      <Border className="print:overflow-visible print:h-auto">
         <Button
           asChild
           size="icon"
-          className="fixed left-5 top-5 z-50"
+          className="fixed left-5 top-5 z-50 print:hidden"
           aria-label="Back to previous page"
         >
           <Link to="/characters">
@@ -118,7 +118,7 @@ function CharacterPreview() {
         <CharacterSidebar open={sidebarOpen} onOpenChange={setSidebarOpen} />
         <CreateDialog open={open} onOpenChange={closeDialog} type={type} />
         <ScrollArea
-          className={`h-[85vh] max-h-[90vh] w-full ${sidebarOpen ? "cursor-not-allowed" : ""}`}
+          className={`h-[85vh] max-h-[90vh] w-full print:max-h-max print:overflow-visible print:h-auto ${sidebarOpen ? "cursor-not-allowed" : ""}`}
         >
           <div
             className={`flex flex-col gap-4 md:grid md:grid-cols-2 xl:grid-cols-3 ${sidebarOpen ? "pointer-events-none" : ""}`}
@@ -155,6 +155,7 @@ function CharacterPreview() {
               items={character.data.backpack}
               className={`md:col-span-2 ${sidebarOpen ? "xl:col-span-1 xl:row-start-1" : "xl:col-span-1"}`}
             />
+            {/* print:break-inside-avoid*/}
             <AspectSection
               aspects={character.data.aspects}
               className={
