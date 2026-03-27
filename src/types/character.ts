@@ -134,7 +134,7 @@ export const characterMetadataSchema = z.object({
   id:           idSchema,
   versionRef:   sourceKeySchema,
   name:         z.string().min(2).max(20),
-  description:  z.string().min(10).max(200),
+  description:  z.string().min(10).max(1000),
   sheetVersion: versionSchema,
   dependencies: z.array(sourceKeySchema).optional(),
   author:       z.string().min(2).max(20),

@@ -571,7 +571,7 @@ function FalloutCurse({
   }
 
   return (
-    <div className="grid gap-2 grid-cols-1 sm:grid-cols-[3fr_8fr]">
+    <div className="grid gap-2 items-center grid-cols-1 sm:grid-cols-[3fr_8fr] md:grid-cols-1 lg:grid-cols-[3fr_8fr] ">
       <h3 className="text-xl uppercase w-20 pt-1">{type}</h3>
       <div className="flex gap-4">
         <div className="flex flex-col justify-center gap-2">

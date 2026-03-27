@@ -20,11 +20,17 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Border } from "@/components/border";
 import { Button } from "@/components/ui/button";
-import { FieldGroup } from "@/components/ui/field";
+import {
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  Field,
+} from "@/components/ui/field";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { OwnContentSection } from "./-components/own-content-section";
 import { ArrowBigLeftIcon, Trash } from "lucide-react";
 import { toast } from "sonner";
+import z from "zod";
 // Types
 import { characterMetadataSchema } from "@/types/character";
 // Stores
@@ -37,6 +43,7 @@ import { useUpdateCharacterSource } from "@/hooks/use-update-character-source";
 // Helpers
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
+import { Input } from "@/components/ui/input";
 
 export const Route = createFileRoute("/characters/$characterId/edit")({
   component: RouteComponent,
@@ -70,6 +77,10 @@ function RouteComponent() {
         name:        character.name,
         author:      character.author,
         description: character.description,
+      });
+      trackForm.reset({
+        curse:   character.data?.character.curse.maxTrack,
+        fallout: character.data?.character.fallout.maxTrack,
       });
     }
   }, [character?.id]);
@@ -106,6 +117,49 @@ function RouteComponent() {
             name:        value.name,
             author:      value.author,
             description: value.description,
+          }),
+        ),
+        {
+          loading: "Updating character information...",
+          success: "Character information updated successfully!",
+          error:   "Failed to update character information.",
+        },
+      );
+    },
+  });
+
+  const characterTrackFormSchema = z.object({
+    curse:   z.number().min(0).max(8),
+    fallout: z.number().min(0).max(8),
+  });
+
+  const trackForm = useCharacterForm({
+    defaultValues: {
+      curse:   character?.data?.character?.curse?.maxTrack ?? 0,
+      fallout: character?.data?.character?.fallout?.maxTrack ?? 0,
+    },
+    validators: {
+      onSubmit: characterTrackFormSchema,
+    },
+    onSubmit: async ({ value }) => {
+      toast.promise(
+        Promise.resolve(
+          updateCharacter({
+            ...character,
+            data: {
+              ...character.data,
+              character: {
+                ...character.data.character,
+                curse: {
+                  ...character.data.character.curse,
+                  maxTrack: value.curse,
+                },
+                fallout: {
+                  ...character.data.character.fallout,
+                  maxTrack: value.fallout,
+                },
+              },
+            },
           }),
         ),
         {
@@ -298,12 +352,89 @@ function RouteComponent() {
                   children={(field) => (
                     <field.DescriptionField
                       label="Description"
-                      maxCharacters={200}
+                      maxCharacters={1000}
                     />
                   )}
                 />
                 <Button type="submit" className="w-full">
                   Update Information
+                </Button>
+              </FieldGroup>
+            </form>
+            <form
+              id="edit-character-track"
+              onSubmit={(e) => {
+                e.preventDefault();
+                trackForm.handleSubmit();
+              }}
+            >
+              <FieldGroup className="gap-4">
+                <div className="flex flex-row gap-4">
+                  <trackForm.AppField
+                    name="curse"
+                    children={(field) => {
+                      const isInvalid =
+                        field.state.meta.isTouched && !field.state.meta.isValid;
+                      return (
+                        <Field data-invalid={isInvalid}>
+                          <FieldLabel htmlFor={field.name}>
+                            Max curse track:
+                          </FieldLabel>
+                          <Input
+                            className="[appearance:textfield]"
+                            id={field.name}
+                            name={field.name}
+                            type="number"
+                            value={field.state.value || ""}
+                            onBlur={field.handleBlur}
+                            onChange={(e) =>
+                              field.handleChange(Number(e.target.value))
+                            }
+                            aria-invalid={isInvalid}
+                            placeholder="1"
+                            autoComplete="off"
+                          />
+                          {isInvalid && (
+                            <FieldError errors={field.state.meta.errors} />
+                          )}
+                        </Field>
+                      );
+                    }}
+                  />
+                  <trackForm.AppField
+                    name="fallout"
+                    children={(field) => {
+                      const isInvalid =
+                        field.state.meta.isTouched && !field.state.meta.isValid;
+                      return (
+                        <Field data-invalid={isInvalid}>
+                          <FieldLabel htmlFor={field.name}>
+                            Max fallout track:
+                          </FieldLabel>
+                          <Input
+                            className="[appearance:textfield]"
+                            id={field.name}
+                            name={field.name}
+                            type="number"
+                            value={field.state.value || ""}
+                            onBlur={field.handleBlur}
+                            onChange={(e) =>
+                              field.handleChange(Number(e.target.value))
+                            }
+                            aria-invalid={isInvalid}
+                            placeholder="1"
+                            autoComplete="off"
+                          />
+                          {isInvalid && (
+                            <FieldError errors={field.state.meta.errors} />
+                          )}
+                        </Field>
+                      );
+                    }}
+                  />
+                </div>
+                <Button type="submit" className="w-full">
+                  Update Tracks
                 </Button>
               </FieldGroup>
             </form>

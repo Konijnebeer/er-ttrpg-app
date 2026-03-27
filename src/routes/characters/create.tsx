@@ -113,8 +113,7 @@ export const defaultCharacterFormValues = {
   selectedPathOddements:   [] as OddementReference[],
   selectedPathFragments:   [] as ItemReference[],
   selectedPathAspects:     [] as AspectReference[],
-  wandererExperience:      wandererExperienceEnum.enum
-    .newly as WandererExperience, // default to newly-awakened,
+  wandererExperience: wandererExperienceEnum.enum.newly as WandererExperience, // default to newly-awakened,
 };
 
 function RouteComponent() {
@@ -202,88 +201,90 @@ function RouteComponent() {
         >
           <FieldGroup>
             <ScrollArea className="max-h-fit overflow-visible lg:max-h-[85vh] lg:overflow-hidden">
-            <div className="flex flex-col sm:flex-row gap-4">
-              <form.AppField
-                name="name"
-                children={(field) => <field.NameField label="Name" />}
-              />
-              <form.AppField
-                name="author"
-                children={(field) => <field.AuthorField label="Author" />}
-              />
-            </div>
-            <form.AppField
-              name="wandererExperience"
-              listeners={{
-                onChange: (wandererExperience) => {
-                  if (
-                    wandererExperience.value ===
-                    wandererExperienceEnum.enum.newly
-                  ) {
-                    form.setFieldValue("selectedOriginEdges", []);
-                    form.setFieldValue("selectedOriginSkills", []);
-                    form.setFieldValue("selectedOriginOddements", []);
-                    form.setFieldValue("selectedOriginFragments", []);
-                    form.setFieldValue("selectedOriginAspects", []);
-                    form.setFieldValue("selectedPathEdges", []);
-                    form.setFieldValue("selectedPathSkills", []);
-                    form.setFieldValue("selectedPathOddements", []);
-                    form.setFieldValue("selectedPathFragments", []);
-                    form.setFieldValue("selectedPathAspects", []);
-                  }
-                },
-              }}
-              children={(field) => (
-                <field.WandererExperienceField label="Wanderer Experience" />
-              )}
-            />
-            <form.AppField
-              name="description"
-              children={(field: any) => (
-                <field.DescriptionField
-                  label="Description"
-                  maxCharacters={200}
+              <div className="p-1">
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <form.AppField
+                    name="name"
+                    children={(field) => <field.NameField label="Name" />}
+                  />
+                  <form.AppField
+                    name="author"
+                    children={(field) => <field.AuthorField label="Author" />}
+                  />
+                </div>
+                <form.AppField
+                  name="wandererExperience"
+                  listeners={{
+                    onChange: (wandererExperience) => {
+                      if (
+                        wandererExperience.value ===
+                        wandererExperienceEnum.enum.newly
+                      ) {
+                        form.setFieldValue("selectedOriginEdges", []);
+                        form.setFieldValue("selectedOriginSkills", []);
+                        form.setFieldValue("selectedOriginOddements", []);
+                        form.setFieldValue("selectedOriginFragments", []);
+                        form.setFieldValue("selectedOriginAspects", []);
+                        form.setFieldValue("selectedPathEdges", []);
+                        form.setFieldValue("selectedPathSkills", []);
+                        form.setFieldValue("selectedPathOddements", []);
+                        form.setFieldValue("selectedPathFragments", []);
+                        form.setFieldValue("selectedPathAspects", []);
+                      }
+                    },
+                  }}
+                  children={(field) => (
+                    <field.WandererExperienceField label="Wanderer Experience" />
+                  )}
                 />
-              )}
-            />
-            <form.Subscribe selector={(state) => state.values.versionRef}>
-              {(versionRef) =>
-                versionRef && (
-                  <form.AppForm>
-                    <Tabs defaultValue="origin" className="my-4">
-                      <TabsList>
-                        <TabsTrigger value="origin">Origin</TabsTrigger>
-                        <TabsTrigger value="path">Path</TabsTrigger>
-                      </TabsList>
-                      <TabsContent value="origin">
-                        <ScrollArea
-                          className={`${originRef ? "h-[75vh]" : "h-[22vh]"} overflow-auto lg:overflow-visible lg:h-auto`}
-                        >
-                          <OriginPathSection
-                            form={form}
-                            sourceKeys={sourceKeys}
-                            type="origins"
-                            label="Origin"
-                          />
-                        </ScrollArea>
-                      </TabsContent>
-                      <TabsContent value="path">
-                        <ScrollArea
-                          className={`${pathRef ? "h-[75vh]" : "h-[22vh]"} overflow-auto lg:overflow-visible lg:h-auto`}
-                        >
-                          <OriginPathSection
-                            form={form}
-                            sourceKeys={sourceKeys}
-                            type="paths"
-                            label="Path"
-                          />
-                        </ScrollArea>
-                      </TabsContent>
-                    </Tabs>
-                  </form.AppForm>
-                )
-              }
-              </form.Subscribe>
+                <form.AppField
+                  name="description"
+                  children={(field: any) => (
+                    <field.DescriptionField
+                      label="Description"
+                      maxCharacters={1000}
+                    />
+                  )}
+                />
+                <form.Subscribe selector={(state) => state.values.versionRef}>
+                  {(versionRef) =>
+                    versionRef && (
+                      <form.AppForm>
+                        <Tabs defaultValue="origin" className="my-4">
+                          <TabsList>
+                            <TabsTrigger value="origin">Origin</TabsTrigger>
+                            <TabsTrigger value="path">Path</TabsTrigger>
+                          </TabsList>
+                          <TabsContent value="origin">
+                            <ScrollArea
+                              className={`${originRef ? "h-[75vh]" : "h-[22vh]"} overflow-auto lg:overflow-visible lg:h-auto`}
+                            >
+                              <OriginPathSection
+                                form={form}
+                                sourceKeys={sourceKeys}
+                                type="origins"
+                                label="Origin"
+                              />
+                            </ScrollArea>
+                          </TabsContent>
+                          <TabsContent value="path">
+                            <ScrollArea
+                              className={`${pathRef ? "h-[75vh]" : "h-[22vh]"} overflow-auto lg:overflow-visible lg:h-auto`}
+                            >
+                              <OriginPathSection
+                                form={form}
+                                sourceKeys={sourceKeys}
+                                type="paths"
+                                label="Path"
+                              />
+                            </ScrollArea>
+                          </TabsContent>
+                        </Tabs>
+                      </form.AppForm>
+                    )
+                  }
+                </form.Subscribe>
+              </div>
             </ScrollArea>
           </FieldGroup>
           <FieldGroup>

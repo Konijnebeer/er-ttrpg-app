@@ -37,7 +37,7 @@ export default function About() {
           <DialogTitle>Welcome!</DialogTitle>
         </DialogHeader>
         <ScrollArea className="max-h-[70vh] sm:max-h-[60vh]">
-          <DialogDescription className="text-primary text-md gap-2 flex flex-col md:flex-row">
+          <DialogDescription className="text-primary text-md gap-2 flex flex-col md:flex-row pb-4">
             <span className="space-y-2 flex flex-col">
               <span>
                 This website is a <strong>fan-made</strong> project created to
