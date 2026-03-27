@@ -13,6 +13,7 @@ import { CharacterCardGrid } from "./-components/character-card";
 import { useEffect } from "react";
 import { useCharacterStore } from "@/store/characterStore";
 import { ArrowBigLeftIcon } from "lucide-react";
+import Settings from "@/components/settings";
 
 export const Route = createFileRoute("/characters/")({
   component: CharactersIndexPage,
@@ -41,6 +42,7 @@ export default function CharactersIndexPage() {
           <ArrowBigLeftIcon />
         </Link>
       </Button>
+      <Settings />
       <Section>
         <SectionHeader>
           <SectionTitle>Characters</SectionTitle>
@@ -49,11 +51,9 @@ export default function CharactersIndexPage() {
             <Button variant="outline" asChild>
               <Link to="/characters/create">Create Character</Link>
             </Button>
-              <Button variant="default" asChild>
-            <Link to="/characters/import">
-                Import Character
-            </Link>
-              </Button>
+            <Button variant="default" asChild>
+              <Link to="/characters/import">Import Character</Link>
+            </Button>
           </SectionAction>
         </SectionHeader>
         <SectionContent>
