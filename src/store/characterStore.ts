@@ -16,6 +16,7 @@ import {
   deleteCharacter,
 } from "@/database/characterDB";
 import { SAVE_DEBOUNCE_MS, BASE_PATH } from "@/lib/constants";
+import { useSettingsStore } from "./settingsStore";
 
 // Omitting keys, for character & backpack  since they are not arrays
 export type CharacterDataArrays = Omit<CharacterData, "character" | "backpack">;
@@ -255,10 +256,13 @@ export const useCharacterStore = create<CharacterStoreState>((set, get) => ({
       clearTimeout(existingTimer);
     }
 
+    const saveDebounceMS =
+      useSettingsStore.getState().settings.saveFrequency ?? SAVE_DEBOUNCE_MS;
+
     // Set new debounced save timer
     const newTimer = setTimeout(async () => {
       await get().saveCharacter();
-    }, SAVE_DEBOUNCE_MS);
+    }, saveDebounceMS);
 
     set({ saveTimer: newTimer });
   },
