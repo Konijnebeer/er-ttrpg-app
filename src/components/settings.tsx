@@ -87,7 +87,8 @@ export default function Settings() {
                     <FieldLabel htmlFor={field.name}>Save Frequency</FieldLabel>
                     <FieldDescription>
                       <strong>Default</strong> saves every 2 seconds with no
-                      interaction, <strong>Half</strong>, 4s, <strong>Quarter</strong> 8s.
+                      interaction, <strong>Half</strong>, 4s,{" "}
+                      <strong>Quarter</strong> 8s.
                     </FieldDescription>
                     <Select
                       value={String(field.state.value)}
@@ -124,9 +125,9 @@ export default function Settings() {
                   <Field data-invalid={isInvalid}>
                     <FieldLabel htmlFor={field.name}>Save Indicator</FieldLabel>
                     <FieldDescription>
-                      <strong>Default</strong> shows the full toast, <strong>Small</strong> just
-                      the icon, <strong>None</strong> still saves but does not
-                      show it.
+                      <strong>Default</strong> shows the full toast,{" "}
+                      <strong>Small</strong> just the icon,{" "}
+                      <strong>None</strong> still saves but does not show it.
                     </FieldDescription>
                     <Select
                       value={field.state.value}

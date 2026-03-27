@@ -1,6 +1,5 @@
 import { useCharacterStore } from "@/store/characterStore";
 import { useSettingsStore } from "@/store/settingsStore";
-import { saveIndicatorSchema } from "@/types/settings";
 import { useEffect, useRef } from "react";
 import { toast } from "sonner";
 
@@ -17,9 +16,9 @@ export function AutoSaveIndicator() {
       // Finished saving
       wasJustSaving.current = false;
 
-      if (indicatorSetting === saveIndicatorSchema.options[0]) {
+      if (indicatorSetting === "Default") {
         toast.success("Character saved");
-      } else if (indicatorSetting === saveIndicatorSchema.options[1]) {
+      } else if (indicatorSetting === "Small") {
         toast.success("", {
           classNames: {
             toast:   "!min-w-0 max-w-10 w-10",
