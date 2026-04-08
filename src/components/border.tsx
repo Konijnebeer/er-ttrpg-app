@@ -7,7 +7,7 @@ export function Border({
   className,
 }: PropsWithChildren<{ className?: string }>) {
   return (
-    <main className="flex min-h-screen items-center justify-center p-8 overflow-hidden">
+    <main className="flex min-h-screen items-center justify-center  p-8 overflow-hidden print:p-0 print:overflow-visible">
       <div
         className={cn(
           "h-[90vh] max-w-[90vw] xl:max-w-8xl w-full sm:rounded-4xl sm:border-4 pt-4 sm:p-6 flex flex-col overflow-hidden",
@@ -18,7 +18,7 @@ export function Border({
       </div>
       <Tooltip>
         <TooltipTrigger asChild>
-          <p className="absolute bottom-4 left-4 text-sm text-primary cursor-help select-none">
+          <p className="absolute bottom-4 left-4 text-sm text-primary cursor-help select-none print:hidden">
             Fan made
           </p>
         </TooltipTrigger>

@@ -39,7 +39,7 @@ export function AspectSection({
         <SectionAction>
           <Button
             size="icon-sm"
-            className="mr-4"
+            className="mr-4 print:hidden"
             onClick={() => openDialog("aspect")}
           >
             <PlusIcon />
@@ -107,7 +107,8 @@ function AspectCard({
   }
   return (
     <Card
-      className="sprite-border gap-2 pb-2"
+      className="sprite-border gap-2 pb-2 print:break-inside-avoid"
+      // print:break-inside-avoid
       //   style={{
       //     borderStyle:       "solid",
       //     borderWidth:       10, // match the 150px border thickness
@@ -121,7 +122,12 @@ function AspectCard({
         <CardTitle>{aspectObject.name}</CardTitle>
         <CardAction className="flex items-center gap-2">
           <span>{aspectObject.category}</span>
-          <Button variant="destructive" size="icon-sm" onClick={onDelete}>
+          <Button
+            variant="destructive"
+            className="print:hidden"
+            size="icon-sm"
+            onClick={onDelete}
+          >
             <Trash />
           </Button>
         </CardAction>

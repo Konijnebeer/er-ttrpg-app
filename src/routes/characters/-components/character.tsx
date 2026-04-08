@@ -392,7 +392,11 @@ function HopeDespair({ dispair, hope }: { dispair: number; hope: number }) {
     // Todo: Make responsive
     <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row text-center space-y-2 md:space-y-0 items-center">
       <div className="flex-1 flex items-center gap-2 flex-col sm:flex-row md:flex-col lg:flex-row place-content-start">
-        <Button size="icon" onClick={() => handleDespairChange(true)}>
+        <Button
+          className="print:hidden"
+          size="icon"
+          onClick={() => handleDespairChange(true)}
+        >
           <Plus />
         </Button>
         <h3 className="capitalize">Despair</h3>
@@ -429,7 +433,11 @@ function HopeDespair({ dispair, hope }: { dispair: number; hope: number }) {
       </div>
       <div className="flex-1 flex items-center gap-4 flex-col sm:flex-row md:flex-col lg:flex-row place-content-end">
         <h3 className="capitalize">Hope</h3>
-        <Button size="icon" onClick={() => handleHopeChange(true)}>
+        <Button
+          className="print:hidden"
+          size="icon"
+          onClick={() => handleHopeChange(true)}
+        >
           <Plus />
         </Button>
       </div>
