@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SourcesIndexRouteImport } from './routes/sources/index'
+import { Route as CommunityIndexRouteImport } from './routes/community/index'
 import { Route as CharactersIndexRouteImport } from './routes/characters/index'
 import { Route as SourcesNewRouteImport } from './routes/sources/new'
 import { Route as SourcesImportRouteImport } from './routes/sources/import'
@@ -30,6 +31,11 @@ const IndexRoute = IndexRouteImport.update({
 const SourcesIndexRoute = SourcesIndexRouteImport.update({
   id: '/sources/',
   path: '/sources/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommunityIndexRoute = CommunityIndexRouteImport.update({
+  id: '/community/',
+  path: '/community/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CharactersIndexRoute = CharactersIndexRouteImport.update({
@@ -93,6 +99,7 @@ export interface FileRoutesByFullPath {
   '/sources/import': typeof SourcesImportRoute
   '/sources/new': typeof SourcesNewRoute
   '/characters': typeof CharactersIndexRoute
+  '/community': typeof CommunityIndexRoute
   '/sources': typeof SourcesIndexRoute
   '/characters/$characterId/edit': typeof CharactersCharacterIdEditRoute
   '/characters/$characterId/preview': typeof CharactersCharacterIdPreviewRoute
@@ -107,6 +114,7 @@ export interface FileRoutesByTo {
   '/sources/import': typeof SourcesImportRoute
   '/sources/new': typeof SourcesNewRoute
   '/characters': typeof CharactersIndexRoute
+  '/community': typeof CommunityIndexRoute
   '/sources': typeof SourcesIndexRoute
   '/characters/$characterId/edit': typeof CharactersCharacterIdEditRoute
   '/characters/$characterId/preview': typeof CharactersCharacterIdPreviewRoute
@@ -122,6 +130,7 @@ export interface FileRoutesById {
   '/sources/import': typeof SourcesImportRoute
   '/sources/new': typeof SourcesNewRoute
   '/characters/': typeof CharactersIndexRoute
+  '/community/': typeof CommunityIndexRoute
   '/sources/': typeof SourcesIndexRoute
   '/characters/$characterId/edit': typeof CharactersCharacterIdEditRoute
   '/characters/$characterId/preview': typeof CharactersCharacterIdPreviewRoute
@@ -138,6 +147,7 @@ export interface FileRouteTypes {
     | '/sources/import'
     | '/sources/new'
     | '/characters'
+    | '/community'
     | '/sources'
     | '/characters/$characterId/edit'
     | '/characters/$characterId/preview'
@@ -152,6 +162,7 @@ export interface FileRouteTypes {
     | '/sources/import'
     | '/sources/new'
     | '/characters'
+    | '/community'
     | '/sources'
     | '/characters/$characterId/edit'
     | '/characters/$characterId/preview'
@@ -166,6 +177,7 @@ export interface FileRouteTypes {
     | '/sources/import'
     | '/sources/new'
     | '/characters/'
+    | '/community/'
     | '/sources/'
     | '/characters/$characterId/edit'
     | '/characters/$characterId/preview'
@@ -181,6 +193,7 @@ export interface RootRouteChildren {
   SourcesImportRoute: typeof SourcesImportRoute
   SourcesNewRoute: typeof SourcesNewRoute
   CharactersIndexRoute: typeof CharactersIndexRoute
+  CommunityIndexRoute: typeof CommunityIndexRoute
   SourcesIndexRoute: typeof SourcesIndexRoute
   CharactersCharacterIdEditRoute: typeof CharactersCharacterIdEditRoute
   CharactersCharacterIdPreviewRoute: typeof CharactersCharacterIdPreviewRoute
@@ -202,6 +215,13 @@ declare module '@tanstack/react-router' {
       path: '/sources'
       fullPath: '/sources'
       preLoaderRoute: typeof SourcesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/community/': {
+      id: '/community/'
+      path: '/community'
+      fullPath: '/community'
+      preLoaderRoute: typeof CommunityIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/characters/': {
@@ -285,6 +305,7 @@ const rootRouteChildren: RootRouteChildren = {
   SourcesImportRoute: SourcesImportRoute,
   SourcesNewRoute: SourcesNewRoute,
   CharactersIndexRoute: CharactersIndexRoute,
+  CommunityIndexRoute: CommunityIndexRoute,
   SourcesIndexRoute: SourcesIndexRoute,
   CharactersCharacterIdEditRoute: CharactersCharacterIdEditRoute,
   CharactersCharacterIdPreviewRoute: CharactersCharacterIdPreviewRoute,

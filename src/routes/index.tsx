@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import { useSourceStore } from "@/store/sourceStore";
 import { useCharacterStore } from "@/store/characterStore";
 import About from "@/components/about";
+import { HeartHandshake } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: SourcesIndexPage,
@@ -54,6 +55,16 @@ export default function SourcesIndexPage() {
 
   return (
     <Border>
+      <Button
+        asChild
+        size="icon"
+        className="fixed left-5 top-5 z-50"
+        aria-label="To community page"
+      >
+        <Link to="/community">
+          <HeartHandshake />
+        </Link>
+      </Button>
       <About />
       <Section className="pb-2">
         <SectionHeader>
