@@ -169,6 +169,14 @@ export const conditionSchema = z.object({
 
 export type Condition = z.infer<typeof conditionSchema>;
 
+export const flavourBonusSchema = z.object({
+  id:          idSchema,
+  description: z.string().min(2).max(100),
+  cost:        z.number().min(1).max(10),
+});
+
+export type FlavourBonus = z.infer<typeof flavourBonusSchema>;
+
 // SourceData
 
 export const sourceDataSchema = z.object({
@@ -181,7 +189,9 @@ export const sourceDataSchema = z.object({
   aspects:     z.array(aspectSchema).optional(),
   skills:      z.array(edgeSkillSchema).optional(),
   edges:       z.array(edgeSkillSchema).optional(),
-  conditions: z.array(conditionSchema).optional(),
+  conditions:  z.array(conditionSchema).optional(),
+  flavourBonuses: z.array(flavourBonusSchema).optional(),
+
   // abilities: z.array().optional(),
 });
 

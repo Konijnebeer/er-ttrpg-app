@@ -9,8 +9,9 @@ import {
 // Refrences
 
 export const edgeSkillReferenceSchema = z.object({
-  ref:   referenceSchema,
-  level: z.number().min(0),
+  ref:          referenceSchema,
+  level:        z.number().min(0),
+  flavourBonus: z.boolean().optional(),
 });
 
 export type EdgeSkillReference = z.infer<typeof edgeSkillReferenceSchema>;

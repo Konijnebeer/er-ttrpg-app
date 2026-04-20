@@ -35,6 +35,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useDraggable, useDroppable } from "@dnd-kit/core";
+import { ExtraMenu } from "./extra-menu";
 
 export function CharacterSidebar({
   open,
@@ -72,6 +73,7 @@ export function CharacterSidebar({
           <SheetDescription>
             Drag and drop items into the sheet, or right click and select amount
           </SheetDescription>
+          <ExtraMenu />
         </SheetHeader>
         <Tabs defaultValue="all" className="px-4 w-full flex-1 min-h-0">
           <TabsList className="w-full shrink-0">
